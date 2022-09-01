@@ -87,9 +87,9 @@ class ATD12k(Dataset):
 
     def __len__(self):
         if self.training:
-            return len(self.trainlist)
+            return len(self.data_list)
         else:
-            return len(self.testlist)
+            return len(self.data_list)
             # return 1
 
 def get_loader(mode, data_root, batch_size, shuffle, num_workers, test_mode=None):
