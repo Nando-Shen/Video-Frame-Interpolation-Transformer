@@ -225,7 +225,7 @@ class SynBlock(nn.Module):
         return framet
 
 if __name__ == '__main__':
-    model = UNet_3D_3D('unet_18', n_inputs=4, n_outputs=1)
+    model = UNet_3D_3D('unet_18', n_inputs=2, n_outputs=1)
     total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print('the number of network parameters: {}'.format(total_params))
     # inp = [torch.randn(1, 3, 225, 225).cuda() for i in range(4)]

@@ -21,6 +21,8 @@ class ATD12k(Dataset):
         dirs = os.listdir(self.data_root)
         data_list = []
         for d in dirs:
+            if d == '.DS_Store':
+                continue
             img0 = os.path.join(self.data_root, d, 'frame1.jpg')
             img1 = os.path.join(self.data_root, d, 'frame3.jpg')
             gt = os.path.join(self.data_root, d, 'frame2.jpg')
@@ -31,9 +33,8 @@ class ATD12k(Dataset):
 
         if self.training:
             self.transforms = transforms.Compose([
-                transforms.RandomCrop(256),
-                transforms.RandomHorizontalFlipVideo(),
-                transforms.RandomVerticalFlipVideo(0.5),
+                transforms.RandomCrop(228),
+                transforms.RandomHorizontalFlip(),
                 # transforms.ColorJitter(0.05, 0.05, 0.05, 0.05),
                 transforms.ToTensor()
             ])
@@ -98,6 +99,6 @@ def get_loader(mode, data_root, batch_size, shuffle, num_workers, test_mode=None
 
 if __name__ == "__main__":
 
-    dataset = ATD12k("/Users/shenjiaming/Documents/2022 S1/ELEC4712/MySuperGlue/atd12k_points", is_training=True)
+    dataset = ATD12k("/Users/shenjiaming/Documents/2022 S1/ELEC4712/MySuperGlue/atd12k_points/train_10k", is_training=True)
     print(dataset[0])
     dataloader = DataLoader(dataset, batch_size=100, shuffle=False, num_workers=32, pin_memory=True)
