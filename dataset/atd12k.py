@@ -14,9 +14,13 @@ class ATD12k(Dataset):
             input_frames: Which frames to input for frame interpolation network.
         """
         self.data_root = data_root
-        self.image_root = os.path.join(self.data_root, 'sequences')
+
         self.training = is_training
         self.inputs = input_frames
+        if is_training:
+            self.data_root = os.path.join(self.data_root, 'train_10k')
+        else:
+            self.data_root = os.path.join(self.data_root, 'test_2k_540p')
 
         dirs = os.listdir(self.data_root)
         data_list = []
@@ -99,6 +103,6 @@ def get_loader(mode, data_root, batch_size, shuffle, num_workers, test_mode=None
 
 if __name__ == "__main__":
 
-    dataset = ATD12k("/Users/shenjiaming/Documents/2022 S1/ELEC4712/MySuperGlue/atd12k_points/train_10k", is_training=True)
+    dataset = ATD12k("/Users/shenjiaming/Documents/2022 S1/ELEC4712/MySuperGlue/atd12k_points", is_training=False)
     print(dataset[0])
     dataloader = DataLoader(dataset, batch_size=100, shuffle=False, num_workers=32, pin_memory=True)
