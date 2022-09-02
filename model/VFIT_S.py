@@ -89,9 +89,9 @@ class UNet_3D_3D(nn.Module):
             )
 
         nf_out = 64
-        self.smooth_ll = SmoothNet(nf[1]*growth, nf_out)
-        self.smooth_l = SmoothNet(nf[2]*growth, nf_out)
-        self.smooth = SmoothNet(nf[3]*growth, nf_out)
+        self.smooth_ll = SmoothNet(nf[1]*growth, nf_out*growth)
+        self.smooth_l = SmoothNet(nf[2]*growth, nf_out*growth)
+        self.smooth = SmoothNet(nf[3]*growth, nf_out*growth)
 
         self.predict_ll = SynBlock(n_inputs, nf_out, ks=ks, dilation=dilation, norm_weight=True)
         self.predict_l = SynBlock(n_inputs, nf_out, ks=ks, dilation=dilation, norm_weight=False)
@@ -120,7 +120,7 @@ class UNet_3D_3D(nn.Module):
         fea2 = self.smooth_l(dx_2)
         fea1 = self.smooth(dx_1)
 
-        out_ll = self.predict_ll(dx_3, frames, x_2.size()[-2:])
+        out_ll = self.predict_ll(fea3, frames, x_2.size()[-2:])
 
         out_l = self.predict_l(fea2, frames, x_1.size()[-2:])
         out_l = F.interpolate(out_ll, size=out_l.size()[-2:], mode='bilinear') + out_l
