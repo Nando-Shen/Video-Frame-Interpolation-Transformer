@@ -89,9 +89,9 @@ class UNet_3D_3D(nn.Module):
             )
 
         nf_out = 64
-        self.smooth_ll = SmoothNet(nf[1]*growth, nf_out*growth)
-        self.smooth_l = SmoothNet(nf[2]*growth, nf_out*growth)
-        self.smooth = SmoothNet(nf[3]*growth, nf_out*growth)
+        self.smooth_ll = SmoothNet(nf[1]*growth, nf_out)
+        self.smooth_l = SmoothNet(nf[2]*growth, nf_out)
+        self.smooth = SmoothNet(nf[3]*growth, nf_out)
 
         self.predict_ll = SynBlock(n_inputs, nf_out, ks=ks, dilation=dilation, norm_weight=True)
         self.predict_l = SynBlock(n_inputs, nf_out, ks=ks, dilation=dilation, norm_weight=False)
