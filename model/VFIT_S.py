@@ -199,9 +199,9 @@ class SynBlock(nn.Module):
     def forward(self, fea, frames, output_size):
         H, W = output_size
 
-        occ = torch.cat(torch.unbind(fea, 1), 1)
-        occ = self.lrelu(self.feature_fuse(occ))
-        Occlusion = self.moduleOcclusion(occ, (H, W))
+        # occ = torch.cat(torch.unbind(fea, 1), 1)
+        # occ = self.lrelu(self.feature_fuse(occ))
+        # Occlusion = self.moduleOcclusion(occ, (H, W))
 
         B, C, T, cur_H, cur_W = fea.shape
         fea = fea.transpose(1, 2).reshape(B*T, C, cur_H, cur_W)
@@ -214,11 +214,12 @@ class SynBlock(nn.Module):
             weight = weights[:, i].contiguous()
             alpha = alphas[:, i].contiguous()
             beta = betas[:, i].contiguous()
-            occ = Occlusion[:, i:i+1]
+            # occ = Occlusion[:, i:i+1]
             frame = F.interpolate(frames[i], size=weight.size()[-2:], mode='bilinear')
 
             warp.append(
-                occ * self.moduleAdaCoF(self.modulePad(frame), weight, alpha, beta, self.dilation)
+                self.moduleAdaCoF(self.modulePad(frame), weight, alpha, beta, self.dilation)
+                # occ * self.moduleAdaCoF(self.modulePad(frame), weight, alpha, beta, self.dilation)
             )
 
         framet = sum(warp)
