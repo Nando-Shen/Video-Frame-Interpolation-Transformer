@@ -69,7 +69,7 @@ class ATD12k(Dataset):
             images = images_
 
             gt = images[2]
-            images = images[:1]
+            images = images[:2]
 
             return images, gt
         else:
