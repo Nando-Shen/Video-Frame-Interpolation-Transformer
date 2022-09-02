@@ -7,7 +7,6 @@ from timm.models.layers import DropPath, trunc_normal_
 from functools import reduce, lru_cache
 from operator import mul
 from einops import rearrange
-from einops.layers.torch import Rearrange
 
 class Mlp(nn.Module):
     """ Multilayer perceptron."""
