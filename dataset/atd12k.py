@@ -67,10 +67,7 @@ class ATD12k(Dataset):
                 random.seed(seed)
                 images_.append(self.transforms(img_))
             images = images_
-            # Random Temporal Flip
-            if random.random() >= 0.5:
-                images = images[::-1]
-                imgpaths = imgpaths[::-1]
+
             gt = images[2]
             images = images[:1]
 
