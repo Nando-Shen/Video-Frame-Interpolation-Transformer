@@ -77,7 +77,7 @@ class ATD12k(Dataset):
             images = [T(img_) for img_ in images]
 
             gt = images[2]
-            images = images[:1]
+            images = images[:2]
             imgpath = self.data_list[index][4]
 
             return images, gt, imgpath
