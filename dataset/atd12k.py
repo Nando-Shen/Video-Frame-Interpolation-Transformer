@@ -78,6 +78,7 @@ class ATD12k(Dataset):
 
             gt = images[2]
             images = images[:1]
+            print(len(images))
             imgpath = self.data_list[index][4]
 
             return images, gt, imgpath
@@ -101,5 +102,5 @@ def get_loader(mode, data_root, batch_size, shuffle, num_workers, test_mode=None
 if __name__ == "__main__":
 
     dataset = ATD12k("/Users/shenjiaming/Documents/2022 S1/ELEC4712/MySuperGlue/atd12k_points", is_training=False)
-    print(dataset[0])
+    # print(dataset[0])
     dataloader = DataLoader(dataset, batch_size=100, shuffle=False, num_workers=32, pin_memory=True)
