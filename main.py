@@ -82,6 +82,7 @@ def train(args, epoch):
         # Build input batch
         images = [img_.to(device) for img_ in images]
         print(images[0].shape)
+        print(images[1].shape)
 
         # Forward
         optimizer.zero_grad()
