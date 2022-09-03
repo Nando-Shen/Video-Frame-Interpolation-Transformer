@@ -50,9 +50,15 @@ if args.model == 'VFIT_S':
     from model.VFIT_S import UNet_3D_3D
 elif args.model == 'VFIT_B':
     from model.VFIT_B import UNet_3D_3D
+elif args.model == 'VFI':
+    from model.VFIformer_arch import VFIformerSmall
 
 print("Building model: %s"%args.model)
-model = UNet_3D_3D( n_inputs=args.nbr_frame, joinType=args.joinType)
+if args.model == 'VFI':
+    args.device = device
+    model = VFIformerSmall()
+else:
+    model = UNet_3D_3D( n_inputs=args.nbr_frame, joinType=args.joinType)
 model = torch.nn.DataParallel(model).to(device)
 total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
 print('the number of network parameters: {}'.format(total_params))
