@@ -14,8 +14,8 @@ import math
 from collections import OrderedDict
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 sys.path.append('../..')
-from models.archs.warplayer import warp
-from models.archs.transformer_layers import TFModel
+from warplayer import warp
+from transformer_layers import TFModel
 
 
 def make_layer(block, n_layers):
