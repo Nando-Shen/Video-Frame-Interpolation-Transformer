@@ -13,7 +13,7 @@ import itertools
 import math
 from collections import OrderedDict
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
-sys.path.append('../..')
+
 from warplayer import warp
 from transformer_layers import TFModel
 
