@@ -87,7 +87,7 @@ def train(args, epoch):
         # Forward
         optimizer.zero_grad()
         if args.model == 'VFI':
-            out_ll, out_l, out = model(images[0], images[1])
+            out, flow_list = model(images[0], images[1])
         else:
             out_ll, out_l, out = model(images)
 
