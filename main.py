@@ -56,7 +56,7 @@ elif args.model == 'VFI':
 print("Building model: %s"%args.model)
 if args.model == 'VFI':
     args.device = device
-    model = VFIformerSmall()
+    model = VFIformerSmall(args)
 else:
     model = UNet_3D_3D( n_inputs=args.nbr_frame, joinType=args.joinType)
 model = torch.nn.DataParallel(model).to(device)
