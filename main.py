@@ -90,6 +90,8 @@ def train(args, epoch):
             out_ll, out_l, out = model(images)
 
         gt = gt_image.to(device)
+        print(gt.shape)
+        print(out.shape)
 
         loss, _ = criterion(out, gt)
         overall_loss = loss
