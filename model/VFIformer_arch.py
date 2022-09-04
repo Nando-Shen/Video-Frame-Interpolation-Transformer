@@ -567,6 +567,7 @@ class VFIformerSmall(nn.Module):
         print(merged_img.shape)
         pred = merged_img + res
         pred = torch.clamp(pred, 0, 1)
+        print(pred.shape)
 
         if self.phase == 'train':
             return pred
