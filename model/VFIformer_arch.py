@@ -559,6 +559,7 @@ class VFIformerSmall(nn.Module):
         x = self.fuse_block(torch.cat([img0, img1, points], dim=1))
 
         refine_output = self.transformer(x, c0, c1)
+        print(refine_output.shape)
         res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
         mask = torch.sigmoid(refine_output[:, 3:4])
         merged_img = img0 * mask + img1 * (1 - mask)
