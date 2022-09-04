@@ -77,7 +77,7 @@ def train(args, epoch):
     model.train()
     criterion.train()
 
-    for i, (images, gt_image) in enumerate(train_loader):
+    for i, (images, gt_image, points) in enumerate(train_loader):
 
         # Build input batch
         images = [img_.to(device) for img_ in images]
@@ -85,7 +85,7 @@ def train(args, epoch):
         # Forward
         optimizer.zero_grad()
         if args.model == 'VFI':
-            out, flow_list = model(images[0], images[1])
+            out, flow_list = model(images[0], images[1], points)
         else:
             out_ll, out_l, out = model(images)
 
@@ -119,11 +119,11 @@ def test(args, epoch):
 
     t = time.time()
     with torch.no_grad():
-        for i, (images, gt_image, _) in enumerate(tqdm(test_loader)):
+        for i, (images, gt_image, points, _) in enumerate(tqdm(test_loader)):
 
             images = [img_.to(device) for img_ in images]
             if args.model == 'VFI':
-                out, flow_list = model(images[0], images[1])
+                out, flow_list = model(images[0], images[1], points)
             else:
                 out = model(images)
 

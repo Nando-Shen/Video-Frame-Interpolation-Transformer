@@ -69,18 +69,21 @@ class ATD12k(Dataset):
             images = images_
 
             gt = images[2]
-            images = images[:2]
 
-            return images, gt
+            images = images[:2]
+            points = images[3]
+
+            return images, gt, points
         else:
             T = self.transforms
             images = [T(img_) for img_ in images]
 
             gt = images[2]
             images = images[:2]
+            points = images[3]
             imgpath = self.data_list[index][4]
 
-            return images, gt, imgpath
+            return images, gt, points, imgpath
 
     def __len__(self):
         if self.training:
