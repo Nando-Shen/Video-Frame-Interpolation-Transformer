@@ -446,7 +446,7 @@ class FlowRefineNet_Multis_Simple(nn.Module):
     def forward(self, x0, x1, points):
         bs = x0.size(0)
 
-        inp = torch.cat([x0, x1, points], dim=0)
+        inp = torch.cat([x0, x1], dim=0)
         s_1 = self.conv1(inp)  # 1
         s_2 = self.conv2(s_1)  # 1/2
         s_3 = self.conv3(s_2)  # 1/4
@@ -455,8 +455,8 @@ class FlowRefineNet_Multis_Simple(nn.Module):
         # warp features by the updated flow
         c0 = [s_1[:bs], s_2[:bs], s_3[:bs], s_4[:bs]]
         c1 = [s_1[bs:], s_2[bs:], s_3[bs:], s_4[bs:]]
-        # out0 = self.warp_fea(c0, flow[:, :2])
-        # out1 = self.warp_fea(c1, flow[:, 2:4])
+        out0 = self.warp_fea(c0, points)
+        out1 = self.warp_fea(c1, points)
 
         return c0, c1
 
