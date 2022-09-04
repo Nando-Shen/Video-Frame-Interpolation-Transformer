@@ -50,10 +50,10 @@ class ATD12k(Dataset):
     def __getitem__(self, index):
 
         imgpaths = [self.data_list[index][0], self.data_list[index][1], self.data_list[index][2], self.data_list[index][3]]
-
+        print(len(imgpaths))
         # Load images
         images = [Image.open(pth) for pth in imgpaths]
-
+        print(len(images))
         ## Select only relevant inputs
         # inputs = [int(e)-1 for e in list(self.inputs)]
         # inputs = inputs[:len(inputs)//2] + [3] + inputs[len(inputs)//2:]
