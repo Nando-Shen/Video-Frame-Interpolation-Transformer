@@ -122,9 +122,14 @@ def test(args, epoch):
         for i, (images, gt_image, _) in enumerate(tqdm(test_loader)):
 
             images = [img_.to(device) for img_ in images]
+            if args.model == 'VFI':
+                out, flow_list = model(images[0], images[1])
+            else:
+                out = model(images)
+
             gt = gt_image.to(device)
 
-            out = model(images) ## images is a list of neighboring frames
+            # out = model(images) ## images is a list of neighboring frames
 
             # Save loss values
             loss, loss_specific = criterion(out, gt)
@@ -173,6 +178,7 @@ def main(args):
     for epoch in range(args.start_epoch, args.max_epoch):
         adjust_learning_rate(optimizer, epoch)
         start_time = time.time()
+        test_loss, psnr, ssim = test(args, epoch)
         train(args, epoch)
 
         torch.save({
