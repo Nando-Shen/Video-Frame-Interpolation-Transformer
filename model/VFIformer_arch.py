@@ -562,7 +562,9 @@ class VFIformerSmall(nn.Module):
         print(refine_output.shape)
         res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
         mask = torch.sigmoid(refine_output[:, 3:4])
+        print(mask.shape)
         merged_img = img0 * mask + img1 * (1 - mask)
+        print(merged_img.shape)
         pred = merged_img + res
         pred = torch.clamp(pred, 0, 1)
 
