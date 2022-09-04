@@ -85,7 +85,7 @@ def train(args, epoch):
         # Forward
         optimizer.zero_grad()
         if args.model == 'VFI':
-            out, flow_list = model(images[0], images[1], points)
+            out, flow_list = model(images[0], images[1], images[2])
         else:
             out_ll, out_l, out = model(images)
 
@@ -123,7 +123,7 @@ def test(args, epoch):
 
             images = [img_.to(device) for img_ in images]
             if args.model == 'VFI':
-                out, flow_list = model(images[0], images[1], points)
+                out, flow_list = model(images[0], images[1], images[2])
             else:
                 out = model(images)
 
