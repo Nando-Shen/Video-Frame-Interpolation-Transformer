@@ -178,7 +178,6 @@ def main(args):
     for epoch in range(args.start_epoch, args.max_epoch):
         adjust_learning_rate(optimizer, epoch)
         start_time = time.time()
-        test_loss, psnr, ssim = test(args, epoch)
         train(args, epoch)
 
         torch.save({
