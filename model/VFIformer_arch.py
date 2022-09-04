@@ -483,7 +483,7 @@ class VFIformerSmall(nn.Module):
 
         self.flownet = IFNet()
         self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
-        self.fuse_block = nn.Sequential(nn.Conv2d(12, 2*c, 3, 1, 1),
+        self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                          nn.Conv2d(2*c, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),)
@@ -538,35 +538,36 @@ class VFIformerSmall(nn.Module):
 
         return flow
 
-    def forward(self, img0, img1, flow_pre=None):
+    def forward(self, img0, img1, points):
         B, _, H, W = img0.size()
-        imgs = torch.cat((img0, img1), 1)
+        # imgs = torch.cat((img0, img1), 1)
 
-        if flow_pre is not None:
-            flow = flow_pre
-            _, c0, c1 = self.refinenet(img0, img1, flow)
+        # if flow_pre is not None:
+        #     flow = flow_pre
+        #     _, c0, c1 = self.refinenet(img0, img1, flow)
+        #
+        # else:
+        #     flow, flow_list = self.flownet(imgs)
+        #     flow, c0, c1 = self.refinenet(img0, img1, flow)
+        #
+        #
+        # warped_img0 = warp(img0, flow[:, :2])
+        # warped_img1 = warp(img1, flow[:, 2:])
 
-        else:
-            flow, flow_list = self.flownet(imgs)
-            flow, c0, c1 = self.refinenet(img0, img1, flow)
-
-
-        warped_img0 = warp(img0, flow[:, :2])
-        warped_img1 = warp(img1, flow[:, 2:])
-
-        x = self.fuse_block(torch.cat([img0, img1, warped_img0, warped_img1], dim=1))
+        c0, c1 = self.refinenet(img0, img1, points)
+        x = self.fuse_block(torch.cat([img0, img1, points], dim=1))
 
         refine_output = self.transformer(x, c0, c1)
         res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
         mask = torch.sigmoid(refine_output[:, 3:4])
-        merged_img = warped_img0 * mask + warped_img1 * (1 - mask)
+        merged_img = img0 * mask + img1 * (1 - mask)
         pred = merged_img + res
         pred = torch.clamp(pred, 0, 1)
 
         if self.phase == 'train':
-            return pred, flow_list
+            return pred
         else:
-            return pred, flow
+            return pred
 
         # c0, c1 = self.refinenet(img0, img1)
         # x = self.fuse_block(torch.cat([img0, img1], dim=1))
