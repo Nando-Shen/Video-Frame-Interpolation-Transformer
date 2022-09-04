@@ -424,26 +424,7 @@ class FlowRefineNet_Multis_Simple(nn.Module):
         self.conv3 = Conv2(2 * c, 4 * c)
         self.conv4 = Conv2(4 * c, 8 * c)
 
-    def forward(self, x0, x1, flow):
-        bs = x0.size(0)
-
-        inp = torch.cat([x0, x1], dim=0)
-        s_1 = self.conv1(inp)  # 1
-        s_2 = self.conv2(s_1)  # 1/2
-        s_3 = self.conv3(s_2)  # 1/4
-        s_4 = self.conv4(s_3)  # 1/8
-
-        flow = F.interpolate(flow, scale_factor=2., mode="bilinear", align_corners=False) * 2.
-
-        # warp features by the updated flow
-        c0 = [s_1[:bs], s_2[:bs], s_3[:bs], s_4[:bs]]
-        c1 = [s_1[bs:], s_2[bs:], s_3[bs:], s_4[bs:]]
-        out0 = self.warp_fea(c0, flow[:, :2])
-        out1 = self.warp_fea(c1, flow[:, 2:4])
-
-        return flow, out0, out1
-
-    # def forward(self, x0, x1):
+    # def forward(self, x0, x1, flow):
     #     bs = x0.size(0)
     #
     #     inp = torch.cat([x0, x1], dim=0)
@@ -452,13 +433,32 @@ class FlowRefineNet_Multis_Simple(nn.Module):
     #     s_3 = self.conv3(s_2)  # 1/4
     #     s_4 = self.conv4(s_3)  # 1/8
     #
+    #     flow = F.interpolate(flow, scale_factor=2., mode="bilinear", align_corners=False) * 2.
+    #
     #     # warp features by the updated flow
     #     c0 = [s_1[:bs], s_2[:bs], s_3[:bs], s_4[:bs]]
     #     c1 = [s_1[bs:], s_2[bs:], s_3[bs:], s_4[bs:]]
-    #     # out0 = self.warp_fea(c0, flow[:, :2])
-    #     # out1 = self.warp_fea(c1, flow[:, 2:4])
+    #     out0 = self.warp_fea(c0, flow[:, :2])
+    #     out1 = self.warp_fea(c1, flow[:, 2:4])
     #
-    #     return c0, c1
+    #     return flow, out0, out1
+
+    def forward(self, x0, x1, points):
+        bs = x0.size(0)
+
+        inp = torch.cat([x0, x1, points], dim=0)
+        s_1 = self.conv1(inp)  # 1
+        s_2 = self.conv2(s_1)  # 1/2
+        s_3 = self.conv3(s_2)  # 1/4
+        s_4 = self.conv4(s_3)  # 1/8
+
+        # warp features by the updated flow
+        c0 = [s_1[:bs], s_2[:bs], s_3[:bs], s_4[:bs]]
+        c1 = [s_1[bs:], s_2[bs:], s_3[bs:], s_4[bs:]]
+        # out0 = self.warp_fea(c0, flow[:, :2])
+        # out1 = self.warp_fea(c1, flow[:, 2:4])
+
+        return c0, c1
 
     def warp_fea(self, feas, flow):
         outs = []
