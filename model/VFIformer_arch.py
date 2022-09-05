@@ -553,6 +553,8 @@ class VFIformerSmall(nn.Module):
 
         warped_img0 = warp(img0, flow[:, :2])
         warped_img1 = warp(img1, flow[:, 2:])
+        print(warped_img0.shape)
+        print(img1.shape)
 
         x = self.fuse_block(torch.cat([img0, img1, warped_img0, warped_img1], dim=1))
 
