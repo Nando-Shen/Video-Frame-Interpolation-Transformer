@@ -187,6 +187,7 @@ def main(args):
             'lr': optimizer.param_groups[-1]['lr']
         }, os.path.join(save_loc, 'checkpoint.pth'))
 
+        # if epoch % 5 == 0:
         test_loss, psnr, ssim = test(args, epoch)
 
         # save checkpoint
