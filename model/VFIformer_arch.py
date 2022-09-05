@@ -541,6 +541,7 @@ class VFIformerSmall(nn.Module):
     def forward(self, img0, img1, flow_pre=None):
         B, _, H, W = img0.size()
         imgs = torch.cat((img0, img1), 1)
+        print(imgs.shape)
 
         if flow_pre is not None:
             flow = flow_pre
