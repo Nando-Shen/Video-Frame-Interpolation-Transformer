@@ -549,7 +549,9 @@ class VFIformerSmall(nn.Module):
 
         else:
             flow, flow_list = self.flownet(imgs)
+            print(flow.shape)
             flow, c0, c1 = self.refinenet(img0, img1, flow)
+            print(flow.shape)
 
         print(flow.shape)
         warped_img0 = warp(img0, flow[:, :2])
