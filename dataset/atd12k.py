@@ -35,9 +35,10 @@ class ATD12k(Dataset):
 
         self.data_list = data_list
 
+        size = [208, 228]
         if self.training:
             self.transforms = transforms.Compose([
-                transforms.RandomCrop(208, 228),
+                transforms.RandomCrop(size),
                 transforms.RandomHorizontalFlip(),
                 # transforms.ColorJitter(0.05, 0.05, 0.05, 0.05),
                 transforms.ToTensor()
