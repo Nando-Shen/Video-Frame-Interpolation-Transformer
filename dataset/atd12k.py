@@ -35,7 +35,7 @@ class ATD12k(Dataset):
 
         self.data_list = data_list
 
-        size = [208, 228]
+        size = [208, 240]
         if self.training:
             self.transforms = transforms.Compose([
                 transforms.RandomCrop(size),
