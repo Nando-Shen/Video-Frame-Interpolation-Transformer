@@ -1065,7 +1065,8 @@ class TFCModel(nn.Module):
         print('s0 {}'.format(s0.shape))
         print('b0 {}'.format(b0.shape))
         fea0 = self.forward_features(s0, b0, self.layers0)
-
+        print('s0 {}'.format(s0.shape))
+        print('b0 {}'.format(b0.shape))
         s1 = self.conv_after_body0(fea0)  # 1->1/2
         b1 = self.conv_after_body0(b0)  # 1->1/2
         print('s1 {}'.format(s1.shape))
