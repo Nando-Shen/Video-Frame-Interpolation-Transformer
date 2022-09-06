@@ -487,8 +487,8 @@ class CTB(nn.Module):
             img_size=img_size, patch_size=patch_size, in_chans=0, embed_dim=dim,
             norm_layer=None)
 
-    def forward(self, x, x_size):
-        return self.patch_embed(self.conv(self.patch_unembed(self.residual_group(x, x_size), x_size))) + x
+    def forward(self, x, y, x_size):
+        return self.patch_embed(self.conv(self.patch_unembed(self.residual_group(x, y, x_size), x_size))) + x
 
     def flops(self):
         flops = 0
@@ -1041,18 +1041,20 @@ class TFCModel(nn.Module):
     def no_weight_decay_keywords(self):
         return {'relative_position_bias_table'}
 
-    def forward_features(self, x, layers):
+    def forward_features(self, x, y, layers):
         x_size = (x.shape[2], x.shape[3])
         x = self.patch_embed(x)
         if self.ape:
             x = x + self.absolute_pos_embed
+            y = y + self.absolute_pos_embed
         x = self.pos_drop(x)
+        y = self.pos_drop(y)
 
         if isinstance(layers, nn.ModuleList):
             for layer in layers:
-                x = layer(x, x_size)
+                x = layer(x, y, x_size)
         else:
-            x = layers(x, x_size)
+            x = layers(x, y, x_size)
 
         x = self.norm(x)  # B L C
         x = self.patch_unembed(x, x_size)
@@ -1063,19 +1065,19 @@ class TFCModel(nn.Module):
 
         s0 = self.conv_first(x.contiguous())  # 1
         b0 = self.conv_first(y.contiguous())  # 1
-        fea0 = self.forward_features(s0, self.layers0)
+        fea0 = self.forward_features(s0, b0, self.layers0)
 
         s1 = self.conv_after_body0(fea0)  # 1->1/2
         b1 = self.conv_after_body0(b0)  # 1->1/2
-        fea1 = self.forward_features(s1, self.layers1)
+        fea1 = self.forward_features(s1, b1, self.layers1)
 
         s2 = self.conv_after_body1(fea1)  # 1/2->1/4
         b2 = self.conv_after_body1(b1)  # 1/2->1/4
-        fea2 = self.forward_features(s2, self.layers2)
+        fea2 = self.forward_features(s2, b2, self.layers2)
 
         s3 = self.conv_after_body2(fea2)  # 1/4->1/8
         b3 = self.conv_after_body2(b2)  # 1/4->1/8
-        fea3 = self.forward_features(s3, self.layers3)
+        fea3 = self.forward_features(s3, b3, self.layers3)
 
         fea3 = self.conv_up0(torch.cat([fea3], dim=1))  # 1/8->1/4
         fea2 = self.conv_up1(torch.cat([fea3, fea2], dim=1))  # 1/4->1/2
