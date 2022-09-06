@@ -997,9 +997,9 @@ class TFCModel(nn.Module):
 
         self.conv_after_body0 = nn.Sequential(nn.Conv2d(embed_dim, embed_dim//2, 3, 2, 1),
                                               nn.LeakyReLU(negative_slope=0.2, inplace=True))
-        self.conv_after_body1 = nn.Sequential(nn.Conv2d(embed_dim, embed_dim//4, 3, 2, 1),
+        self.conv_after_body1 = nn.Sequential(nn.Conv2d(embed_dim, embed_dim//2, 3, 2, 1),
                                               nn.LeakyReLU(negative_slope=0.2, inplace=True))
-        self.conv_after_body2 = nn.Sequential(nn.Conv2d(embed_dim, embed_dim//8, 3, 2, 1),
+        self.conv_after_body2 = nn.Sequential(nn.Conv2d(embed_dim, embed_dim//2, 3, 2, 1),
                                               nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
         self.conv_up0 = nn.Sequential(nn.ConvTranspose2d(2*embed_dim, embed_dim, 4, 2, 1),
