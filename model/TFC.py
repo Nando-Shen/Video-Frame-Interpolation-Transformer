@@ -914,7 +914,7 @@ class TFCModel(nn.Module):
         self.layers0 = nn.ModuleList()
         num_layers = len(depths[0])
         for i_layer in range(num_layers):
-            layer = CTB(dim=embed_dim,
+            layer = CTB(dim=fuse_c,
                          input_resolution=(patches_resolution[0],
                                            patches_resolution[1]),
                          depth=depths[0][i_layer],
@@ -935,7 +935,7 @@ class TFCModel(nn.Module):
         self.layers1 = nn.ModuleList()
         num_layers = len(depths[1])
         for i_layer in range(num_layers):
-            layer = CTB(dim=embed_dim,
+            layer = CTB(dim=fuse_c,
                          input_resolution=(patches_resolution[0],
                                            patches_resolution[1]),
                          depth=depths[1][i_layer],
@@ -956,7 +956,7 @@ class TFCModel(nn.Module):
         self.layers2 = nn.ModuleList()
         num_layers = len(depths[2])
         for i_layer in range(num_layers):
-            layer = CTB(dim=embed_dim,
+            layer = CTB(dim=fuse_c,
                          input_resolution=(patches_resolution[0],
                                            patches_resolution[1]),
                          depth=depths[2][i_layer],
@@ -977,7 +977,7 @@ class TFCModel(nn.Module):
         self.layers3 = nn.ModuleList()
         num_layers = len(depths[3])
         for i_layer in range(num_layers):
-            layer = CTB(dim=embed_dim,
+            layer = CTB(dim=fuse_c,
                          input_resolution=(patches_resolution[0],
                                            patches_resolution[1]),
                          depth=depths[3][i_layer],
