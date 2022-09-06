@@ -245,6 +245,8 @@ class SwinTransformerBlock(nn.Module):
         # assert L == H * W, "input feature has wrong size"
 
         shortcut = x
+        print('SwinTransformerBlock x {}'.format(x.shape))
+        print('SwinTransformerBlock y {}'.format(y.shape))
         x = self.norm1(x)
         y = self.norm1(y)
         x = x.view(B, H, W, C)
@@ -408,6 +410,8 @@ class BasicLayer(nn.Module):
             if self.use_checkpoint:
                 x = checkpoint.checkpoint(blk, x, y, x_size)
             else:
+                print('BasicLayer x {}'.format(x.shape))
+                print('BasicLayer y {}'.format(y.shape))
                 x = blk(x, y, x_size)
         if self.downsample is not None:
             x = self.downsample(x)
