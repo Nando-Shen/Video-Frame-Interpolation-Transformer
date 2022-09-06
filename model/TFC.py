@@ -877,10 +877,10 @@ class TFCModel(nn.Module):
         num_out_ch = out_chans
         num_feat = 64
         self.img_range = img_range
-        self.embed_dim = embed_dim
+        self.embed_dim = fuse_c
         self.ape = ape
         self.patch_norm = patch_norm
-        self.num_features = embed_dim
+        self.num_features = fuse_c
         self.mlp_ratio = mlp_ratio
 
         self.conv_first = nn.Conv2d(num_in_ch, fuse_c, 3, 1, 1)
