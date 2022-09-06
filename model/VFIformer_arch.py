@@ -16,6 +16,7 @@ from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 
 from model.warplayer import warp
 from model.transformer_layers import TFModel
+from model.TFC import TFCModel
 
 
 def make_layer(block, n_layers):
@@ -498,6 +499,15 @@ class VFIformerSmall(nn.Module):
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]]])
+        self.cross_tran = TFCModel(img_size=(height, width), in_chans=2*c, out_chans=4, fuse_c=c,
+                                          window_size=window_size, img_range=1.,
+                                          depths=[[1, 1], [1, 1], [1, 1], [1, 1]],
+                                          embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
+                                          resi_connection='1conv',
+                                          use_crossattn=[[[False, False, False, False], [False, False, False, False]], \
+                                                      [[False, False, False, False], [False, False, False, False]], \
+                                                      [[False, False, False, False], [False, False, False, False]], \
+                                                      [[False, False, False, False], [False, False, False, False]]])
 
 
         self.apply(self._init_weights)
@@ -561,7 +571,12 @@ class VFIformerSmall(nn.Module):
         refine_output = self.transformer(x, c0, c1)
         res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
         mask = torch.sigmoid(refine_output[:, 3:4])
-        merged_img = img0 * mask + img1 * (1 - mask)
+
+        i0 = self.cross_tran(points, img0)
+        i1 = self.cross_tran(points, img1)
+
+        # merged_img = img0 * mask + img1 * (1 - mask)
+        merged_img = i0 * mask + i1 * (1 - mask)
         pred = merged_img + res
         pred = torch.clamp(pred, 0, 1)
 
