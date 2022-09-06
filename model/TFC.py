@@ -883,7 +883,7 @@ class TFCModel(nn.Module):
         self.num_features = embed_dim
         self.mlp_ratio = mlp_ratio
 
-        self.conv_first = nn.Conv2d(num_in_ch, embed_dim, 3, 1, 1)
+        self.conv_first = nn.Conv2d(num_in_ch, fuse_c, 3, 1, 1)
 
         # split image into non-overlapping patches
         self.patch_embed = PatchEmbed(
@@ -995,26 +995,26 @@ class TFCModel(nn.Module):
                          resi_connection=resi_connection)
             self.layers3.append(layer)
 
-        self.conv_after_body0 = nn.Sequential(nn.Conv2d(embed_dim, embed_dim//2, 3, 2, 1),
+        self.conv_after_body0 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c*2, 3, 2, 1),
                                               nn.LeakyReLU(negative_slope=0.2, inplace=True))
-        self.conv_after_body1 = nn.Sequential(nn.Conv2d(embed_dim, embed_dim//2, 3, 2, 1),
+        self.conv_after_body1 = nn.Sequential(nn.Conv2d(fuse_c*2, fuse_c*4, 3, 2, 1),
                                               nn.LeakyReLU(negative_slope=0.2, inplace=True))
-        self.conv_after_body2 = nn.Sequential(nn.Conv2d(embed_dim, embed_dim//2, 3, 2, 1),
+        self.conv_after_body2 = nn.Sequential(nn.Conv2d(fuse_c*4, fuse_c*8, 3, 2, 1),
                                               nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
-        self.conv_up0 = nn.Sequential(nn.ConvTranspose2d(2*embed_dim, embed_dim, 4, 2, 1),
+        self.conv_up0 = nn.Sequential(nn.ConvTranspose2d(16*fuse_c, fuse_c, 4, 2, 1),
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
-        self.conv_up1 = nn.Sequential(nn.ConvTranspose2d(2*embed_dim, embed_dim, 4, 2, 1),
+        self.conv_up1 = nn.Sequential(nn.ConvTranspose2d(2*fuse_c, fuse_c, 4, 2, 1),
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
-        self.conv_up2 = nn.Sequential(nn.ConvTranspose2d(2*embed_dim, embed_dim, 4, 2, 1),
+        self.conv_up2 = nn.Sequential(nn.ConvTranspose2d(2*fuse_c, fuse_c, 4, 2, 1),
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
-        self.conv_last1 = nn.Sequential(nn.Conv2d(embed_dim*2, embed_dim, 3, 1, 1),
+        self.conv_last1 = nn.Sequential(nn.Conv2d(fuse_c*2, fuse_c, 3, 1, 1),
                                        nn.LeakyReLU(negative_slope=0.2, inplace=True),
-                                       nn.Conv2d(embed_dim, embed_dim, 3, 1, 1))
-        self.conv_last2 = nn.Sequential(nn.Conv2d(embed_dim, embed_dim//2, 3, 1, 1),
+                                       nn.Conv2d(fuse_c, fuse_c, 3, 1, 1))
+        self.conv_last2 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c//2, 3, 1, 1),
                                         nn.LeakyReLU(negative_slope=0.2, inplace=True),
-                                        nn.Conv2d(embed_dim//2, num_out_ch, 3, 1, 1),)
+                                        nn.Conv2d(fuse_c//2, num_out_ch, 3, 1, 1),)
 
         self.norm = norm_layer(self.num_features)
 
@@ -1072,6 +1072,8 @@ class TFCModel(nn.Module):
         print('s1 {}'.format(s1.shape))
         print('b1 {}'.format(b1.shape))
         fea1 = self.forward_features(s1, b1, self.layers1)
+        print('s1 {}'.format(s1.shape))
+        print('b1 {}'.format(b1.shape))
 
         s2 = self.conv_after_body1(fea1)  # 1/2->1/4
         b2 = self.conv_after_body1(b1)  # 1/2->1/4
