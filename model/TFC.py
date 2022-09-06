@@ -245,8 +245,8 @@ class SwinTransformerBlock(nn.Module):
         # assert L == H * W, "input feature has wrong size"
 
         shortcut = x
-        print('SwinTransformerBlock x {}'.format(x.shape))
-        print('SwinTransformerBlock y {}'.format(y.shape))
+        # print('SwinTransformerBlock x {}'.format(x.shape))
+        # print('SwinTransformerBlock y {}'.format(y.shape))
         x = self.norm1(x)
         y = self.norm1(y)
         x = x.view(B, H, W, C)
@@ -410,8 +410,8 @@ class BasicLayer(nn.Module):
             if self.use_checkpoint:
                 x = checkpoint.checkpoint(blk, x, y, x_size)
             else:
-                print('BasicLayer x {}'.format(x.shape))
-                print('BasicLayer y {}'.format(y.shape))
+                # print('BasicLayer x {}'.format(x.shape))
+                # print('BasicLayer y {}'.format(y.shape))
                 x = blk(x, y, x_size)
         if self.downsample is not None:
             x = self.downsample(x)
@@ -1062,10 +1062,14 @@ class TFCModel(nn.Module):
 
         s0 = self.conv_first(x.contiguous())  # 1
         b0 = self.conv_first(y.contiguous())  # 1
+        print('s0 {}'.format(s0.shape))
+        print('b0 {}'.format(b0.shape))
         fea0 = self.forward_features(s0, b0, self.layers0)
 
         s1 = self.conv_after_body0(fea0)  # 1->1/2
         b1 = self.conv_after_body0(b0)  # 1->1/2
+        print('s1 {}'.format(s1.shape))
+        print('b1 {}'.format(b1.shape))
         fea1 = self.forward_features(s1, b1, self.layers1)
 
         s2 = self.conv_after_body1(fea1)  # 1/2->1/4
