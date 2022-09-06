@@ -887,7 +887,7 @@ class TFCModel(nn.Module):
 
         # split image into non-overlapping patches
         self.patch_embed = PatchEmbed(
-            img_size=img_size, patch_size=patch_size, in_chans=embed_dim, embed_dim=embed_dim,
+            img_size=img_size, patch_size=patch_size, in_chans=fuse_c, embed_dim=fuse_c,
             norm_layer=norm_layer if self.patch_norm else None)
         num_patches = self.patch_embed.num_patches
         patches_resolution = self.patch_embed.patches_resolution
@@ -895,12 +895,12 @@ class TFCModel(nn.Module):
 
         # merge non-overlapping patches into image
         self.patch_unembed = PatchUnEmbed(
-            img_size=img_size, patch_size=patch_size, in_chans=embed_dim, embed_dim=embed_dim,
+            img_size=img_size, patch_size=patch_size, in_chans=fuse_c, embed_dim=fuse_c,
             norm_layer=norm_layer if self.patch_norm else None)
 
         # absolute position embedding
         if self.ape:
-            self.absolute_pos_embed = nn.Parameter(torch.zeros(1, num_patches, embed_dim))
+            self.absolute_pos_embed = nn.Parameter(torch.zeros(1, num_patches, fuse_c))
             trunc_normal_(self.absolute_pos_embed, std=.02)
 
         self.pos_drop = nn.Dropout(p=drop_rate)
