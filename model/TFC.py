@@ -1040,6 +1040,7 @@ class TFCModel(nn.Module):
     def forward_features(self, x, y, layers):
         x_size = (x.shape[2], x.shape[3])
         x = self.patch_embed(x)
+        y = self.patch_embed(y)
         if self.ape:
             x = x + self.absolute_pos_embed
             y = y + self.absolute_pos_embed
