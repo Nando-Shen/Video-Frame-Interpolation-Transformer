@@ -503,11 +503,7 @@ class VFIformerSmall(nn.Module):
                                           window_size=window_size, img_range=1.,
                                           depths=[[1, 1], [1, 1], [1, 1], [1, 1]],
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
-                                          resi_connection='1conv',
-                                          use_crossattn=[[[False, False, False, False], [False, False, False, False]], \
-                                                      [[False, False, False, False], [False, False, False, False]], \
-                                                      [[False, False, False, False], [False, False, False, False]], \
-                                                      [[False, False, False, False], [False, False, False, False]]])
+                                          resi_connection='1conv')
 
 
         self.apply(self._init_weights)

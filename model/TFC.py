@@ -925,9 +925,7 @@ class TFCModel(nn.Module):
                          use_checkpoint=use_checkpoint,
                          img_size=(img_size[0]//8, img_size[1]//8),
                          patch_size=patch_size,
-                         resi_connection=resi_connection,
-                         use_crossattn=use_crossattn[0][i_layer]
-                         )
+                         resi_connection=resi_connection)
             self.layers0.append(layer)
 
         self.layers1 = nn.ModuleList()
@@ -948,9 +946,7 @@ class TFCModel(nn.Module):
                          use_checkpoint=use_checkpoint,
                          img_size=(img_size[0]//4, img_size[1]//4),
                          patch_size=patch_size,
-                         resi_connection=resi_connection,
-                         use_crossattn=use_crossattn[1][i_layer]
-                         )
+                         resi_connection=resi_connection)
             self.layers1.append(layer)
 
         self.layers2 = nn.ModuleList()
@@ -971,9 +967,7 @@ class TFCModel(nn.Module):
                          use_checkpoint=use_checkpoint,
                          img_size=(img_size[0]//2, img_size[1]//2),
                          patch_size=patch_size,
-                         resi_connection=resi_connection,
-                         use_crossattn=use_crossattn[2][i_layer]
-                         )
+                         resi_connection=resi_connection)
             self.layers2.append(layer)
 
         self.layers3 = nn.ModuleList()
@@ -994,9 +988,7 @@ class TFCModel(nn.Module):
                          use_checkpoint=use_checkpoint,
                          img_size=(img_size[0], img_size[1]),
                          patch_size=patch_size,
-                         resi_connection=resi_connection,
-                         use_crossattn=use_crossattn[3][i_layer]
-                         )
+                         resi_connection=resi_connection)
             self.layers3.append(layer)
 
         self.conv_after_body0 = nn.Sequential(nn.Conv2d(embed_dim+fuse_c*2, embed_dim, 3, 2, 1),
