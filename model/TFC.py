@@ -864,6 +864,25 @@ class SwinIR(nn.Module):
         return flops
 
 
+def conv(in_planes, out_planes, kernel_size=3, stride=1, padding=1, dilation=1):
+    return nn.Sequential(
+        nn.Conv2d(in_planes, out_planes, kernel_size=kernel_size, stride=stride,
+                  padding=padding, dilation=dilation, bias=True),
+        nn.PReLU(out_planes)
+    )
+
+
+class Conv2(nn.Module):
+    def __init__(self, in_planes, out_planes, stride=2):
+        super(Conv2, self).__init__()
+        self.conv1 = conv(in_planes, out_planes, 3, stride, 1)
+        self.conv2 = conv(out_planes, out_planes, 3, 1, 1)
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        return x
+
 class TFCModel(nn.Module):
     def __init__(self, img_size=64, patch_size=1, in_chans=3, out_chans=3, fuse_c=16,
                  embed_dim=96, depths=[[1,1], [3,3], [3,3], [3,3]], num_heads=[[6,6], [6,6], [6,6], [6,6]],
@@ -883,7 +902,12 @@ class TFCModel(nn.Module):
         self.num_features = fuse_c
         self.mlp_ratio = mlp_ratio
 
-        self.conv_first = nn.Conv2d(num_in_ch, fuse_c, 3, 1, 1)
+        # self.conv_first = nn.Conv2d(num_in_ch, fuse_c, 3, 1, 1)
+        self.conv_1 = Conv2(num_in_ch, fuse_c)
+        self.conv_2 = Conv2(fuse_c, 2*fuse_c)
+        self.conv_3 = Conv2(2*fuse_c, 4*fuse_c)
+        self.conv_4 = Conv2(2*fuse_c, 8*fuse_c)
+
 
         # split image into non-overlapping patches
         self.patch_embed = PatchEmbed(
@@ -1060,15 +1084,15 @@ class TFCModel(nn.Module):
 
     def forward(self, x, y):
 
-        s0 = self.conv_first(x.contiguous())  # 1
-        b0 = self.conv_first(y.contiguous())  # 1
+        s0 = self.conv_1(x.contiguous())  # 1
+        b0 = self.conv_1(y.contiguous())  # 1
         print('s0 {}'.format(s0.shape))
         print('b0 {}'.format(b0.shape))
         fea0 = self.forward_features(s0, b0, self.layers0)
         print('s0 {}'.format(s0.shape))
         print('b0 {}'.format(b0.shape))
-        s1 = self.conv_after_body0(fea0)  # 1->1/2
-        b1 = self.conv_after_body0(b0)  # 1->1/2
+        s1 = self.conv_2(fea0)  # 1->1/2
+        b1 = self.conv_2(b0)  # 1->1/2
         print('s1 {}'.format(s1.shape))
         print('b1 {}'.format(b1.shape))
         fea1 = self.forward_features(s1, b1, self.layers1)
