@@ -1059,7 +1059,7 @@ class TFCModel(nn.Module):
     def no_weight_decay_keywords(self):
         return {'relative_position_bias_table'}
 
-    def forward_features(self, x, y, layers):
+    def forward_features(self, x, y, layers, norm):
         x_size = (x.shape[2], x.shape[3])
         x = self.patch_embed(x)
         y = self.patch_embed(y)
@@ -1075,8 +1075,8 @@ class TFCModel(nn.Module):
         else:
             x = layers(x, y, x_size)
 
-        norm_func = nn.LayerNorm(x.shape[1])
-        x = norm_func(x)  # B L C
+        # norm_func = nn.LayerNorm(x.shape[1])
+        x = norm(x)  # B L C
         x = self.patch_unembed(x, x_size)
 
         return x
@@ -1087,7 +1087,7 @@ class TFCModel(nn.Module):
         b0 = self.conv_1(y.contiguous())  # 1
         print('s0 {}'.format(s0.shape))
         print('b0 {}'.format(b0.shape))
-        fea0 = self.forward_features(s0, b0, self.layers0)
+        fea0 = self.forward_features(s0, b0, self.layers0, nn.LayerNorm(x.shape[1]))
         print('fea0 {}'.format(fea0.shape))
         print('b0 {}'.format(b0.shape))
 
@@ -1095,7 +1095,7 @@ class TFCModel(nn.Module):
         b1 = self.conv_2(b0)  # 1->1/2
         print('s1 {}'.format(s1.shape))
         print('b1 {}'.format(b1.shape))
-        fea1 = self.forward_features(s1, b1, self.layers1)
+        fea1 = self.forward_features(s1, b1, self.layers1, nn.LayerNorm(x.shape[1]))
         print('fea1 {}'.format(fea1.shape))
         print('b1 {}'.format(b1.shape))
 
