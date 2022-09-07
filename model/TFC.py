@@ -1038,10 +1038,7 @@ class TFCModel(nn.Module):
         self.conv_last2 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c//2, 3, 1, 1),
                                         nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                         nn.Conv2d(fuse_c//2, num_out_ch, 3, 1, 1),)
-        self.norm1 = norm_layer(fuse_c)
-        self.norm2 = norm_layer(fuse_c*2)
-        self.norm3 = norm_layer(fuse_c*4)
-        self.norm4 = norm_layer(fuse_c*8)
+        self.norm = norm_layer(fuse_c)
 
         self.apply(self._init_weights)
 
@@ -1079,8 +1076,8 @@ class TFCModel(nn.Module):
             x = layers(x, y, x_size)
 
         # norm_func = nn.LayerNorm(x.shape[1])
-        # x = norm(x)  # B L C
-        # x = self.patch_unembed(x, x_size)
+        x = self.norm(x)  # B L C
+        x = self.patch_unembed(x, x_size)
 
         return x
 
