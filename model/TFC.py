@@ -492,7 +492,7 @@ class CTB(nn.Module):
             norm_layer=None)
 
     def forward(self, x, y, x_size):
-        return self.patch_embed(self.conv(self.patch_unembed(self.residual_group(x, y, x_size), x_size)),None) + x
+        return self.patch_embed(self.conv(self.patch_unembed(self.residual_group(x, y, x_size), x_size))) + x
 
     def flops(self):
         flops = 0
@@ -534,12 +534,10 @@ class PatchEmbed(nn.Module):
         else:
             self.norm = None
 
-    def forward(self, x, norm):
+    def forward(self, x):
         x = x.flatten(2).transpose(1, 2)  # B Ph*Pw C
         if self.norm is not None:
             x = self.norm(x)
-        elif norm is not None:
-            x = norm(x)
         return x
 
     def flops(self):
@@ -912,16 +910,16 @@ class TFCModel(nn.Module):
 
         # split image into non-overlapping patches
         self.patch_embed = PatchEmbed(
-            img_size=img_size, patch_size=patch_size, in_chans=fuse_c, embed_dim=fuse_c)
-            # norm_layer=norm_layer if self.patch_norm else None)
+            img_size=img_size, patch_size=patch_size, in_chans=fuse_c, embed_dim=fuse_c,
+            norm_layer=norm_layer if self.patch_norm else None)
         num_patches = self.patch_embed.num_patches
         patches_resolution = self.patch_embed.patches_resolution
         self.patches_resolution = patches_resolution
 
         # merge non-overlapping patches into image
         self.patch_unembed = PatchUnEmbed(
-            img_size=img_size, patch_size=patch_size, in_chans=fuse_c, embed_dim=fuse_c)
-            # norm_layer=norm_layer if self.patch_norm else None)
+            img_size=img_size, patch_size=patch_size, in_chans=fuse_c, embed_dim=fuse_c,
+            norm_layer=norm_layer if self.patch_norm else None)
 
         # absolute position embedding
         if self.ape:
@@ -1066,8 +1064,8 @@ class TFCModel(nn.Module):
 
     def forward_features(self, x, y, layers, norm):
         x_size = (x.shape[2], x.shape[3])
-        x = self.patch_embed(x, norm)
-        y = self.patch_embed(y, norm)
+        x = self.patch_embed(x)
+        y = self.patch_embed(y)
         if self.ape:
             x = x + self.absolute_pos_embed
             y = y + self.absolute_pos_embed
@@ -1081,8 +1079,8 @@ class TFCModel(nn.Module):
             x = layers(x, y, x_size)
 
         # norm_func = nn.LayerNorm(x.shape[1])
-        x = norm(x)  # B L C
-        x = self.patch_unembed(x, x_size)
+        # x = norm(x)  # B L C
+        # x = self.patch_unembed(x, x_size)
 
         return x
 
@@ -1092,31 +1090,27 @@ class TFCModel(nn.Module):
         b0 = self.conv_1(y.contiguous())  # 1
         print('s0 {}'.format(s0.shape))
         print('b0 {}'.format(b0.shape))
-        # s0_size = (s0.shape[2], s0.shape[3])
-        fea0 = self.forward_features(s0, b0, self.layers0, self.norm1)
-        # fea0 = self.norm1(fea0)
-        # self.patch_unembed(fea0, s0_size)
+        fea0 = self.forward_features(s0, b0, self.layers0)
         print('fea0 {}'.format(fea0.shape))
         print('b0 {}'.format(b0.shape))
 
-        s1 = self.conv_2(fea0)  # 1->1/2
-        b1 = self.conv_2(b0)  # 1->1/2
+        # s1 = self.conv_2(fea0)  # 1->1/2
+        # b1 = self.conv_2(b0)  # 1->1/2
+        s1 = F.interpolate(fea0, scale_factor=0.5, mode="bilinear", align_corners=False)
+        b1 = F.interpolate(b0, scale_factor=0.5, mode="bilinear", align_corners=False)
         print('s1 {}'.format(s1.shape))
         print('b1 {}'.format(b1.shape))
-        fea1 = self.forward_features(s1, b1, self.layers1, self.norm2)
-        # fea1 = self.norm2(fea1)
-        # s1_size = (s1.shape[2], s1.shape[3])
-        # self.patch_unembed(fea1, s1_size)
+        fea1 = self.forward_features(s1, b1, self.layers1)
         print('fea1 {}'.format(fea1.shape))
         print('b1 {}'.format(b1.shape))
 
         s2 = self.conv_3(fea1)  # 1/2->1/4
         b2 = self.conv_3(b1)  # 1/2->1/4
-        fea2 = self.forward_features(s2, b2, self.layers2, self.norm3)
+        fea2 = self.forward_features(s2, b2, self.layers2)
 
         s3 = self.conv_4(fea2)  # 1/4->1/8
         b3 = self.conv_4(b2)  # 1/4->1/8
-        fea3 = self.forward_features(s3, b3, self.layers3, self.norm4)
+        fea3 = self.forward_features(s3, b3, self.layers3)
 
         fea3 = self.conv_up0(torch.cat([fea3], dim=1))  # 1/8->1/4
         fea2 = self.conv_up1(torch.cat([fea3, fea2], dim=1))  # 1/4->1/2
