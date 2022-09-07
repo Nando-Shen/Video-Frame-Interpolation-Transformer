@@ -492,7 +492,7 @@ class CTB(nn.Module):
             norm_layer=None)
 
     def forward(self, x, y, x_size):
-        return self.patch_embed(self.conv(self.patch_unembed(self.residual_group(x, y, x_size), x_size))) + x
+        return self.patch_embed(self.conv(self.patch_unembed(self.residual_group(x, y, x_size), x_size)),None) + x
 
     def flops(self):
         flops = 0
@@ -538,7 +538,7 @@ class PatchEmbed(nn.Module):
         x = x.flatten(2).transpose(1, 2)  # B Ph*Pw C
         if self.norm is not None:
             x = self.norm(x)
-        else:
+        elif norm is not None:
             x = norm(x)
         return x
 
