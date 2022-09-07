@@ -908,7 +908,6 @@ class TFCModel(nn.Module):
         self.conv_3 = Conv2(2*fuse_c, 4*fuse_c)
         self.conv_4 = Conv2(2*fuse_c, 8*fuse_c)
 
-
         # split image into non-overlapping patches
         self.patch_embed = PatchEmbed(
             img_size=img_size, patch_size=patch_size, in_chans=fuse_c, embed_dim=fuse_c,
@@ -1091,11 +1090,15 @@ class TFCModel(nn.Module):
         fea0 = self.forward_features(s0, b0, self.layers0)
         print('s0 {}'.format(s0.shape))
         print('b0 {}'.format(b0.shape))
-        s1 = self.conv_2(fea0)  # 1->1/2
+
+
+        s1 = self.conv_2(s0)  # 1->1/2
+        s1 = self.conv_after_body0(torch.cat([fea0, s1], dim=1))  # 1->1/2
         b1 = self.conv_2(b0)  # 1->1/2
         print('s1 {}'.format(s1.shape))
         print('b1 {}'.format(b1.shape))
         fea1 = self.forward_features(s1, b1, self.layers1)
+
         print('s1 {}'.format(s1.shape))
         print('b1 {}'.format(b1.shape))
 
