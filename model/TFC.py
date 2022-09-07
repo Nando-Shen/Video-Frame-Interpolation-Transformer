@@ -1090,9 +1090,9 @@ class TFCModel(nn.Module):
         b0 = self.conv_1(y.contiguous())  # 1
         print('s0 {}'.format(s0.shape))
         print('b0 {}'.format(b0.shape))
+        s0_size = (s0.shape[2], s0.shape[3])
         fea0 = self.forward_features(s0, b0, self.layers0)
         fea0 = self.norm1(fea0)
-        s0_size = (s0.shape[2], s0.shape[3])
         self.patch_unembed(fea0, s0_size)
         print('fea0 {}'.format(fea0.shape))
         print('b0 {}'.format(b0.shape))
