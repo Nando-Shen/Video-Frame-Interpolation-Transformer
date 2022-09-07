@@ -1111,6 +1111,8 @@ class TFCModel(nn.Module):
         # b3 = self.conv_4(b2)  # 1/4->1/8
         s3 = F.interpolate(fea2, scale_factor=0.5, mode="bilinear", align_corners=False)
         b3 = F.interpolate(b2, scale_factor=0.5, mode="bilinear", align_corners=False)
+        print('s1 {}'.format(s3.shape))
+        print('b1 {}'.format(b3.shape))
         fea3 = self.forward_features(s3, b3, self.layers3)
 
         fea3 = self.conv_up0(torch.cat([fea3], dim=1))  # 1/8->1/4
