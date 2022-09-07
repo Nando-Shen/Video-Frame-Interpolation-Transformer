@@ -1032,7 +1032,7 @@ class TFCModel(nn.Module):
         self.conv_up2 = nn.Sequential(nn.ConvTranspose2d(2*fuse_c, fuse_c, 4, 2, 1),
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
-        self.conv_last1 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c, 3, 1, 1),
+        self.conv_last1 = nn.Sequential(nn.Conv2d(fuse_c*2, fuse_c, 3, 1, 1),
                                        nn.LeakyReLU(negative_slope=0.2, inplace=True))
                                        # nn.Conv2d(fuse_c, fuse_c, 3, 1, 1))
         self.conv_last2 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c//2, 3, 1, 1),
