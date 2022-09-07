@@ -564,7 +564,6 @@ class VFIformerSmall(nn.Module):
 
         i0 = self.cross_tran(img0, points)
         i1 = self.cross_tran(img1, points)
-        print(i0.shape)
         c0, c1 = self.refinenet(i0, i1)
         x = self.fuse_block(torch.cat([i0, i1, points], dim=1))
 
