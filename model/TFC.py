@@ -1116,7 +1116,7 @@ class TFCModel(nn.Module):
         # fea3 = self.forward_features(s3, b3, self.layers3)
 
         # fea3 = self.conv_up0(torch.cat([fea3], dim=1))  # 1/8->1/4
-        fea2 = self.conv_up0(fea2, dim=1)  # 1/4->1/2
+        fea2 = self.conv_up0(fea2)  # 1/4->1/2
         fea1 = self.conv_up1(torch.cat([fea2, fea1], dim=1))  # 1/2->1
 
         out = self.conv_last1(torch.cat([fea1, fea0], dim=1)) + s0
