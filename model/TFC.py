@@ -534,10 +534,12 @@ class PatchEmbed(nn.Module):
         else:
             self.norm = None
 
-    def forward(self, x):
+    def forward(self, x, norm):
         x = x.flatten(2).transpose(1, 2)  # B Ph*Pw C
         if self.norm is not None:
             x = self.norm(x)
+        else:
+            x = norm(x)
         return x
 
     def flops(self):
@@ -910,16 +912,16 @@ class TFCModel(nn.Module):
 
         # split image into non-overlapping patches
         self.patch_embed = PatchEmbed(
-            img_size=img_size, patch_size=patch_size, in_chans=fuse_c, embed_dim=fuse_c,
-            norm_layer=norm_layer if self.patch_norm else None)
+            img_size=img_size, patch_size=patch_size, in_chans=fuse_c, embed_dim=fuse_c)
+            # norm_layer=norm_layer if self.patch_norm else None)
         num_patches = self.patch_embed.num_patches
         patches_resolution = self.patch_embed.patches_resolution
         self.patches_resolution = patches_resolution
 
         # merge non-overlapping patches into image
         self.patch_unembed = PatchUnEmbed(
-            img_size=img_size, patch_size=patch_size, in_chans=fuse_c, embed_dim=fuse_c,
-            norm_layer=norm_layer if self.patch_norm else None)
+            img_size=img_size, patch_size=patch_size, in_chans=fuse_c, embed_dim=fuse_c)
+            # norm_layer=norm_layer if self.patch_norm else None)
 
         # absolute position embedding
         if self.ape:
@@ -1064,8 +1066,8 @@ class TFCModel(nn.Module):
 
     def forward_features(self, x, y, layers, norm):
         x_size = (x.shape[2], x.shape[3])
-        x = self.patch_embed(x)
-        y = self.patch_embed(y)
+        x = self.patch_embed(x, norm)
+        y = self.patch_embed(y, norm)
         if self.ape:
             x = x + self.absolute_pos_embed
             y = y + self.absolute_pos_embed
