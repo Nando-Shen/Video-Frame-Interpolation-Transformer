@@ -1062,7 +1062,7 @@ class TFCModel(nn.Module):
     def no_weight_decay_keywords(self):
         return {'relative_position_bias_table'}
 
-    def forward_features(self, x, y, layers, norm):
+    def forward_features(self, x, y, layers):
         x_size = (x.shape[2], x.shape[3])
         x = self.patch_embed(x)
         y = self.patch_embed(y)
