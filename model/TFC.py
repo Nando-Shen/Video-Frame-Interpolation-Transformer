@@ -1120,7 +1120,7 @@ class TFCModel(nn.Module):
         fea1 = self.conv_up1(torch.cat([fea2, fea1], dim=1))  # 1/2->1
 
         out = self.conv_last1(torch.cat([fea1, fea0], dim=1)) + s0
-        # out = self.conv_last2(out)
+        out = self.conv_last2(out)
         print('out {}'.format(out.shape))
         return out
 
