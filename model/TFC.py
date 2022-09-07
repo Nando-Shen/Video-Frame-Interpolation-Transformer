@@ -906,7 +906,7 @@ class TFCModel(nn.Module):
         self.conv_1 = Conv2(num_in_ch, fuse_c)
         self.conv_2 = Conv2(fuse_c, 2*fuse_c)
         self.conv_3 = Conv2(2*fuse_c, 4*fuse_c)
-        self.conv_4 = Conv2(2*fuse_c, 8*fuse_c)
+        self.conv_4 = Conv2(4*fuse_c, 8*fuse_c)
 
         # split image into non-overlapping patches
         self.patch_embed = PatchEmbed(
@@ -1039,7 +1039,6 @@ class TFCModel(nn.Module):
                                         nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                         nn.Conv2d(fuse_c//2, num_out_ch, 3, 1, 1),)
 
-        self.norm = norm_layer(self.num_features)
 
         self.apply(self._init_weights)
 
@@ -1060,6 +1059,9 @@ class TFCModel(nn.Module):
     def no_weight_decay_keywords(self):
         return {'relative_position_bias_table'}
 
+    def norm(self, n):
+        return nn.LayerNorm(self.num_features*n)
+
     def forward_features(self, x, y, layers):
         x_size = (x.shape[2], x.shape[3])
         x = self.patch_embed(x)
@@ -1076,7 +1078,8 @@ class TFCModel(nn.Module):
         else:
             x = layers(x, y, x_size)
 
-        x = self.norm(x)  # B L C
+        norm_func = self.norm(x.shape[1])
+        x = norm_func(x)  # B L C
         x = self.patch_unembed(x, x_size)
 
         return x
@@ -1091,7 +1094,6 @@ class TFCModel(nn.Module):
         print('fea0 {}'.format(fea0.shape))
         print('b0 {}'.format(b0.shape))
 
-
         s1 = self.conv_2(fea0)  # 1->1/2
         b1 = self.conv_2(b0)  # 1->1/2
         print('s1 {}'.format(s1.shape))
@@ -1100,12 +1102,12 @@ class TFCModel(nn.Module):
         print('fea1 {}'.format(fea1.shape))
         print('b1 {}'.format(b1.shape))
 
-        s2 = self.conv_after_body1(fea1)  # 1/2->1/4
-        b2 = self.conv_after_body1(b1)  # 1/2->1/4
+        s2 = self.conv_3(fea1)  # 1/2->1/4
+        b2 = self.conv_3(b1)  # 1/2->1/4
         fea2 = self.forward_features(s2, b2, self.layers2)
 
-        s3 = self.conv_after_body2(fea2)  # 1/4->1/8
-        b3 = self.conv_after_body2(b2)  # 1/4->1/8
+        s3 = self.conv_4(fea2)  # 1/4->1/8
+        b3 = self.conv_4(b2)  # 1/4->1/8
         fea3 = self.forward_features(s3, b3, self.layers3)
 
         fea3 = self.conv_up0(torch.cat([fea3], dim=1))  # 1/8->1/4
