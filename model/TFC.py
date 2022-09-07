@@ -1059,9 +1059,6 @@ class TFCModel(nn.Module):
     def no_weight_decay_keywords(self):
         return {'relative_position_bias_table'}
 
-    def norm(self, n):
-        return nn.LayerNorm(self.num_features*n)
-
     def forward_features(self, x, y, layers):
         x_size = (x.shape[2], x.shape[3])
         x = self.patch_embed(x)
@@ -1078,7 +1075,7 @@ class TFCModel(nn.Module):
         else:
             x = layers(x, y, x_size)
 
-        norm_func = self.norm(x.shape[1])
+        norm_func = nn.LayerNorm(x.shape[1])
         x = norm_func(x)  # B L C
         x = self.patch_unembed(x, x_size)
 
