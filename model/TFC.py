@@ -1033,8 +1033,8 @@ class TFCModel(nn.Module):
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
         self.conv_last1 = nn.Sequential(nn.Conv2d(fuse_c*2, fuse_c, 3, 1, 1),
-                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
-                                       # nn.Conv2d(fuse_c, fuse_c, 3, 1, 1))
+                                       nn.LeakyReLU(negative_slope=0.2, inplace=True),
+                                       nn.Conv2d(fuse_c, fuse_c, 3, 1, 1))
         self.conv_last2 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c//2, 3, 1, 1),
                                         nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                         nn.Conv2d(fuse_c//2, num_out_ch, 3, 1, 1),)
@@ -1085,21 +1085,13 @@ class TFCModel(nn.Module):
 
         s0 = self.conv_1(x.contiguous())  # 1
         b0 = self.conv_1(y.contiguous())  # 1
-        print('s0 {}'.format(s0.shape))
-        print('b0 {}'.format(b0.shape))
         fea0 = self.forward_features(s0, b0, self.layers0)
-        print('fea0 {}'.format(fea0.shape))
-        print('b0 {}'.format(b0.shape))
 
         # s1 = self.conv_2(fea0)  # 1->1/2
         # b1 = self.conv_2(b0)  # 1->1/2
         s1 = F.interpolate(fea0, scale_factor=0.5, mode="bilinear", align_corners=False)
         b1 = F.interpolate(b0, scale_factor=0.5, mode="bilinear", align_corners=False)
-        print('s1 {}'.format(s1.shape))
-        print('b1 {}'.format(b1.shape))
         fea1 = self.forward_features(s1, b1, self.layers1)
-        print('fea1 {}'.format(fea1.shape))
-        print('b1 {}'.format(b1.shape))
 
         # s2 = self.conv_3(fea1)  # 1/2->1/4
         # b2 = self.conv_3(b1)  # 1/2->1/4
@@ -1116,10 +1108,14 @@ class TFCModel(nn.Module):
         # fea3 = self.forward_features(s3, b3, self.layers3)
 
         # fea3 = self.conv_up0(torch.cat([fea3], dim=1))  # 1/8->1/4
+        print('fea2 {}'.format(fea2.shape))
         fea2 = self.conv_up0(fea2)  # 1/4->1/2
+        print('fea2 {}'.format(fea2.shape))
         fea1 = self.conv_up1(torch.cat([fea2, fea1], dim=1))  # 1/2->1
-
+        print('fea1 {}'.format(fea1.shape))
+        print('fea0 {}'.format(fea0.shape))
         out = self.conv_last1(torch.cat([fea1, fea0], dim=1)) + s0
+        print('out {}'.format(out.shape))
         out = self.conv_last2(out)
         print('out {}'.format(out.shape))
         return out
