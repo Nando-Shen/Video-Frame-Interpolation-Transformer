@@ -1038,7 +1038,10 @@ class TFCModel(nn.Module):
         self.conv_last2 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c//2, 3, 1, 1),
                                         nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                         nn.Conv2d(fuse_c//2, num_out_ch, 3, 1, 1),)
-
+        self.norm1 = norm_layer(fuse_c)
+        self.norm2 = norm_layer(fuse_c*2)
+        self.norm3 = norm_layer(fuse_c*4)
+        self.norm4 = norm_layer(fuse_c*8)
 
         self.apply(self._init_weights)
 
@@ -1076,8 +1079,8 @@ class TFCModel(nn.Module):
             x = layers(x, y, x_size)
 
         # norm_func = nn.LayerNorm(x.shape[1])
-        x = norm(x)  # B L C
-        x = self.patch_unembed(x, x_size)
+        # x = norm(x)  # B L C
+        # x = self.patch_unembed(x, x_size)
 
         return x
 
@@ -1087,7 +1090,10 @@ class TFCModel(nn.Module):
         b0 = self.conv_1(y.contiguous())  # 1
         print('s0 {}'.format(s0.shape))
         print('b0 {}'.format(b0.shape))
-        fea0 = self.forward_features(s0, b0, self.layers0, nn.LayerNorm(s0.shape[1]))
+        fea0 = self.forward_features(s0, b0, self.layers0)
+        fea0 = self.norm1(fea0)
+        fea0_size = (fea0.shape[2], fea0.shape[3])
+        self.patch_unembed(fea0, fea0_size)
         print('fea0 {}'.format(fea0.shape))
         print('b0 {}'.format(b0.shape))
 
@@ -1095,7 +1101,10 @@ class TFCModel(nn.Module):
         b1 = self.conv_2(b0)  # 1->1/2
         print('s1 {}'.format(s1.shape))
         print('b1 {}'.format(b1.shape))
-        fea1 = self.forward_features(s1, b1, self.layers1, nn.LayerNorm(s1.shape[1]))
+        fea1 = self.forward_features(s1, b1, self.layers1)
+        fea1 = self.norm2(fea0)
+        fea1_size = (fea1.shape[2], fea1.shape[3])
+        self.patch_unembed(fea1, fea1_size)
         print('fea1 {}'.format(fea1.shape))
         print('b1 {}'.format(b1.shape))
 
