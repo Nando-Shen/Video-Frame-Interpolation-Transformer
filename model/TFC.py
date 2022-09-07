@@ -903,10 +903,10 @@ class TFCModel(nn.Module):
         self.mlp_ratio = mlp_ratio
 
         # self.conv_first = nn.Conv2d(num_in_ch, fuse_c, 3, 1, 1)
-        self.conv_1 = Conv2(num_in_ch, fuse_c)
-        self.conv_2 = Conv2(fuse_c, 2*fuse_c)
-        self.conv_3 = Conv2(2*fuse_c, 4*fuse_c)
-        self.conv_4 = Conv2(4*fuse_c, 8*fuse_c)
+        self.conv_1 = nn.Conv2d(num_in_ch, fuse_c, 3, 1, 1)
+        self.conv_2 = nn.Conv2d(fuse_c, 2*fuse_c, 3, 1, 1)
+        self.conv_3 = nn.Conv2d(2*fuse_c, 4*fuse_c, 3, 1, 1)
+        self.conv_4 = nn.Conv2d(4*fuse_c, 8*fuse_c, 3, 1, 1)
 
         # split image into non-overlapping patches
         self.patch_embed = PatchEmbed(
@@ -1085,7 +1085,7 @@ class TFCModel(nn.Module):
         print('x {}'.format(x.shape))
         s0 = self.conv_1(x.contiguous())  # 1
         b0 = self.conv_1(y.contiguous())  # 1
-        print(s0.shape)
+        print('x {}'.format(x.shape))
         fea0 = self.forward_features(s0, b0, self.layers0)
         print('fea00 {}'.format(fea0.shape))
 
