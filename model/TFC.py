@@ -1092,8 +1092,8 @@ class TFCModel(nn.Module):
         print('b0 {}'.format(b0.shape))
         fea0 = self.forward_features(s0, b0, self.layers0)
         fea0 = self.norm1(fea0)
-        fea0_size = (fea0.shape[2], fea0.shape[3])
-        self.patch_unembed(fea0, fea0_size)
+        s0_size = (s0.shape[2], s0.shape[3])
+        self.patch_unembed(fea0, s0_size)
         print('fea0 {}'.format(fea0.shape))
         print('b0 {}'.format(b0.shape))
 
@@ -1102,9 +1102,9 @@ class TFCModel(nn.Module):
         print('s1 {}'.format(s1.shape))
         print('b1 {}'.format(b1.shape))
         fea1 = self.forward_features(s1, b1, self.layers1)
-        fea1 = self.norm2(fea0)
-        fea1_size = (fea1.shape[2], fea1.shape[3])
-        self.patch_unembed(fea1, fea1_size)
+        fea1 = self.norm2(fea1)
+        s1_size = (s1.shape[2], s1.shape[3])
+        self.patch_unembed(fea1, s1_size)
         print('fea1 {}'.format(fea1.shape))
         print('b1 {}'.format(b1.shape))
 
