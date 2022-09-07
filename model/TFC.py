@@ -1086,6 +1086,7 @@ class TFCModel(nn.Module):
         s0 = self.conv_1(x.contiguous())  # 1
         b0 = self.conv_1(y.contiguous())  # 1
         fea0 = self.forward_features(s0, b0, self.layers0)
+        print('fea00 {}'.format(fea0.shape))
 
         # s1 = self.conv_2(fea0)  # 1->1/2
         # b1 = self.conv_2(b0)  # 1->1/2
