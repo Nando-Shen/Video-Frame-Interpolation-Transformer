@@ -1025,16 +1025,16 @@ class TFCModel(nn.Module):
         self.conv_after_body2 = nn.Sequential(nn.Conv2d(fuse_c*8, fuse_c, 3, 2, 1),
                                               nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
-        self.conv_up0 = nn.Sequential(nn.ConvTranspose2d(16*fuse_c, fuse_c, 4, 2, 1),
+        self.conv_up0 = nn.Sequential(nn.ConvTranspose2d(fuse_c, fuse_c//2, 4, 2, 1),
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
-        self.conv_up1 = nn.Sequential(nn.ConvTranspose2d(2*fuse_c, fuse_c, 4, 2, 1),
+        self.conv_up1 = nn.Sequential(nn.ConvTranspose2d(fuse_c, fuse_c, 4, 2, 1),
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
         self.conv_up2 = nn.Sequential(nn.ConvTranspose2d(2*fuse_c, fuse_c, 4, 2, 1),
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
-        self.conv_last1 = nn.Sequential(nn.Conv2d(fuse_c*2, fuse_c, 3, 1, 1),
-                                       nn.LeakyReLU(negative_slope=0.2, inplace=True),
-                                       nn.Conv2d(fuse_c, fuse_c, 3, 1, 1))
+        self.conv_last1 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c, 3, 1, 1),
+                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
+                                       # nn.Conv2d(fuse_c, fuse_c, 3, 1, 1))
         self.conv_last2 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c//2, 3, 1, 1),
                                         nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                         nn.Conv2d(fuse_c//2, num_out_ch, 3, 1, 1),)
@@ -1109,19 +1109,19 @@ class TFCModel(nn.Module):
 
         # s3 = self.conv_4(fea2)  # 1/4->1/8
         # b3 = self.conv_4(b2)  # 1/4->1/8
-        s3 = F.interpolate(fea2, scale_factor=0.5, mode="bilinear", align_corners=False)
-        b3 = F.interpolate(b2, scale_factor=0.5, mode="bilinear", align_corners=False)
-        print('s1 {}'.format(s3.shape))
-        print('b1 {}'.format(b3.shape))
-        fea3 = self.forward_features(s3, b3, self.layers3)
+        # s3 = F.interpolate(fea2, scale_factor=0.5, mode="bilinear", align_corners=False)
+        # b3 = F.interpolate(b2, scale_factor=0.5, mode="bilinear", align_corners=False)
+        # print('s1 {}'.format(s3.shape))
+        # print('b1 {}'.format(b3.shape))
+        # fea3 = self.forward_features(s3, b3, self.layers3)
 
-        fea3 = self.conv_up0(torch.cat([fea3], dim=1))  # 1/8->1/4
-        fea2 = self.conv_up1(torch.cat([fea3, fea2], dim=1))  # 1/4->1/2
-        fea1 = self.conv_up2(torch.cat([fea2, fea1], dim=1))  # 1/2->1
+        # fea3 = self.conv_up0(torch.cat([fea3], dim=1))  # 1/8->1/4
+        fea2 = self.conv_up0(fea2, dim=1)  # 1/4->1/2
+        fea1 = self.conv_up1(torch.cat([fea2, fea1], dim=1))  # 1/2->1
 
         out = self.conv_last1(torch.cat([fea1, fea0], dim=1)) + s0
-        out = self.conv_last2(out)
-
+        # out = self.conv_last2(out)
+        print('out {}'.format(out.shape))
         return out
 
     def flops(self):
