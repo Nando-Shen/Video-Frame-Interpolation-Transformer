@@ -1018,11 +1018,11 @@ class TFCModel(nn.Module):
                          resi_connection=resi_connection)
             self.layers3.append(layer)
 
-        self.conv_after_body0 = nn.Sequential(nn.Conv2d(fuse_c*2, fuse_c, 3, 2, 1),
+        self.conv_after_body0 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c, 3, 2, 1),
                                               nn.LeakyReLU(negative_slope=0.2, inplace=True))
-        self.conv_after_body1 = nn.Sequential(nn.Conv2d(fuse_c*4, fuse_c, 3, 2, 1),
+        self.conv_after_body1 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c, 3, 2, 1),
                                               nn.LeakyReLU(negative_slope=0.2, inplace=True))
-        self.conv_after_body2 = nn.Sequential(nn.Conv2d(fuse_c*8, fuse_c, 3, 2, 1),
+        self.conv_after_body2 = nn.Sequential(nn.Conv2d(fuse_c, fuse_c, 3, 2, 1),
                                               nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
         self.conv_up0 = nn.Sequential(nn.ConvTranspose2d(fuse_c, fuse_c, 4, 2, 1),
