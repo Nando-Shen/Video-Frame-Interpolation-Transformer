@@ -1087,7 +1087,8 @@ class TFCModel(nn.Module):
         fea0 = self.forward_features(s0, b0, self.layers0)
 
         s1 = self.conv_after_body0(fea0)
-        fea1 = self.forward_features(s1, p[0], self.layers1)
+        b1 = self.conv_after_body0(b0)
+        fea1 = self.forward_features(s1, b1, self.layers1)
 
         s2 = self.conv_after_body1(fea1)
         fea2 = self.forward_features(s2, p[1], self.layers2)
