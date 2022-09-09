@@ -564,8 +564,8 @@ class VFIformerSmall(nn.Module):
         # warped_img1 = warp(img1, flow[:, 2:])
 
         c0, c1, p0 = self.refinenet(img0, img1, points)
-        i0 = self.cross_tran(img0, points, p0)
-        i1 = self.cross_tran(img1, points, p0)
+        i0 = self.cross_tran(img0, points)
+        i1 = self.cross_tran(img1, points)
         x = self.fuse_block(torch.cat([i0, i1, points], dim=1))
 
         refine_output = self.transformer(x, c0, c1)

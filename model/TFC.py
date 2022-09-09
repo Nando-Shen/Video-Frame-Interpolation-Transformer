@@ -1081,7 +1081,7 @@ class TFCModel(nn.Module):
 
         return x
 
-    def forward(self, x, y, p):
+    def forward(self, x, y):
         s0 = self.conv_1(x.contiguous())  # 1
         b0 = self.conv_1(y.contiguous())  # 1
         fea0 = self.forward_features(s0, b0, self.layers0)
