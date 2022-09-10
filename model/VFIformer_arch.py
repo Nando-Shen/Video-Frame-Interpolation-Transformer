@@ -444,10 +444,10 @@ class FlowRefineNet_Multis_Simple(nn.Module):
     #
     #     return flow, out0, out1
 
-    def forward(self, x0, x1, points):
+    def forward(self, x0, x1):
         bs = x0.size(0)
 
-        inp = torch.cat([x0, x1, points], dim=0)
+        inp = torch.cat([x0, x1], dim=0)
         s_1 = self.conv1(inp)  # 1
         s_2 = self.conv2(s_1)  # 1/2
         s_3 = self.conv3(s_2)  # 1/4
@@ -455,14 +455,13 @@ class FlowRefineNet_Multis_Simple(nn.Module):
 
         # warp features by the updated flow
         c0 = [s_1[:bs], s_2[:bs], s_3[:bs], s_4[:bs]]
-        c1 = [s_1[bs:2*bs], s_2[bs:2*bs], s_3[bs:2*bs], s_4[bs:2*bs]]
-        p0 = [s_1[2*bs:], s_2[2*bs:], s_3[2*bs:], s_4[2*bs:]]
+        c1 = [s_1[bs:], s_2[bs:], s_3[bs:], s_4[bs:]]
 
 
         # out0 = self.warp_fea(c0, points)
         # out1 = self.warp_fea(c1, points)
 
-        return c0, c1, p0
+        return c0, c1
 
     def warp_fea(self, feas, flow):
         outs = []
@@ -563,7 +562,7 @@ class VFIformerSmall(nn.Module):
         # warped_img0 = warp(img0, flow[:, :2])
         # warped_img1 = warp(img1, flow[:, 2:])
 
-        c0, c1, p0 = self.refinenet(img0, img1, points)
+        c0, c1 = self.refinenet(img0, img1)
         i0 = self.cross_tran(img0, points)
         i1 = self.cross_tran(img1, points)
         x = self.fuse_block(torch.cat([i0, i1, points], dim=1))
@@ -573,7 +572,7 @@ class VFIformerSmall(nn.Module):
         mask = torch.sigmoid(refine_output[:, 3:4])
 
         # merged_img = img0 * mask + img1 * (1 - mask)
-        merged_img = i0 * mask + i1 * (1 - mask)
+        merged_img = img0 * mask + img1 * (1 - mask)
         pred = merged_img + res
         pred = torch.clamp(pred, 0, 1)
 
