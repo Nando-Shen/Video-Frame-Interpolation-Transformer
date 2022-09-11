@@ -4,7 +4,7 @@
 #PBS -l walltime=24:00:00
 #PBS -j oe
 
-cd /home/jshe2377/rever-mix/Video-Frame-Interpolation-Transformer
+cd /home/jshe2377/onemix/Video-Frame-Interpolation-Transformer
 
 module load python/3.8.2 magma/2.5.3 openmpi-gcc/3.1.5
 source /home/jshe2377/NeuS/neus/bin/activate
