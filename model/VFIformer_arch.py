@@ -566,8 +566,13 @@ class VFIformerSmall(nn.Module):
         i0 = self.cross_tran(img0, points)
         i1 = self.cross_tran(img1, points)
         x = self.fuse_block(torch.cat([i0, i1, points], dim=1))
+        y = self.fuse_block(torch.cat([img0, img1, points], dim=1))
 
-        refine_output = self.transformer(x, c0, c1)
+        refine_output_x = self.transformer(x, c0, c1)
+        refine_output_y = self.transformer(y, c0, c1)
+
+        refine_output = refine_output_x + refine_output_y
+
         res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
         mask = torch.sigmoid(refine_output[:, 3:4])
 
