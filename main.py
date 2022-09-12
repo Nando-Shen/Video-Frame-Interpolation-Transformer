@@ -192,14 +192,14 @@ def main(args):
     for epoch in range(args.start_epoch, args.max_epoch):
         adjust_learning_rate(optimizer, epoch)
         start_time = time.time()
-        train(args, epoch)
-
-        torch.save({
-            'epoch': epoch,
-            'state_dict': model.state_dict(),
-            'optimizer': optimizer.state_dict(),
-            'lr': optimizer.param_groups[-1]['lr']
-        }, os.path.join(save_loc, 'checkpoint.pth'))
+        # train(args, epoch)
+        #
+        # torch.save({
+        #     'epoch': epoch,
+        #     'state_dict': model.state_dict(),
+        #     'optimizer': optimizer.state_dict(),
+        #     'lr': optimizer.param_groups[-1]['lr']
+        # }, os.path.join(save_loc, 'checkpoint.pth'))
 
         test_loss, psnr, ssim = test(args, epoch)
 
