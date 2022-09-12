@@ -479,7 +479,7 @@ class VFIformerSmall(nn.Module):
         c = 24
         height = args.crop_size
         width = args.crop_size
-        window_size = 6
+        window_size = 8
         embed_dim = 136
 
         self.flownet = IFNet()
