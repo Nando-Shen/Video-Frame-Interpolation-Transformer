@@ -3,7 +3,7 @@ import time
 import torch
 from tqdm import tqdm
 
-from torch.cuda.amp import autocast
+from torch.cuda.amp import autocast, GradScaler
 import config
 import myutils
 from loss import Loss
@@ -61,7 +61,7 @@ if args.model == 'VFI':
     model = VFIformerSmall(args)
 else:
     model = UNet_3D_3D( n_inputs=args.nbr_frame, joinType=args.joinType)
-model = torch.nn.DataParallel(model).to(device)
+model = torch.nn.DataParallel(model).to(device).half()
 total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
 print('the number of network parameters: {}'.format(total_params))
 
@@ -77,6 +77,7 @@ def train(args, epoch):
     losses, psnrs, ssims = myutils.init_meters(args.loss)
     model.train()
     criterion.train()
+    scaler = GradScaler()
 
     for i, (images, gt_image) in enumerate(train_loader):
 
@@ -88,18 +89,24 @@ def train(args, epoch):
         if args.model == 'VFI':
             with autocast():
                 out = model(images[0], images[1], images[2])
+                gt = gt_image.to(device)
+                loss, _ = criterion(out, gt)
+                overall_loss = loss
+                losses['total'].update(loss.item())
         else:
             out_ll, out_l, out = model(images)
+            gt = gt_image.to(device)
+            loss, _ = criterion(out, gt)
+            overall_loss = loss
+            losses['total'].update(loss.item())
+            overall_loss.backward()
+            optimizer.step()
 
-        gt = gt_image.to(device)
+        scaler.scale(overall_loss).backward()
+        scaler.step(optimizer)
 
-        loss, _ = criterion(out, gt)
-        overall_loss = loss
+        scaler.update()
 
-        losses['total'].update(loss.item())
-
-        overall_loss.backward()
-        optimizer.step()
 
         # Calc metrics & print logs
         if i % args.log_iter == 0:
