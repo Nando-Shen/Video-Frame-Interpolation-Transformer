@@ -5,6 +5,7 @@ import torch.nn as nn
 from torch.nn import init
 import torch.nn.functional as F
 from torch.nn.parallel import DistributedDataParallel
+from torch.cuda.amp import autocast
 import functools
 import copy
 from functools import partial, reduce
@@ -546,6 +547,7 @@ class VFIformerSmall(nn.Module):
 
         return flow
 
+    @autocast
     def forward(self, img0, img1, points):
         B, _, H, W = img0.size()
         # imgs = torch.cat((img0, img1), 1)

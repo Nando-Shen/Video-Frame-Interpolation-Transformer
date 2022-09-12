@@ -3,6 +3,7 @@ import time
 import torch
 from tqdm import tqdm
 
+from torch.cuda.amp import autocast
 import config
 import myutils
 from loss import Loss
@@ -60,7 +61,7 @@ if args.model == 'VFI':
     model = VFIformerSmall(args)
 else:
     model = UNet_3D_3D( n_inputs=args.nbr_frame, joinType=args.joinType)
-model = torch.nn.DataParallel(model).half().to(device)
+model = torch.nn.DataParallel(model).to(device)
 total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
 print('the number of network parameters: {}'.format(total_params))
 
@@ -85,7 +86,8 @@ def train(args, epoch):
         # Forward
         optimizer.zero_grad()
         if args.model == 'VFI':
-            out = model(images[0], images[1], images[2])
+            with autocast:
+                out = model(images[0], images[1], images[2])
         else:
             out_ll, out_l, out = model(images)
 
