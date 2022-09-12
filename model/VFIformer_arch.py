@@ -480,7 +480,7 @@ class VFIformerSmall(nn.Module):
         height = args.crop_size
         width = args.crop_size
         window_size = 8
-        embed_dim = 136
+        embed_dim = 160
 
         self.flownet = IFNet()
         self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
