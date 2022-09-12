@@ -2,6 +2,7 @@ import time
 
 import torch
 from tqdm import tqdm
+from torch.cuda.amp import autocast, GradScaler
 
 import config
 import myutils
@@ -77,6 +78,7 @@ def train(args, epoch):
     model.train()
     criterion.train()
 
+    scaler = GradScaler()
     for i, (images, gt_image) in enumerate(train_loader):
 
         # Build input batch
@@ -85,23 +87,34 @@ def train(args, epoch):
         # Forward
         optimizer.zero_grad()
         if args.model == 'VFI':
-            out = model(images[0], images[1], images[2])
+            with autocast():
+                out = model(images[0], images[1], images[2])
+                gt = gt_image.to(device)
+
+                loss, _ = criterion(out, gt)
         else:
             out_ll, out_l, out = model(images)
+            gt = gt_image.to(device)
 
-        gt = gt_image.to(device)
+            loss, _ = criterion(out, gt)
 
-        loss, _ = criterion(out, gt)
         overall_loss = loss
 
         losses['total'].update(loss.item())
 
-        overall_loss.backward()
-        optimizer.step()
+        scaler.scale(overall_loss).backward()
+
+        scaler.step(optimizer)
+
+        scaler.update()
+
+        # overall_loss.backward()
+        # optimizer.step()
 
         # Calc metrics & print logs
         if i % args.log_iter == 0:
-            myutils.eval_metrics(out, gt, psnrs, ssims)
+            with autocast():
+                myutils.eval_metrics(out, gt, psnrs, ssims)
 
             print('Train Epoch: {} [{}/{}]\tLoss: {:.6f}\tPSNR: {:.4f}  Lr:{:.6f}'.format(
                 epoch, i, len(train_loader), losses['total'].avg, psnrs.avg , optimizer.param_groups[0]['lr'], flush=True))
