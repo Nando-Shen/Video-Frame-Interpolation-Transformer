@@ -63,7 +63,7 @@ class ATD12k(Dataset):
             images_ = []
             for img_ in images:
                 random.seed(seed)
-                images_.append(self.transforms(img_))
+                images_.append(self.transforms(img_).half())
             images = images_
 
             gt = images[3]
