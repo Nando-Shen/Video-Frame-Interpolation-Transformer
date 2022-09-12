@@ -103,7 +103,8 @@ def train(args, epoch):
 
         # Calc metrics & print logs
         if i % args.log_iter == 0:
-            myutils.eval_metrics(out, gt, psnrs, ssims)
+            with autocast:
+                myutils.eval_metrics(out, gt, psnrs, ssims)
 
             print('Train Epoch: {} [{}/{}]\tLoss: {:.6f}\tPSNR: {:.4f}  Lr:{:.6f}'.format(
                 epoch, i, len(train_loader), losses['total'].avg, psnrs.avg , optimizer.param_groups[0]['lr'], flush=True))
