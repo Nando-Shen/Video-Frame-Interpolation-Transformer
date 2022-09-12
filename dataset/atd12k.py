@@ -34,12 +34,11 @@ class ATD12k(Dataset):
             data_list.append([img0, img1, points, gt, d])
 
         self.data_list = data_list
-        size = (192, 384)
+
         if self.training:
             self.transforms = transforms.Compose([
                 # transforms.RandomCrop(228),
                 transforms.RandomHorizontalFlip(),
-                transforms.Scale(size),
                 # transforms.ColorJitter(0.05, 0.05, 0.05, 0.05),
                 transforms.ToTensor()
             ])
@@ -59,10 +58,12 @@ class ATD12k(Dataset):
         # images = [images[i] for i in inputs]
         # imgpaths = [imgpaths[i] for i in inputs]
         # Data augmentation
+        size = (192, 384)
         if self.training:
             seed = random.randint(0, 2**32)
             images_ = []
             for img_ in images:
+                img_ = img_.resize(size)
                 random.seed(seed)
                 images_.append(self.transforms(img_))
             images = images_
