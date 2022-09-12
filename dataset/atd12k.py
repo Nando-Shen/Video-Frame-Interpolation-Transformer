@@ -34,11 +34,12 @@ class ATD12k(Dataset):
             data_list.append([img0, img1, points, gt, d])
 
         self.data_list = data_list
-
+        size = (192, 384)
         if self.training:
             self.transforms = transforms.Compose([
                 # transforms.RandomCrop(228),
                 transforms.RandomHorizontalFlip(),
+                transforms.Scale(size),
                 # transforms.ColorJitter(0.05, 0.05, 0.05, 0.05),
                 transforms.ToTensor()
             ])
