@@ -72,13 +72,14 @@ criterion = Loss(args)
 from torch.optim import Adamax
 optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
 
+scaler = GradScaler()
+
 def train(args, epoch):
     torch.cuda.empty_cache()
     losses, psnrs, ssims = myutils.init_meters(args.loss)
     model.train()
     criterion.train()
 
-    scaler = GradScaler()
     for i, (images, gt_image) in enumerate(train_loader):
 
         # Build input batch
@@ -87,11 +88,11 @@ def train(args, epoch):
         # Forward
         optimizer.zero_grad()
         if args.model == 'VFI':
-            with autocast():
-                out = model(images[0], images[1], images[2])
-                gt = gt_image.to(device)
+            # with autocast():
+            out = model(images[0], images[1], images[2])
+            gt = gt_image.to(device)
 
-                loss, _ = criterion(out, gt)
+            loss, _ = criterion(out, gt)
         else:
             out_ll, out_l, out = model(images)
             gt = gt_image.to(device)
@@ -113,8 +114,8 @@ def train(args, epoch):
 
         # Calc metrics & print logs
         if i % args.log_iter == 0:
-            with autocast():
-                myutils.eval_metrics(out, gt, psnrs, ssims)
+            # with autocast():
+            myutils.eval_metrics(out, gt, psnrs, ssims)
 
             print('Train Epoch: {} [{}/{}]\tLoss: {:.6f}\tPSNR: {:.4f}  Lr:{:.6f}'.format(
                 epoch, i, len(train_loader), losses['total'].avg, psnrs.avg , optimizer.param_groups[0]['lr'], flush=True))
