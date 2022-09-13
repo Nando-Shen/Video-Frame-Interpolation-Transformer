@@ -9,6 +9,8 @@ from loss import Loss
 import shutil
 import os
 
+from torch.cuda.amp import autocast, GradScaler
+
 def load_checkpoint(args, model, optimizer, path):
     print("loading checkpoint %s" % path)
     checkpoint = torch.load(path)
@@ -71,6 +73,8 @@ criterion = Loss(args)
 from torch.optim import Adamax
 optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
 
+scaler = GradScaler()
+
 def train(args, epoch):
     torch.cuda.empty_cache()
     losses, psnrs, ssims = myutils.init_meters(args.loss)
@@ -85,23 +89,34 @@ def train(args, epoch):
         # Forward
         optimizer.zero_grad()
         if args.model == 'VFI':
-            out, flow_list = model(images[0], images[1])
+            with autocast():
+                out, flow_list = model(images[0], images[1])
+                gt = gt_image.to(device)
+
+                loss, _ = criterion(out, gt)
+                overall_loss = loss
+
+                losses['total'].update(loss.item())
         else:
             out_ll, out_l, out = model(images)
+            gt = gt_image.to(device)
 
-        gt = gt_image.to(device)
+            loss, _ = criterion(out, gt)
+            overall_loss = loss
 
-        loss, _ = criterion(out, gt)
-        overall_loss = loss
+            losses['total'].update(loss.item())
+            overall_loss.backward()
+            optimizer.step()
 
-        losses['total'].update(loss.item())
+        scaler.scale(overall_loss).backward()
+        scaler.step(optimizer)
 
-        overall_loss.backward()
-        optimizer.step()
+        scaler.update()
 
         # Calc metrics & print logs
         if i % args.log_iter == 0:
-            myutils.eval_metrics(out, gt, psnrs, ssims)
+            with autocast():
+                myutils.eval_metrics(out, gt, psnrs, ssims)
 
             print('Train Epoch: {} [{}/{}]\tLoss: {:.6f}\tPSNR: {:.4f}  Lr:{:.6f}'.format(
                 epoch, i, len(train_loader), losses['total'].avg, psnrs.avg , optimizer.param_groups[0]['lr'], flush=True))
@@ -123,7 +138,8 @@ def test(args, epoch):
 
             images = [img_.to(device) for img_ in images]
             if args.model == 'VFI':
-                out, flow_list = model(images[0], images[1])
+                with autocast():
+                    out, flow_list = model(images[0], images[1])
             else:
                 out = model(images)
 
@@ -139,7 +155,8 @@ def test(args, epoch):
             losses['total'].update(loss.item())
 
             # Evaluate metrics
-            myutils.eval_metrics(out, gt, psnrs, ssims)
+            with autocast():
+                myutils.eval_metrics(out, gt, psnrs, ssims)
 
     return losses['total'].avg, psnrs.avg, ssims.avg
 
@@ -170,7 +187,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    load_checkpoint(args, model, optimizer, save_loc+'/checkpoint.pth')
+    # load_checkpoint(args, model, optimizer, save_loc+'/checkpoint.pth')
     # test_loss, psnr, ssim = test(args, args.start_epoch)
     # print(psnr)
 
