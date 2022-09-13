@@ -32,7 +32,6 @@ device = torch.device('cuda' if args.cuda else 'cpu')
 torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
 
-scaler = GradScaler()
 
 torch.manual_seed(args.random_seed)
 if args.cuda:
@@ -79,6 +78,7 @@ def train(args, epoch):
     losses, psnrs, ssims = myutils.init_meters(args.loss)
     model.train()
     criterion.train()
+    scaler = GradScaler()
 
     for i, (images, gt_image) in enumerate(train_loader):
 
@@ -101,6 +101,8 @@ def train(args, epoch):
 
             loss, _ = criterion(out, gt)
             overall_loss = loss
+            overall_loss.backward()
+            optimizer.step()
 
         losses['total'].update(loss.item())
 
@@ -110,7 +112,8 @@ def train(args, epoch):
 
         # Calc metrics & print logs
         if i % args.log_iter == 0:
-            myutils.eval_metrics(out, gt, psnrs, ssims)
+            with autocast():
+                myutils.eval_metrics(out, gt, psnrs, ssims)
 
             print('Train Epoch: {} [{}/{}]\tLoss: {:.6f}\tPSNR: {:.4f}  Lr:{:.6f}'.format(
                 epoch, i, len(train_loader), losses['total'].avg, psnrs.avg , optimizer.param_groups[0]['lr'], flush=True))
@@ -132,7 +135,8 @@ def test(args, epoch):
 
             images = [img_.to(device) for img_ in images]
             if args.model == 'VFI':
-                out = model(images[0], images[1], images[2])
+                with autocast():
+                    out = model(images[0], images[1], images[2])
             else:
                 out = model(images)
 
@@ -148,7 +152,8 @@ def test(args, epoch):
             losses['total'].update(loss.item())
 
             # Evaluate metrics
-            myutils.eval_metrics(out, gt, psnrs, ssims)
+            with autocast():
+                myutils.eval_metrics(out, gt, psnrs, ssims)
 
     return losses['total'].avg, psnrs.avg, ssims.avg
 
