@@ -8,6 +8,7 @@ import myutils
 from loss import Loss
 import shutil
 import os
+from torch.cuda.amp import autocast, GradScaler
 
 def load_checkpoint(args, model, optimizer, path):
     print("loading checkpoint %s" % path)
@@ -30,6 +31,8 @@ save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 device = torch.device('cuda' if args.cuda else 'cpu')
 torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
+
+scaler = GradScaler()
 
 torch.manual_seed(args.random_seed)
 if args.cuda:
@@ -85,19 +88,25 @@ def train(args, epoch):
         # Forward
         optimizer.zero_grad()
         if args.model == 'VFI':
-            out = model(images[0], images[1], images[2])
+            with autocast():
+                out = model(images[0], images[1], images[2])
+                gt = gt_image.to(device)
+
+                loss, _ = criterion(out, gt)
+                overall_loss = loss
+
         else:
             out_ll, out_l, out = model(images)
+            gt = gt_image.to(device)
 
-        gt = gt_image.to(device)
-
-        loss, _ = criterion(out, gt)
-        overall_loss = loss
+            loss, _ = criterion(out, gt)
+            overall_loss = loss
 
         losses['total'].update(loss.item())
 
-        overall_loss.backward()
-        optimizer.step()
+        scaler.scale(overall_loss).backward()
+        scaler.step(optimizer)
+        scaler.update()
 
         # Calc metrics & print logs
         if i % args.log_iter == 0:
