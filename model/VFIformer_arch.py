@@ -493,16 +493,16 @@ class VFIformerSmall(nn.Module):
 
         self.transformer = TFModel(img_size=(height, width), in_chans=2*c, out_chans=4, fuse_c=c,
                                           window_size=window_size, img_range=1.,
-                                          depths=[[1, 1], [1, 1], [1, 1], [1, 1]],
+                                          depths=[[3, 3], [3, 3], [3, 3], [1, 1]],
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
                                           resi_connection='1conv',
                                           use_crossattn=[[[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]]])
-        self.cross_tran = TFCModel(img_size=(height, width), in_chans=3, out_chans=3, fuse_c=c,
+        self.cross_tran = TFCModel(img_size=(height, width), in_chans=3, out_chans=4, fuse_c=c,
                                           window_size=window_size, img_range=1.,
-                                          depths=[[1, 1], [1, 1], [1, 1], [1, 1]],
+                                          depths=[[3, 3], [3, 3], [3, 3], [1, 1]],
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
                                           resi_connection='1conv')
 
@@ -563,9 +563,21 @@ class VFIformerSmall(nn.Module):
         # warped_img1 = warp(img1, flow[:, 2:])
 
         c0, c1 = self.refinenet(img0, img1)
-        i0 = self.cross_tran(img0, points)
-        i1 = self.cross_tran(img1, points)
-        x = self.fuse_block(torch.cat([i0, i1, points], dim=1))
+        i0_output = self.cross_tran(img0, points)
+        res0 = torch.sigmoid(i0_output[:, :3]) * 2 - 1
+        mask0 = torch.sigmoid(i0_output[:, 3:4])
+        merged_img0 = img0 * mask0 + points * (1 - mask0)
+        pred0 = merged_img0 + res0
+        pred0 = torch.clamp(pred0, 0, 1)
+
+        i1_output = self.cross_tran(img1, points)
+        res1 = torch.sigmoid(i1_output[:, :3]) * 2 - 1
+        mask1 = torch.sigmoid(i1_output[:, 3:4])
+        merged_img1 = img1 * mask1 + points * (1 - mask1)
+        pred1 = merged_img1 + res1
+        pred1 = torch.clamp(pred1, 0, 1)
+
+        x = self.fuse_block(torch.cat([pred0, pred1, points], dim=1))
 
         refine_output = self.transformer(x, c0, c1)
         res = torch.sigmoid(refine_output[:, :3]) * 2 - 1

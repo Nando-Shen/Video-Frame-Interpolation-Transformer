@@ -3,6 +3,8 @@ import time
 import torch
 from tqdm import tqdm
 
+from torch.cuda.amp import autocast, GradScaler
+
 import config
 import myutils
 from loss import Loss
@@ -71,6 +73,8 @@ criterion = Loss(args)
 from torch.optim import Adamax
 optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
 
+scaler = GradScaler()
+
 def train(args, epoch):
     torch.cuda.empty_cache()
     losses, psnrs, ssims = myutils.init_meters(args.loss)
@@ -85,19 +89,29 @@ def train(args, epoch):
         # Forward
         optimizer.zero_grad()
         if args.model == 'VFI':
-            out = model(images[0], images[1], images[2])
+            with autocast():
+                out = model(images[0], images[1], images[2])
+                gt = gt_image.to(device)
+
+                loss, _ = criterion(out, gt)
+                overall_loss = loss
+
+                losses['total'].update(loss.item())
         else:
             out_ll, out_l, out = model(images)
+            gt = gt_image.to(device)
 
-        gt = gt_image.to(device)
+            loss, _ = criterion(out, gt)
+            overall_loss = loss
 
-        loss, _ = criterion(out, gt)
-        overall_loss = loss
+            losses['total'].update(loss.item())
+            overall_loss.backward()
+            optimizer.step()
 
-        losses['total'].update(loss.item())
+        scaler.scale(overall_loss).backward()
+        scaler.step(optimizer)
 
-        overall_loss.backward()
-        optimizer.step()
+        scaler.update()
 
         # Calc metrics & print logs
         if i % args.log_iter == 0:
