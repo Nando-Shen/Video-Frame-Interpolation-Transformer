@@ -60,10 +60,12 @@ class ATD12k(Dataset):
         # images = [images[i] for i in inputs]
         # imgpaths = [imgpaths[i] for i in inputs]
         # Data augmentation
+        size = (192, 384)
         if self.training:
             seed = random.randint(0, 2**32)
             images_ = []
             for img_ in images:
+                img_ = img_.resize(size)
                 random.seed(seed)
                 images_.append(self.transforms(img_))
             images = images_
@@ -74,7 +76,7 @@ class ATD12k(Dataset):
             return images, gt
         else:
             T = self.transforms
-            images = [T(img_) for img_ in images]
+            images = [T(img_.resize(size)) for img_ in images]
 
             gt = images[2]
             images = images[:2]

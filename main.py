@@ -138,11 +138,14 @@ def test(args, epoch):
 
             images = [img_.to(device) for img_ in images]
             if args.model == 'VFI':
-                out, flow_list = model(images[0], images[1])
+                with autocast():
+                    out, flow_list = model(images[0], images[1])
+                    gt = gt_image.to(device)
             else:
                 out = model(images)
+                gt = gt_image.to(device)
 
-            gt = gt_image.to(device)
+
 
             # out = model(images) ## images is a list of neighboring frames
 
@@ -154,7 +157,8 @@ def test(args, epoch):
             losses['total'].update(loss.item())
 
             # Evaluate metrics
-            myutils.eval_metrics(out, gt, psnrs, ssims)
+            with autocast():
+                myutils.eval_metrics(out, gt, psnrs, ssims)
 
     return losses['total'].avg, psnrs.avg, ssims.avg
 
