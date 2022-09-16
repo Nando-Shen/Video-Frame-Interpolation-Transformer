@@ -22,6 +22,7 @@ from torch.utils.data import DataLoader
 os.environ["CUDA_VISIBLE_DEVICES"]='1'
 args, unparsed = config.get_args()
 cwd = os.getcwd()
+print(args)
 
 device = torch.device('cuda' if args.cuda else 'cpu')
 
