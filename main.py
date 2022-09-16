@@ -137,9 +137,8 @@ def test(args, epoch):
 
             images = [img_.to(device) for img_ in images]
             if args.model == 'VFI':
-                with autocast():
-                    out = model(images[0], images[1], images[2])
-                    gt = gt_image.to(device)
+                out = model(images[0], images[1], images[2])
+                gt = gt_image.to(device)
             else:
                 out = model(images)
                 gt = gt_image.to(device)
@@ -154,8 +153,7 @@ def test(args, epoch):
             losses['total'].update(loss.item())
 
             # Evaluate metrics
-            with autocast():
-                myutils.eval_metrics(out, gt, psnrs, ssims)
+            myutils.eval_metrics(out, gt, psnrs, ssims)
 
     return losses['total'].avg, psnrs.avg, ssims.avg
 
