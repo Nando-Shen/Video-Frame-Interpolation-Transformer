@@ -25,6 +25,7 @@ cwd = os.getcwd()
 print(args)
 
 device = torch.device('cuda' if args.cuda else 'cpu')
+print(device)
 
 torch.manual_seed(args.random_seed)
 if args.cuda:
