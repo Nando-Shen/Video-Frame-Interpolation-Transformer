@@ -44,7 +44,7 @@ learn_arg.add_argument("--pretrained" , type=str,
                         help="Load from a pretrained model.")
 
 parser.add_argument('--phase', default='train', type=str)
-parser.add_argument('--crop_size', default=288, type=int)
+parser.add_argument('--crop_size', default=192, type=int)
 
 # Misc
 misc_arg = add_argument_group('Misc')
