@@ -54,7 +54,7 @@ args.device = device
 args.resume_flownet = False
 model = VFIformerSmall(args)
 
-model = torch.nn.DataParallel(model).to(device)
+model = model.to(device)
 print("#params" , sum([p.numel() for p in model.parameters()]))
 
 def save_image(recovery, image_name):
