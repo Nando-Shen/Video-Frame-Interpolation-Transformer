@@ -39,7 +39,7 @@ learn_arg.add_argument('--max_epoch', type=int, default=50)
 learn_arg.add_argument('--resume', action='store_true')
 learn_arg.add_argument('--resume_exp', type=str, default=None)
 learn_arg.add_argument('--checkpoint_dir', type=str ,default="ckp")
-learn_arg.add_argument("--load_from"  ,type=str , default='checkpoints/VFIT_B/model_best.pth')
+learn_arg.add_argument("--load_from"  ,type=str , default='ckp/checkpoints/model_best.pth')
 learn_arg.add_argument("--pretrained" , type=str,
                         help="Load from a pretrained model.")
 

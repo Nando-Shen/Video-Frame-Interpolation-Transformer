@@ -38,27 +38,32 @@ elif args.dataset == "ucf101":
 elif args.dataset == "Davis":
     from dataset.Davis_test import get_loader
     test_loader = get_loader(args.data_root, args.test_batch_size, shuffle=False, num_workers=args.num_workers, test_mode=True)
+elif args.dataset == 'atd12k':
+    from dataset.atd12k import get_loader
+    test_loader = get_loader('test', args.data_root, args.test_batch_size, shuffle=False, num_workers=args.num_workers)
 
 if args.model == 'VFIT_S':
     from model.VFIT_S import UNet_3D_3D
 elif args.model == 'VFIT_B':
     from model.VFIT_B import UNet_3D_3D
+elif args.model == 'VFI':
+    from model.VFIformer_arch import VFIformerSmall
 
 print("Building model: %s"%args.model)
-model = UNet_3D_3D(n_inputs=args.nbr_frame, joinType=args.joinType)
+model = VFIformerSmall(args)
 
 model = torch.nn.DataParallel(model).to(device)
 print("#params" , sum([p.numel() for p in model.parameters()]))
 
 def save_image(recovery, image_name):
-    recovery_image = torch.split(recovery, 1, dim=0)
-    batch_num = len(recovery_image)
+    # recovery_image = torch.split(recovery, 1, dim=0)
+    # batch_num = len(recovery_image)
 
     if not os.path.exists('./results'):
         os.makedirs('./results')
 
-    for ind in range(batch_num):
-        utils.save_image(recovery_image[ind], './results/{}.png'.format(image_name[ind]))
+    # for ind in range(batch_num):
+    utils.save_image(recovery, './results/{}.png'.format(image_name))
 
 def to_psnr(rect, gt):
     mse = F.mse_loss(rect, gt, reduction='none')
@@ -73,7 +78,7 @@ def test(args):
     model.eval()
 
     with torch.no_grad():
-        for i, (images, gt_image, _) in enumerate(tqdm(test_loader)):
+        for i, (images, gt_image, imgpath) in enumerate(tqdm(test_loader)):
 
             images = [img_.cuda() for img_ in images]
             gt = gt_image.cuda()
@@ -86,6 +91,7 @@ def test(args):
             time_taken.append(time.time() - start_time)
 
             myutils.eval_metrics(out, gt, psnrs, ssims)
+            save_image(out, imgpath)
 
     print("PSNR: %f, SSIM: %fn" %
           (psnrs.avg, ssims.avg))
