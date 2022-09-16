@@ -90,7 +90,7 @@ def test(args):
 
             torch.cuda.synchronize()
             start_time = time.time()
-            out = model(images)
+            out = model(images[0], images[1], images[2])
 
             torch.cuda.synchronize()
             time_taken.append(time.time() - start_time)
