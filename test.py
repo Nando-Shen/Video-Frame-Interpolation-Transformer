@@ -61,14 +61,14 @@ model = torch.nn.DataParallel(model).to(device)
 print("#params" , sum([p.numel() for p in model.parameters()]))
 
 def save_image(recovery, image_name):
-    # recovery_image = torch.split(recovery, 1, dim=0)
-    # batch_num = len(recovery_image)
+    recovery_image = torch.split(recovery, 1, dim=0)
+    batch_num = len(recovery_image)
 
     if not os.path.exists('./results'):
         os.makedirs('./results')
 
-    # for ind in range(batch_num):
-    utils.save_image(recovery, './results/{}.png'.format(image_name))
+    for ind in range(batch_num):
+        utils.save_image(recovery_image[ind], './results/{}.png'.format(image_name[int]))
 
 def to_psnr(rect, gt):
     mse = F.mse_loss(rect, gt, reduction='none')
