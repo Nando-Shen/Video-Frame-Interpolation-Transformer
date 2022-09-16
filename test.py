@@ -50,6 +50,8 @@ elif args.model == 'VFI':
     from model.VFIformer_arch import VFIformerSmall
 
 print("Building model: %s"%args.model)
+args.device = device
+args.resume_flownet = False
 model = VFIformerSmall(args)
 
 model = torch.nn.DataParallel(model).to(device)
