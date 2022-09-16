@@ -19,7 +19,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
 ##### Parse CmdLine Arguments #####
-os.environ["CUDA_VISIBLE_DEVICES"]='1'
+# os.environ["CUDA_VISIBLE_DEVICES"]='1'
 args, unparsed = config.get_args()
 cwd = os.getcwd()
 print(args)
@@ -57,7 +57,7 @@ args.device = device
 args.resume_flownet = False
 model = VFIformerSmall(args)
 
-model = model.to(device)
+model = torch.nn.DataParallel(model).to(device)
 print("#params" , sum([p.numel() for p in model.parameters()]))
 
 def save_image(recovery, image_name):
