@@ -68,7 +68,7 @@ def save_image(recovery, image_name):
         os.makedirs('./results')
 
     for ind in range(batch_num):
-        utils.save_image(recovery_image[ind], './results/{}.png'.format(image_name[int]))
+        utils.save_image(recovery_image[ind], './results/{}.png'.format(image_name[ind]))
 
 def to_psnr(rect, gt):
     mse = F.mse_loss(rect, gt, reduction='none')
