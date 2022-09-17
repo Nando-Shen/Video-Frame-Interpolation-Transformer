@@ -480,16 +480,16 @@ class VFIformerSmall(nn.Module):
         height = args.crop_size
         width = args.crop_size
         window_size = 8
-        embed_dim = 160
+        embed_dim = 100
 
         self.flownet = IFNet()
         self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
-        self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
+        self.fuse_block = nn.Sequential(nn.Conv2d(9, 3*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),
-                                         nn.Conv2d(2*c, 2*c, 3, 1, 1),
+                                         nn.Conv2d(3*c, 3*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),)
 
-        self.transformer = TFModel(img_size=(height, width), in_chans=2*c, out_chans=4, fuse_c=c,
+        self.transformer = TFModel(img_size=(height, width), in_chans=3*c, out_chans=4, fuse_c=c,
                                           window_size=window_size, img_range=1.,
                                           depths=[[3, 3], [3, 3], [2, 2], [1, 1]],
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
