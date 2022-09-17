@@ -592,7 +592,7 @@ class VFIformerSmall(nn.Module):
         merged_img = img0 * mask + img1 * (1 - mask)
         pred = merged_img + res
 
-        pred = self.final_fuse_block(torch.cat([i0_output, i1_output, pred], dim=1))
+        pred = self.final_fuse_block(torch.cat([res0, res1, pred], dim=1))
 
         pred = torch.clamp(pred, 0, 1)
 
