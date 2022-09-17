@@ -1002,17 +1002,17 @@ class TFModel(nn.Module):
 
         s1 = F.interpolate(fea0, scale_factor=0.5, mode="bilinear", align_corners=False)
         # s1 = self.conv_after_body0(torch.cat([fea0, c0[0], c1[0]], dim=1))  # 1->1/2
-        fea1 = self.forward_features(torch.cat([s1, c0[0], c1[0]], dim=1), self.layers1)
+        fea1 = self.forward_features(s1, self.layers1)
 
         s2 = F.interpolate(fea1, scale_factor=0.5, mode="bilinear", align_corners=False)
         # s2 = self.conv_after_body1(torch.cat([fea1, c0[1], c1[1]], dim=1))  # 1/2->1/4
-        fea2 = self.forward_features(torch.cat([s2, c0[1], c1[1]], dim=1), self.layers2)
+        fea2 = self.forward_features(s2, self.layers2)
 
         s3 = F.interpolate(fea2, scale_factor=0.5, mode="bilinear", align_corners=False)
         # s3 = self.conv_after_body2(torch.cat([fea2, c0[2], c1[2]], dim=1))  # 1/4->1/8
-        fea3 = self.forward_features(torch.cat([s3, c0[2], c1[2]], dim=1), self.layers3)
+        fea3 = self.forward_features(s3, self.layers3)
 
-        fea3 = self.conv_up0(torch.cat([fea3, c0[3], c1[3]], dim=1))  # 1/8->1/4
+        fea3 = self.conv_up0(fea3)  # 1/8->1/4
         fea2 = self.conv_up1(torch.cat([fea3, fea2], dim=1))  # 1/4->1/2
         fea1 = self.conv_up2(torch.cat([fea2, fea1], dim=1))  # 1/2->1
 
