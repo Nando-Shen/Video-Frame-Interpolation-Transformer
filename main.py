@@ -73,12 +73,13 @@ criterion = Loss(args)
 from torch.optim import Adamax
 optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
 
+scaler = GradScaler()
+
 def train(args, epoch):
     torch.cuda.empty_cache()
     losses, psnrs, ssims = myutils.init_meters(args.loss)
     model.train()
     criterion.train()
-    scaler = GradScaler()
 
     for i, (images, gt_image) in enumerate(train_loader):
 
