@@ -489,7 +489,12 @@ class VFIformerSmall(nn.Module):
         self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                          nn.Conv2d(2*c, 2*c, 3, 1, 1),
-                                         nn.LeakyReLU(negative_slope=0.2, inplace=True),)
+                                         nn.LeakyReLU(negative_slope=0.2, inplace=True))
+
+        self.final_fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
+                                         nn.LeakyReLU(negative_slope=0.2, inplace=True),
+                                         nn.Conv2d(2*c, 3, 3, 1, 1),
+                                         nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
         self.transformer = TFModel(img_size=(height, width), in_chans=2*c, out_chans=4, fuse_c=c,
                                           window_size=window_size, img_range=1.,
@@ -563,21 +568,21 @@ class VFIformerSmall(nn.Module):
         # warped_img1 = warp(img1, flow[:, 2:])
 
         c0, c1 = self.refinenet(img0, img1)
-        i0_output = self.cross_tran(img0, points)
+        i0_output = self.cross_tran(points, img0)
         res0 = torch.sigmoid(i0_output[:, :3]) * 2 - 1
-        mask0 = torch.sigmoid(i0_output[:, 3:4])
-        merged_img0 = img0 * mask0 + points * (1 - mask0)
-        pred0 = merged_img0 + res0
-        pred0 = torch.clamp(pred0, 0, 1)
+        # mask0 = torch.sigmoid(i0_output[:, 3:4])
+        # merged_img0 = img0 * mask0 + points * (1 - mask0)
+        # pred0 = merged_img0 + res0
+        # pred0 = torch.clamp(pred0, 0, 1)
 
-        i1_output = self.cross_tran(img1, points)
+        i1_output = self.cross_tran(points, img1)
         res1 = torch.sigmoid(i1_output[:, :3]) * 2 - 1
-        mask1 = torch.sigmoid(i1_output[:, 3:4])
-        merged_img1 = img1 * mask1 + points * (1 - mask1)
-        pred1 = merged_img1 + res1
-        pred1 = torch.clamp(pred1, 0, 1)
+        # mask1 = torch.sigmoid(i1_output[:, 3:4])
+        # merged_img1 = img1 * mask1 + points * (1 - mask1)
+        # pred1 = merged_img1 + res1
+        # pred1 = torch.clamp(pred1, 0, 1)
 
-        x = self.fuse_block(torch.cat([pred0, pred1, points], dim=1))
+        x = self.fuse_block(torch.cat([img0, img1, points], dim=1))
 
         refine_output = self.transformer(x, c0, c1)
         res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
@@ -586,6 +591,9 @@ class VFIformerSmall(nn.Module):
         # merged_img = img0 * mask + img1 * (1 - mask)
         merged_img = img0 * mask + img1 * (1 - mask)
         pred = merged_img + res
+
+        pred = self.final_fuse_block(torch.cat([i0_output, i1_output, pred], dim=1))
+
         pred = torch.clamp(pred, 0, 1)
 
         if self.phase == 'train':
