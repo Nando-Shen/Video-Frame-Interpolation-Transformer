@@ -492,9 +492,9 @@ class VFIformerSmall(nn.Module):
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
         self.final_fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
-                                         nn.LeakyReLU(negative_slope=0.2, inplace=True),
-                                         nn.Conv2d(2*c, 3, 3, 1, 1),
-                                         nn.LeakyReLU(negative_slope=0.2, inplace=True))
+                                            nn.LeakyReLU(negative_slope=0.2, inplace=True),
+                                            nn.Conv2d(2*c, 3, 3, 1, 1),
+                                            nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
         self.transformer = TFModel(img_size=(height, width), in_chans=2*c, out_chans=4, fuse_c=c,
                                           window_size=window_size, img_range=1.,
@@ -593,6 +593,7 @@ class VFIformerSmall(nn.Module):
         pred = merged_img + res
 
         pred = self.final_fuse_block(torch.cat([res0, res1, pred], dim=1))
+        pred = torch.sigmoid(pred)
 
         pred = torch.clamp(pred, 0, 1)
 
