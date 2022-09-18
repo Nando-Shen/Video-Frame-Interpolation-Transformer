@@ -505,7 +505,7 @@ class VFIformerSmall(nn.Module):
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]]])
-        self.cross_tran = TFCModel(img_size=(height, width), in_chans=3, out_chans=4, fuse_c=c,
+        self.cross_tran = TFCModel(img_size=(height, width), in_chans=3, out_chans=3, fuse_c=c,
                                           window_size=window_size, img_range=1.,
                                           depths=[[3, 3], [3, 3], [3, 3], [1, 1]],
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
@@ -569,14 +569,14 @@ class VFIformerSmall(nn.Module):
 
         c0, c1 = self.refinenet(img0, img1)
         i0_output = self.cross_tran(points, img0)
-        res0 = torch.sigmoid(i0_output[:, :3]) * 2 - 1
+        res0 = torch.sigmoid(i0_output)
         # mask0 = torch.sigmoid(i0_output[:, 3:4])
         # merged_img0 = img0 * mask0 + points * (1 - mask0)
         # pred0 = merged_img0 + res0
         # pred0 = torch.clamp(pred0, 0, 1)
 
         i1_output = self.cross_tran(points, img1)
-        res1 = torch.sigmoid(i1_output[:, :3]) * 2 - 1
+        res1 = torch.sigmoid(i1_output)
         # mask1 = torch.sigmoid(i1_output[:, 3:4])
         # merged_img1 = img1 * mask1 + points * (1 - mask1)
         # pred1 = merged_img1 + res1
@@ -595,7 +595,7 @@ class VFIformerSmall(nn.Module):
         pred = self.final_fuse_block(torch.cat([res0, res1, pred], dim=1))
         pred = torch.sigmoid(pred)
 
-        pred = torch.clamp(pred, 0, 1)
+        # pred = torch.clamp(pred, 0, 1)
 
         if self.phase == 'train':
             return pred
