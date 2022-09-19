@@ -904,9 +904,6 @@ class TFCModel(nn.Module):
 
         # self.conv_first = nn.Conv2d(num_in_ch, fuse_c, 3, 1, 1)
         self.conv_1 = nn.Conv2d(num_in_ch, fuse_c, 3, 1, 1)
-        self.conv_2 = nn.Conv2d(fuse_c, 2*fuse_c, 3, 1, 1)
-        self.conv_3 = nn.Conv2d(2*fuse_c, 4*fuse_c, 3, 1, 1)
-        self.conv_4 = nn.Conv2d(4*fuse_c, 8*fuse_c, 3, 1, 1)
 
         # split image into non-overlapping patches
         self.patch_embed = PatchEmbed(
@@ -1086,16 +1083,22 @@ class TFCModel(nn.Module):
         b0 = self.conv_1(y.contiguous())  # 1
         fea0 = self.forward_features(s0, b0, self.layers0)
 
-        s1 = self.conv_after_body0(fea0)
-        b1 = self.conv_after_body0(b0)
+        # s1 = self.conv_after_body0(fea0)
+        s1 = F.interpolate(fea0, scale_factor=0.5, mode="bilinear", align_corners=False)
+        # b1 = self.conv_after_body0(b0)
+        b1 = F.interpolate(b0, scale_factor=0.5, mode="bilinear", align_corners=False)
         fea1 = self.forward_features(s1, b1, self.layers1)
 
-        s2 = self.conv_after_body1(fea1)
-        b2 = self.conv_after_body0(b1)
+        # s2 = self.conv_after_body1(fea1)
+        s2 = F.interpolate(fea1, scale_factor=0.5, mode="bilinear", align_corners=False)
+        # b2 = self.conv_after_body0(b1)
+        b2 = F.interpolate(b1, scale_factor=0.5, mode="bilinear", align_corners=False)
         fea2 = self.forward_features(s2, b2, self.layers2)
 
-        s3 = self.conv_after_body2(fea2)
-        b3 = self.conv_after_body0(b2)
+        # s3 = self.conv_after_body2(fea2)
+        s3 = F.interpolate(fea2, scale_factor=0.5, mode="bilinear", align_corners=False)
+        # b3 = self.conv_after_body0(b2)
+        b3 = F.interpolate(b2, scale_factor=0.5, mode="bilinear", align_corners=False)
         fea3 = self.forward_features(s3, b3, self.layers3)
 
         fea3 = self.conv_up0(fea3)  # 1/8->1/4
