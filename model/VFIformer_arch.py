@@ -500,7 +500,7 @@ class VFIformerSmall(nn.Module):
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]]])
 
-        self.cross = TFCModel(img_size=(height, width), in_chans=4, out_chans=4, fuse_c=c,
+        self.cross = TFCModel(img_size=(height, width), in_chans=3, out_chans=4, fuse_c=c,
                                           window_size=window_size, img_range=1.,
                                           depths=[[3, 3], [3, 3], [2, 2], [1, 1]],
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
