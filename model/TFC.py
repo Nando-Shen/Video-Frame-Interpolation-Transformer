@@ -1082,12 +1082,9 @@ class TFCModel(nn.Module):
         return x
 
     def forward(self, x, y):
-        # print('x {}'.format(x.shape))
         s0 = self.conv_1(x.contiguous())  # 1
         b0 = self.conv_1(y.contiguous())  # 1
-        # print('x {}'.format(x.shape))
         fea0 = self.forward_features(s0, b0, self.layers0)
-        # print('fea00 {}'.format(fea0.shape))
 
         # s1 = self.conv_2(fea0)  # 1->1/2
         # b1 = self.conv_2(b0)  # 1->1/2
@@ -1103,23 +1100,17 @@ class TFCModel(nn.Module):
 
         # s3 = self.conv_4(fea2)  # 1/4->1/8
         # b3 = self.conv_4(b2)  # 1/4->1/8
-        # s3 = F.interpolate(fea2, scale_factor=0.5, mode="bilinear", align_corners=False)
-        # b3 = F.interpolate(b2, scale_factor=0.5, mode="bilinear", align_corners=False)
-        # print('s1 {}'.format(s3.shape))
-        # print('b1 {}'.format(b3.shape))
-        # fea3 = self.forward_features(s3, b3, self.layers3)
+        s3 = F.interpolate(fea2, scale_factor=0.5, mode="bilinear", align_corners=False)
+        b3 = F.interpolate(b2, scale_factor=0.5, mode="bilinear", align_corners=False)
 
-        # fea3 = self.conv_up0(torch.cat([fea3], dim=1))  # 1/8->1/4
-        # print('fea2 {}'.format(fea2.shape))
-        fea2 = self.conv_up0(fea2)  # 1/4->1/2
-        # print('fea2 {}'.format(fea2.shape))
-        fea1 = self.conv_up1(torch.cat([fea2, fea1], dim=1))  # 1/2->1
-        # print('fea1 {}'.format(fea1.shape))
-        # print('fea0 {}'.format(fea0.shape))
+        fea3 = self.forward_features(s3, b3, self.layers3)
+
+        fea3 = self.conv_up0(torch.cat([fea3], dim=1))  # 1/8->1/4
+        fea2 = self.conv_up1(torch.cat([fea3, fea2], dim=1))  # 1/4->1/2
+        fea1 = self.conv_up2(torch.cat([fea2, fea1], dim=1))  # 1/2->1
+
         out = self.conv_last1(torch.cat([fea1, fea0], dim=1)) + s0
-        # print('out {}'.format(out.shape))
         out = self.conv_last2(out)
-        # print('out {}'.format(out.shape))
         return out
 
     def flops(self):

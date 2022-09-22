@@ -571,18 +571,23 @@ class VFIformerSmall(nn.Module):
 
         refine_output = self.transformer(x)
         res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
-        # mask = torch.sigmoid(refine_output[:, 3:4])
-        # merged_img = img0 * mask + img1 * (1 - mask)
-        # pred = merged_img + res
-
-
-
+        mask = torch.sigmoid(refine_output[:, 3:4])
+        merged_img = img0 * mask + img1 * (1 - mask)
+        pred = merged_img + res
         pred = torch.clamp(pred, 0, 1)
 
+        cross_output = self.cross(pred, points)
+        cross_res = torch.sigmoid(cross_output[:, :3]) * 2 - 1
+        cross_mask = torch.sigmoid(cross_output[:, 3:4])
+        cross_merged_img = img0 * cross_mask + img1 * (1 - cross_mask)
+        cross_pred = cross_merged_img + cross_res
+
+        cross_pred = torch.clamp(cross_pred, 0, 1)
+
         if self.phase == 'train':
-            return pred
+            return cross_pred
         else:
-            return pred
+            return cross_pred
 
         # c0, c1 = self.refinenet(img0, img1)
         # x = self.fuse_block(torch.cat([img0, img1], dim=1))
