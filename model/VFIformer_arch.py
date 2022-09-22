@@ -16,6 +16,7 @@ from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 
 from model.warplayer import warp
 from model.transformer_layers import TFModel
+from model.TFC import TFCModel
 
 
 def make_layer(block, n_layers):
@@ -499,6 +500,16 @@ class VFIformerSmall(nn.Module):
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]]])
 
+        self.cross = TFCModel(img_size=(height, width), in_chans=4, out_chans=4, fuse_c=c,
+                                          window_size=window_size, img_range=1.,
+                                          depths=[[3, 3], [3, 3], [2, 2], [1, 1]],
+                                          embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
+                                          resi_connection='1conv',
+                                          use_crossattn=[[[False, False, False, False], [False, False, False, False]], \
+                                                      [[False, False, False, False], [False, False, False, False]], \
+                                                      [[False, False, False, False], [False, False, False, False]], \
+                                                      [[False, False, False, False], [False, False, False, False]]])
+
 
         self.apply(self._init_weights)
 
@@ -555,14 +566,17 @@ class VFIformerSmall(nn.Module):
         # warped_img0 = warp(img0, flow[:, :2])
         # warped_img1 = warp(img1, flow[:, 2:])
 
-        c0, c1 = self.refinenet(img0, img1)
+        # c0, c1 = self.refinenet(img0, img1)
         x = self.fuse_block(torch.cat([img0, img1, points], dim=1))
 
-        refine_output = self.transformer(x, c0, c1)
+        refine_output = self.transformer(x)
         res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
-        mask = torch.sigmoid(refine_output[:, 3:4])
-        merged_img = img0 * mask + img1 * (1 - mask)
-        pred = merged_img + res
+        # mask = torch.sigmoid(refine_output[:, 3:4])
+        # merged_img = img0 * mask + img1 * (1 - mask)
+        # pred = merged_img + res
+
+
+
         pred = torch.clamp(pred, 0, 1)
 
         if self.phase == 'train':
