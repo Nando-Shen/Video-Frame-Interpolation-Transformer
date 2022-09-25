@@ -569,14 +569,14 @@ class VFIformerSmall(nn.Module):
 
 
         i0_output = self.cross_tran(points, img0)
-        res0 = torch.sigmoid(i0_output)
+        res0 = torch.sigmoid(i0_output[:, :3]) * 2 - 1
         mask0 = torch.sigmoid(i0_output[:, 3:4])
         merged_img0 = img0 * mask0 + points * (1 - mask0)
         pred0 = merged_img0 + res0
         pred0 = torch.clamp(pred0, 0, 1)
 
         i1_output = self.cross_tran(points, img1)
-        res1 = torch.sigmoid(i1_output)
+        res1 = torch.sigmoid(i0_output[:, :3]) * 2 - 1
         mask1 = torch.sigmoid(i1_output[:, 3:4])
         merged_img1 = img1 * mask1 + points * (1 - mask1)
         pred1 = merged_img1 + res1
