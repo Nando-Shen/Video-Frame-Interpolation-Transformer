@@ -491,6 +491,11 @@ class VFIformerSmall(nn.Module):
                                          nn.Conv2d(2*c, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
+        self.single_fuse_block = nn.Sequential(nn.Conv2d(3, c, 3, 1, 1),
+                                         nn.LeakyReLU(negative_slope=0.2, inplace=True),
+                                         nn.Conv2d(c, c, 3, 1, 1),
+                                         nn.LeakyReLU(negative_slope=0.2, inplace=True))
+
         self.final_fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
                                             nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                             nn.Conv2d(2*c, 3, 3, 1, 1),
@@ -505,7 +510,7 @@ class VFIformerSmall(nn.Module):
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]]])
-        self.cross_tran = TFCModel(img_size=(height, width), in_chans=3, out_chans=3, fuse_c=c,
+        self.cross_tran = TFCModel(img_size=(height, width), in_chans=c, out_chans=3, fuse_c=c,
                                           window_size=window_size, img_range=1.,
                                           depths=[[3, 3], [3, 3], [3, 3], [1, 1]],
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
@@ -567,32 +572,36 @@ class VFIformerSmall(nn.Module):
         # warped_img0 = warp(img0, flow[:, :2])
         # warped_img1 = warp(img1, flow[:, 2:])
 
+        fuse_points = self.single_fuse_block(points)
+        fuse_img0 = self.single_fuse_block(img0)
+        fuse_img1 = self.single_fuse_block(img1)
 
-        i0_output = self.cross_tran(points, img0)
-        res0 = torch.sigmoid(i0_output[:, :3]) * 2 - 1
-        mask0 = torch.sigmoid(i0_output[:, 3:4])
-        merged_img0 = img0 * mask0 + points * (1 - mask0)
-        pred0 = merged_img0 + res0
-        pred0 = torch.clamp(pred0, 0, 1)
+        i0_output = self.cross_tran(fuse_points, fuse_img0)
+        res0 = torch.sigmoid(i0_output)
+        # mask0 = torch.sigmoid(i0_output[:, 3:4])
+        # merged_img0 = img0 * mask0 + points * (1 - mask0)
+        # pred0 = merged_img0 + res0
+        # pred0 = torch.clamp(pred0, 0, 1)
 
-        i1_output = self.cross_tran(points, img1)
-        res1 = torch.sigmoid(i0_output[:, :3]) * 2 - 1
-        mask1 = torch.sigmoid(i1_output[:, 3:4])
-        merged_img1 = img1 * mask1 + points * (1 - mask1)
-        pred1 = merged_img1 + res1
-        pred1 = torch.clamp(pred1, 0, 1)
+        i1_output = self.cross_tran(fuse_points, fuse_img1)
+        res1 = torch.sigmoid(i1_output)
+        # mask1 = torch.sigmoid(i1_output[:, 3:4])
+        # merged_img1 = img1 * mask1 + points * (1 - mask1)
+        # pred1 = merged_img1 + res1
+        # pred1 = torch.clamp(pred1, 0, 1)
 
-        c0, c1 = self.refinenet(pred0, pred1)
-        x = self.fuse_block(torch.cat([pred0, pred1, points], dim=1))
+        x = self.fuse_block(torch.cat([img0, img1, points], dim=1))
 
+        c0, c1 = self.refinenet(img0, img1)
         refine_output = self.transformer(x, c0, c1)
         res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
         mask = torch.sigmoid(refine_output[:, 3:4])
 
-        merged_img = pred0 * mask + pred1 * (1 - mask)
+        # merged_img = img0 * mask + img1 * (1 - mask)
+        merged_img = img0 * mask + img1 * (1 - mask)
         pred = merged_img + res
 
-        pred = self.final_fuse_block(torch.cat([pred0, pred1, pred], dim=1))
+        pred = self.final_fuse_block(torch.cat([res0, res1, pred], dim=1))
         pred = torch.sigmoid(pred)
 
         # pred = torch.clamp(pred, 0, 1)
