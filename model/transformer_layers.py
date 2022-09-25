@@ -929,20 +929,7 @@ class TFModel(nn.Module):
                          )
             self.layers3.append(layer)
 
-        self.conv_after_body0 = nn.Sequential(nn.Conv2d(embed_dim+fuse_c*2, embed_dim, 3, 2, 1),
-                                              nn.LeakyReLU(negative_slope=0.2, inplace=True),
-                                              nn.Conv2d(embed_dim, embed_dim, 3, 1, 1),
-                                              nn.LeakyReLU(negative_slope=0.2, inplace=True),)
-        self.conv_after_body1 = nn.Sequential(nn.Conv2d(embed_dim+fuse_c*4, embed_dim, 3, 2, 1),
-                                              nn.LeakyReLU(negative_slope=0.2, inplace=True),
-                                              nn.Conv2d(embed_dim, embed_dim, 3, 1, 1),
-                                              nn.LeakyReLU(negative_slope=0.2, inplace=True),)
-        self.conv_after_body2 = nn.Sequential(nn.Conv2d(embed_dim+fuse_c*8, embed_dim, 3, 2, 1),
-                                              nn.LeakyReLU(negative_slope=0.2, inplace=True),
-                                              nn.Conv2d(embed_dim, embed_dim, 3, 1, 1),
-                                              nn.LeakyReLU(negative_slope=0.2, inplace=True),)
-
-        self.conv_up0 = nn.Sequential(nn.ConvTranspose2d(embed_dim+fuse_c*16, embed_dim, 4, 2, 1),
+        self.conv_up0 = nn.Sequential(nn.ConvTranspose2d(embed_dim, embed_dim, 4, 2, 1),
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
         self.conv_up1 = nn.Sequential(nn.ConvTranspose2d(2*embed_dim, embed_dim, 4, 2, 1),
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
@@ -995,21 +982,21 @@ class TFModel(nn.Module):
 
         return x
 
-    def forward(self, x, c0, c1):
+    def forward(self, x):
 
         s0 = self.conv_first(x.contiguous())  # 1
         fea0 = self.forward_features(s0, self.layers0)
 
-        s1 = self.conv_after_body0(torch.cat([fea0, c0[0], c1[0]], dim=1))  # 1->1/2
+        s1 = F.interpolate(fea0, scale_factor=0.5, mode="bilinear", align_corners=False)
         fea1 = self.forward_features(s1, self.layers1)
 
-        s2 = self.conv_after_body1(torch.cat([fea1, c0[1], c1[1]], dim=1))  # 1/2->1/4
+        s2 = F.interpolate(fea1, scale_factor=0.5, mode="bilinear", align_corners=False)
         fea2 = self.forward_features(s2, self.layers2)
 
-        s3 = self.conv_after_body2(torch.cat([fea2, c0[2], c1[2]], dim=1))  # 1/4->1/8
+        s3 = F.interpolate(fea2, scale_factor=0.5, mode="bilinear", align_corners=False)
         fea3 = self.forward_features(s3, self.layers3)
 
-        fea3 = self.conv_up0(torch.cat([fea3, c0[3], c1[3]], dim=1))  # 1/8->1/4
+        fea3 = self.conv_up0(fea3)  # 1/8->1/4
         fea2 = self.conv_up1(torch.cat([fea3, fea2], dim=1))  # 1/4->1/2
         fea1 = self.conv_up2(torch.cat([fea2, fea1], dim=1))  # 1/2->1
 
