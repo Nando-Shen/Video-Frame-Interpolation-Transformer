@@ -317,7 +317,6 @@ class Loss(nn.modules.loss._Loss):
         if args.cuda:# and args.n_GPUs > 1:
             self.loss_module = nn.DataParallel(self.loss_module)
 
-
     def forward(self, sr, hr, fake_imgs=None):
         loss = 0
         losses = {}
@@ -334,7 +333,6 @@ class Loss(nn.modules.loss._Loss):
                 loss += effective_loss
             elif l['type'] == 'DIS':
                 losses[l['type']] = self.loss[i - 1]['function'].loss
-
 
         return loss, losses
 
@@ -374,4 +372,4 @@ class Ternary(nn.Module):
     def forward(self, img0, img1):
         img0 = self.transform(self.rgb2gray(img0))
         img1 = self.transform(self.rgb2gray(img1))
-        return self.hamming(img0, img1) * self.valid_mask(img0, 1)
+        return (self.hamming(img0, img1) * self.valid_mask(img0, 1)).mean()
