@@ -273,7 +273,7 @@ class Loss(nn.modules.loss._Loss):
     def __init__(self, args):
         super(Loss, self).__init__()
         print('Preparing loss function:')
-
+        device = torch.device('cuda' if args.cuda else 'cpu')
         self.loss = []
         self.loss_module = nn.ModuleList()
         for loss in args.loss.split('+'):
@@ -293,7 +293,7 @@ class Loss(nn.modules.loss._Loss):
             elif loss_type.find('GAN') >= 0:
                 loss_function = Adversarial(args, loss_type)
             elif loss_type == 'Ternary':
-                loss_function = Ternary()
+                loss_function = Ternary(device)
 
             self.loss.append({
                 'type': loss_type,
@@ -340,14 +340,14 @@ class Loss(nn.modules.loss._Loss):
 
 
 class Ternary(nn.Module):
-    def __init__(self):
+    def __init__(self, device):
         super(Ternary, self).__init__()
         patch_size = 7
         out_channels = patch_size * patch_size
         self.w = np.eye(out_channels).reshape(
             (patch_size, patch_size, 1, out_channels))
         self.w = np.transpose(self.w, (3, 2, 0, 1))
-        # self.w = torch.tensor(self.w).float().to(device)
+        self.w = torch.tensor(self.w).float().to(device)
 
     def transform(self, img):
         patches = F.conv2d(img, self.w, padding=3, bias=None)
