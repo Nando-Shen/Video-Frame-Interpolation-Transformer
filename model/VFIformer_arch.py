@@ -493,12 +493,12 @@ class VFIformerSmall(nn.Module):
                                          nn.Conv2d(2*c, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
-        self.final_fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
+        self.final_fuse_block = nn.Sequential(nn.Conv2d(12, 2*c, 3, 1, 1),
                                             nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                             nn.Conv2d(2*c, 3, 3, 1, 1),
                                             nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
-        self.transformer = TFModel(img_size=(height, width), in_chans=2*c, out_chans=4, fuse_c=c,
+        self.transformer = TFModel(img_size=(height, width), in_chans=2*c, out_chans=3, fuse_c=c,
                                           window_size=window_size, img_range=1.,
                                           depths=[[3, 3], [3, 3], [3, 3], [1, 1]],
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
@@ -590,14 +590,15 @@ class VFIformerSmall(nn.Module):
         x = self.fuse_block(torch.cat([img0, img1, points], dim=1))
 
         refine_output = self.transformer(x)
-        res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
-        mask = torch.sigmoid(refine_output[:, 3:4])
+        res = torch.sigmoid(refine_output)
+        # res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
+        # mask = torch.sigmoid(refine_output[:, 3:4])
 
         # merged_img = img0 * mask + img1 * (1 - mask)
-        merged_img = img0 * mask + img1 * (1 - mask)
-        pred = merged_img + res
+        # merged_img = img0 * mask + img1 * (1 - mask)
+        # pred = merged_img + res
 
-        pred = self.final_fuse_block(torch.cat([res0, res1, pred], dim=1))
+        pred = self.final_fuse_block(torch.cat([res0, res1, res, flow], dim=1))
         pred = torch.sigmoid(pred)
 
         # pred = torch.clamp(pred, 0, 1)
