@@ -484,8 +484,10 @@ class VFIformerSmall(nn.Module):
         window_size = 8
         embed_dim = 160
 
+        # self.flownet = IFNet()
+        # self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
         self.flownet = IFNet()
-        self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
+        self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
         self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                          nn.Conv2d(2*c, 2*c, 3, 1, 1),
@@ -553,7 +555,7 @@ class VFIformerSmall(nn.Module):
 
     def forward(self, img0, img1, points):
         B, _, H, W = img0.size()
-        # imgs = torch.cat((img0, img1), 1)
+        imgs = torch.cat((img0, img1), 1)
 
         # if flow_pre is not None:
         #     flow = flow_pre
@@ -567,7 +569,10 @@ class VFIformerSmall(nn.Module):
         # warped_img0 = warp(img0, flow[:, :2])
         # warped_img1 = warp(img1, flow[:, 2:])
 
-        c0, c1 = self.refinenet(img0, img1)
+        flow, flow_list = self.flownet(imgs)
+        flow, _, _ = self.refinenet(img0, img1, flow)
+        # c0, c1 = self.refinenet(img0, img1)
+
         i0_output = self.cross_tran(points, img0)
         res0 = torch.sigmoid(i0_output)
         # mask0 = torch.sigmoid(i0_output[:, 3:4])
@@ -584,7 +589,7 @@ class VFIformerSmall(nn.Module):
 
         x = self.fuse_block(torch.cat([img0, img1, points], dim=1))
 
-        refine_output = self.transformer(x, c0, c1)
+        refine_output = self.transformer(x)
         res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
         mask = torch.sigmoid(refine_output[:, 3:4])
 
