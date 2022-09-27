@@ -942,7 +942,7 @@ class TFModel(nn.Module):
                                               nn.Conv2d(embed_dim, embed_dim, 3, 1, 1),
                                               nn.LeakyReLU(negative_slope=0.2, inplace=True),)
 
-        self.conv_up0 = nn.Sequential(nn.ConvTranspose2d(embed_dim, embed_dim, 4, 2, 1),
+        self.conv_up0 = nn.Sequential(nn.ConvTranspose2d(embed_dim+fuse_c*16, embed_dim, 4, 2, 1),
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
         self.conv_up1 = nn.Sequential(nn.ConvTranspose2d(2*embed_dim, embed_dim, 4, 2, 1),
                                       nn.LeakyReLU(negative_slope=0.2, inplace=True))
