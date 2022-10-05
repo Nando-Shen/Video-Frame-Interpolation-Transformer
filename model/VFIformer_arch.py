@@ -570,7 +570,7 @@ class VFIformerSmall(nn.Module):
         # warped_img1 = warp(img1, flow[:, 2:])
 
         flow, _ = self.flownet(imgs)
-        flow, c0, c1 = self.refinenet(img0, img1, flow)
+        flow, _, _ = self.refinenet(img0, img1, flow)
         # c0, c1 = self.refinenet(img0, img1)
 
         warped_img0 = warp(img0, flow[:, :2])
@@ -592,7 +592,7 @@ class VFIformerSmall(nn.Module):
 
         x = self.fuse_block(torch.cat([warped_img0, warped_img1, points], dim=1))
 
-        refine_output = self.transformer(x, c0, c1)
+        refine_output = self.transformer(x)
         res = torch.sigmoid(refine_output)
         # res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
         # mask = torch.sigmoid(refine_output[:, 3:4])
