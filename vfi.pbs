@@ -1,10 +1,10 @@
 #!/bin/bash
 #PBS -P VUR
 #PBS -l select=1:ncpus=4:ngpus=1:mem=16GB
-#PBS -l walltime=30:00:00
+#PBS -l walltime=20:00:00
 #PBS -j oe
 
-cd /home/jshe2377/flowdeep/Video-Frame-Interpolation-Transformer
+cd /home/jshe2377/intflowdeep/Video-Frame-Interpolation-Transformer
 
 module load python/3.8.2 magma/2.5.3 openmpi-gcc/3.1.5
 source /home/jshe2377/NeuS/neus/bin/activate
