@@ -507,11 +507,11 @@ class VFIformerSmall(nn.Module):
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]]])
-        self.cross_tran = TFCModel(img_size=(height, width), in_chans=3, out_chans=3, fuse_c=c,
-                                          window_size=window_size, img_range=1.,
-                                          depths=[[3, 3], [3, 3], [3, 3], [1, 1]],
-                                          embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
-                                          resi_connection='1conv')
+        # self.cross_tran = TFCModel(img_size=(height, width), in_chans=3, out_chans=3, fuse_c=c,
+        #                                   window_size=window_size, img_range=1.,
+        #                                   depths=[[3, 3], [3, 3], [3, 3], [1, 1]],
+        #                                   embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
+        #                                   resi_connection='1conv')
 
 
         self.apply(self._init_weights)
