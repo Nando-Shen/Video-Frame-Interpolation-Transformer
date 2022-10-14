@@ -37,14 +37,13 @@ class ATD12k(Dataset):
 
         if self.training:
             self.transforms = transforms.Compose([
-                transforms.RandomCrop(192),
-                transforms.RandomHorizontalFlip(),
-                # transforms.ColorJitter(0.05, 0.05, 0.05, 0.05),
-                transforms.ToTensor()
+                transforms.CenterCrop((224,224)),
+                transforms.ToTensor(),
             ])
         else:
             self.transforms = transforms.Compose([
-                transforms.ToTensor()
+                transforms.CenterCrop((224, 224)),
+                transforms.ToTensor(),
             ])
 
     def __getitem__(self, index):
