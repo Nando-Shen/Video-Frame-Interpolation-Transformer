@@ -29,54 +29,56 @@ class ATD12k(Dataset):
                 continue
             img0 = os.path.join(self.data_root, d, 'frame1.jpg')
             img1 = os.path.join(self.data_root, d, 'frame3.jpg')
-            gt = os.path.join(self.data_root, d, 'frame2.jpg')
             points = os.path.join(self.data_root, d, 'inter.jpg')
-            data_list.append([img0, img1, gt, points, d])
+            gt = os.path.join(self.data_root, d, 'frame2.jpg')
+            data_list.append([img0, img1, points, gt, d])
 
         self.data_list = data_list
 
         if self.training:
             self.transforms = transforms.Compose([
-                transforms.CenterCrop((224,224)),
-                transforms.ToTensor(),
+                # transforms.RandomCrop(228),
+                transforms.RandomHorizontalFlip(),
+                # transforms.ColorJitter(0.05, 0.05, 0.05, 0.05),
+                transforms.ToTensor()
             ])
         else:
             self.transforms = transforms.Compose([
-                transforms.CenterCrop((224, 224)),
-                transforms.ToTensor(),
+                transforms.ToTensor()
             ])
 
     def __getitem__(self, index):
 
         imgpaths = [self.data_list[index][0], self.data_list[index][1], self.data_list[index][2], self.data_list[index][3]]
-
         # Load images
         images = [Image.open(pth) for pth in imgpaths]
-
         ## Select only relevant inputs
         # inputs = [int(e)-1 for e in list(self.inputs)]
         # inputs = inputs[:len(inputs)//2] + [3] + inputs[len(inputs)//2:]
         # images = [images[i] for i in inputs]
         # imgpaths = [imgpaths[i] for i in inputs]
         # Data augmentation
+        size = (192, 384)
         if self.training:
             seed = random.randint(0, 2**32)
             images_ = []
             for img_ in images:
+                img_ = img_.resize(size)
                 random.seed(seed)
                 images_.append(self.transforms(img_))
             images = images_
 
-            gt = images[2]
-            images = images[:2]
+            gt = images[3]
+
+            images = images[:3]
 
             return images, gt
         else:
             T = self.transforms
-            images = [T(img_) for img_ in images]
+            images = [T(img_.resize(size)) for img_ in images]
 
-            gt = images[2]
-            images = images[:2]
+            gt = images[3]
+            images = images[:3]
             imgpath = self.data_list[index][4]
 
             return images, gt, imgpath
