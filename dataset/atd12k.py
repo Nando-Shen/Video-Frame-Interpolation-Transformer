@@ -29,9 +29,11 @@ class ATD12k(Dataset):
                 continue
             img0 = os.path.join(self.data_root, d, 'frame1.jpg')
             img1 = os.path.join(self.data_root, d, 'frame3.jpg')
-            points = os.path.join(self.data_root, d, 'inter.jpg')
+            points14 = os.path.join(self.data_root, d, 'inter14.jpg')
+            points12 = os.path.join(self.data_root, d, 'inter12.jpg')
+            points34 = os.path.join(self.data_root, d, 'inter34.jpg')
             gt = os.path.join(self.data_root, d, 'frame2.jpg')
-            data_list.append([img0, img1, points, gt, d])
+            data_list.append([img0, img1, points14, points12, points34, gt, d])
 
         self.data_list = data_list
 
@@ -68,18 +70,18 @@ class ATD12k(Dataset):
                 images_.append(self.transforms(img_))
             images = images_
 
-            gt = images[3]
+            gt = images[5]
 
-            images = images[:3]
+            images = images[:5]
 
             return images, gt
         else:
             T = self.transforms
             images = [T(img_.resize(size)) for img_ in images]
 
-            gt = images[3]
-            images = images[:3]
-            imgpath = self.data_list[index][4]
+            gt = images[5]
+            images = images[:5]
+            imgpath = self.data_list[index][6]
 
             return images, gt, imgpath
 

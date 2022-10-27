@@ -488,7 +488,7 @@ class VFIformerSmall(nn.Module):
         # self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
         self.flownet = IFNet()
         self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
-        self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
+        self.fuse_block = nn.Sequential(nn.Conv2d(15, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                          nn.Conv2d(2*c, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True))
@@ -507,7 +507,7 @@ class VFIformerSmall(nn.Module):
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]], \
                                                       [[False, False, False, False], [False, False, False, False]]])
-        self.cross_tran = TFCModel(img_size=(height, width), in_chans=3, out_chans=3, fuse_c=c,
+        self.cross_tran = TFCModel(img_size=(height, width), in_chans=9, out_chans=3, fuse_c=c,
                                           window_size=window_size, img_range=1.,
                                           depths=[[3, 3], [3, 3], [3, 3], [1, 1]],
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,

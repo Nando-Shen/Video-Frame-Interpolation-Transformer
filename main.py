@@ -86,11 +86,13 @@ def train(args, epoch):
         # Build input batch
         images = [img_.to(device) for img_ in images]
 
+        points = torch.cat([images[2],images[3],images[4]], 1)
+
         # Forward
         optimizer.zero_grad()
         if args.model == 'VFI':
             with autocast():
-                out = model(images[0], images[1], images[2])
+                out = model(images[0], images[1], points)
                 gt = gt_image.to(device)
 
                 loss, _ = criterion(out, gt)
@@ -137,8 +139,9 @@ def test(args, epoch):
         for i, (images, gt_image, _) in enumerate(tqdm(test_loader)):
 
             images = [img_.to(device) for img_ in images]
+            points = torch.cat([images[2], images[3], images[4]], dim=1)
             if args.model == 'VFI':
-                out = model(images[0], images[1], images[2])
+                out = model(images[0], images[1], points)
             else:
                 out = model(images)
 
