@@ -211,7 +211,7 @@ def main(args):
         is_best = psnr > best_psnr
         best_psnr = max(psnr, best_psnr)
         if is_best:
-            shutil.copyfile(os.path.join(save_loc, 'checkpoint.pth'), os.path.join(save_loc, 'model_best.pth'))
+            shutil.copyfile(os.path.join(save_loc, 'checkpoint.pth'), os.path.join(save_loc, 'model_best1.pth'))
 
         one_epoch_time = time.time() - start_time
         print_log(epoch, args.max_epoch, one_epoch_time, psnr, ssim, optimizer.param_groups[-1]['lr'])
