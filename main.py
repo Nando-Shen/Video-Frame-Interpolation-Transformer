@@ -4,6 +4,7 @@ import torch
 from tqdm import tqdm
 
 from torch.cuda.amp import autocast, GradScaler
+from torchvision.utils import save_image as imwrite
 
 import config
 import myutils
@@ -136,7 +137,7 @@ def test(args, epoch):
 
     t = time.time()
     with torch.no_grad():
-        for i, (images, gt_image, _) in enumerate(tqdm(test_loader)):
+        for i, (images, gt_image, datapath) in enumerate(tqdm(test_loader)):
 
             images = [img_.to(device) for img_ in images]
             points = torch.cat([images[2], images[3], images[4]], dim=1)
@@ -147,7 +148,14 @@ def test(args, epoch):
 
             gt = gt_image.to(device)
 
+            print(out.size())
+
             # out = model(images) ## images is a list of neighboring frames
+            for idx in range(out.size()[0]):
+                # print(idx)
+                print(datapath[idx])
+                # os.makedirs(args.result_dir + '/' + datapath[idx])
+                # imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/fullhalfmix.png')
 
             # Save loss values
             loss, loss_specific = criterion(out, gt)
@@ -188,9 +196,10 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    load_checkpoint(args, model, optimizer, save_loc+'/checkpoint.pth')
-    # test_loss, psnr, ssim = test(args, args.start_epoch)
-    # print(psnr)
+    load_checkpoint(args, model, optimizer, save_loc+'/flowdeep_model_best1.pth')
+    test_loss, psnr, ssim = test(args, args.start_epoch)
+    print("psnr :{}, ssim:{}".format(psnr, ssim))
+    exit()
 
     best_psnr = 0
     for epoch in range(args.start_epoch, args.max_epoch):
