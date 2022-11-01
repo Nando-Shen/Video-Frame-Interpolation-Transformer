@@ -153,9 +153,9 @@ def test(args, epoch):
             # out = model(images) ## images is a list of neighboring frames
             for idx in range(out.size()[0]):
                 # print(idx)
-                print(datapath[idx])
-                # os.makedirs(args.result_dir + '/' + datapath[idx])
-                # imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/fullhalfmix.png')
+                # print(datapath[idx])
+                os.makedirs(args.result_dir + '/' + datapath[idx])
+                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/flowdeep.png')
 
             # Save loss values
             loss, loss_specific = criterion(out, gt)
