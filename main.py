@@ -149,9 +149,9 @@ def test(args, epoch):
 
             for idx in range(out.size()[0]):
                 # print(idx)
-                print(datapath[idx])
-                # os.makedirs(args.result_dir + '/' + datapath[idx])
-                # imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/fullhalfmix.png')
+                # print(datapath[idx])
+                os.makedirs(args.result_dir + '/' + datapath[idx])
+                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/fullhalfmix.png')
 
 
             # out = model(images) ## images is a list of neighboring frames
