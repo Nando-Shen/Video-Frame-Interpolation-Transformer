@@ -498,7 +498,7 @@ class VFIformerSmall(nn.Module):
                                             nn.Conv2d(2*c, 3, 3, 1, 1),
                                             nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
-        self.points_fuse = nn.Sequential(nn.Conv2d(2, 2*c, 3, 1, 1),
+        self.points_fuse = nn.Sequential(nn.Conv2d(1, 2*c, 3, 1, 1),
                                             nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                             nn.Conv2d(2*c, 3, 3, 1, 1),
                                             nn.LeakyReLU(negative_slope=0.2, inplace=True))
