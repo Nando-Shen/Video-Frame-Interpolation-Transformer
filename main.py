@@ -88,6 +88,7 @@ def train(args, epoch):
         images = [img_.to(device) for img_ in images]
 
         points = torch.cat([images[2],images[3],images[4]], 1)
+        print(points.size())
 
         # Forward
         optimizer.zero_grad()
