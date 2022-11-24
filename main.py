@@ -86,10 +86,7 @@ def train(args, epoch):
 
         # Build input batch
         images = [img_.to(device) for img_ in images]
-        print(images[0].size())
-        print(images[2].size())
         points = torch.cat([images[2],images[3],images[4]], 1)
-        print(points.size())
 
         # Forward
         optimizer.zero_grad()
@@ -150,7 +147,7 @@ def test(args, epoch):
 
             gt = gt_image.to(device)
 
-            print(out.size())
+            # print(out.size())
 
             # out = model(images) ## images is a list of neighboring frames
             for idx in range(out.size()[0]):
