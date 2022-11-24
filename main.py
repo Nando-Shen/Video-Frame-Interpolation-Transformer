@@ -87,7 +87,7 @@ def train(args, epoch):
         # Build input batch
         images = [img_.to(device) for img_ in images]
 
-
+        points = torch.cat([images[2],images[3],images[4]], 1)
 
         # Forward
         optimizer.zero_grad()
