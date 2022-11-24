@@ -87,7 +87,7 @@ def train(args, epoch):
         # Build input batch
         images = [img_.to(device) for img_ in images]
 
-        points = torch.cat([images[2],images[3],images[4]], 1)
+
 
         # Forward
         optimizer.zero_grad()
@@ -196,10 +196,10 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    load_checkpoint(args, model, optimizer, save_loc+'/flowdeep_model_best1.pth')
-    test_loss, psnr, ssim = test(args, args.start_epoch)
-    print("psnr :{}, ssim:{}".format(psnr, ssim))
-    exit()
+    # load_checkpoint(args, model, optimizer, save_loc+'/flowdeep_model_best1.pth')
+    # test_loss, psnr, ssim = test(args, args.start_epoch)
+    # print("psnr :{}, ssim:{}".format(psnr, ssim))
+    # exit()
 
     best_psnr = 0
     for epoch in range(args.start_epoch, args.max_epoch):
