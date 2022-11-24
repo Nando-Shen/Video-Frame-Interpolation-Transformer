@@ -88,7 +88,7 @@ def train(args, epoch):
         images = [img_.to(device) for img_ in images]
         print(images[0].size())
         print(images[2].size())
-        points = torch.cat([images[2],images[3],images[4]], 1)
+        points = torch.cat([images[3],images[4]], 1)
         print(points.size())
 
         # Forward
@@ -142,7 +142,7 @@ def test(args, epoch):
         for i, (images, gt_image, datapath) in enumerate(tqdm(test_loader)):
 
             images = [img_.to(device) for img_ in images]
-            points = torch.cat([images[2], images[3], images[4]], dim=1)
+            points = torch.cat([images[3], images[4]], dim=1)
             if args.model == 'VFI':
                 out = model(images[0], images[1], points)
             else:
