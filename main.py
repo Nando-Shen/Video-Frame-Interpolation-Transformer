@@ -86,7 +86,8 @@ def train(args, epoch):
 
         # Build input batch
         images = [img_.to(device) for img_ in images]
-
+        print(images[0].size())
+        print(images[2].size())
         points = torch.cat([images[2],images[3],images[4]], 1)
         print(points.size())
 
