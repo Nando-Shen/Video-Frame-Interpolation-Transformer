@@ -4,11 +4,11 @@
 #PBS -l walltime=48:00:00
 #PBS -j oe
 
-cd /project/VUR/jshe2377/ab_newflowdeep4/Video-Frame-Interpolation-Transformer
+cd /project/VUR/jshe2377/ab_newflowdeep5/Video-Frame-Interpolation-Transformer
 
 module load python/3.8.2 magma/2.5.3 openmpi-gcc/3.1.5
 source /home/jshe2377/NeuS/neus/bin/activate
 module load cuda/10.2.89
 
 python main.py --model VFI --dataset atd12k \
---data_root /project/VUR/jshe2377/atd12k_points_new/atd12k_points --batch_size 2
+--data_root /project/VUR/jshe2377/atd12k_points_three/atd12k_points --batch_size 2
