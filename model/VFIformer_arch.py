@@ -498,7 +498,7 @@ class VFIformerSmall(nn.Module):
                                             nn.Conv2d(2*c, 3, 3, 1, 1),
                                             nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
-        self.points_fuse = nn.Sequential(nn.Conv2d(3, 2*c, 3, 1, 1),
+        self.points_fuse = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
                                             nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                             nn.Conv2d(2*c, 3, 3, 1, 1),
                                             nn.LeakyReLU(negative_slope=0.2, inplace=True))
@@ -581,7 +581,7 @@ class VFIformerSmall(nn.Module):
         warped_img0 = warp(img0, flow[:, :2])
         warped_img1 = warp(img1, flow[:, 2:])
 
-        points = self.points_fuse(points)
+        points = self.points_fuse(torch.cat([points[0], points[1], points[2]], dim=1))
 
         i0_output = self.cross_tran(points, warped_img0)
         res0 = torch.sigmoid(i0_output)
