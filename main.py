@@ -195,7 +195,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    # load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
+    load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
     # test_loss, psnr, ssim = test(args, args.start_epoch)
     # print("psnr :{}, ssim:{}".format(psnr, ssim))
     # exit()
