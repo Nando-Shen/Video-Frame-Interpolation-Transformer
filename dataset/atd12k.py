@@ -31,12 +31,13 @@ class ATD12k(Dataset):
             img1 = os.path.join(self.data_root, d, 'frame3.jpg')
             # points14 = os.path.join(self.data_root, d, 'frame3.jpg')
 
-            points14 = os.path.join(self.data_root, d, 'inter14.jpg')
-            points12 = os.path.join(self.data_root, d, 'inter12.jpg')
-            points34 = os.path.join(self.data_root, d, 'inter34.jpg')
             gt = os.path.join(self.data_root, d, 'frame2.jpg')
+
+            dt1 = os.path.join(self.data_root, d, 'dt1.jpg')
+            dt3 = os.path.join(self.data_root, d, 'dt3.jpg')
+
             # data_list.append([img0, img1, points14, points12, points34, gt, d])
-            data_list.append([img0, img1, points14, points12, points34, gt, d])
+            data_list.append([img0, img1, dt1, dt3, gt, d])
 
         self.data_list = data_list
 
