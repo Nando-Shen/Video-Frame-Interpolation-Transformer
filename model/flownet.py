@@ -16,15 +16,15 @@ try:
 
     from networks.submodules import *
 except:
-    from networks.resample2d_package.resample2d import Resample2d
-    from networks.channelnorm_package.channelnorm import ChannelNorm
+    from model.networks.resample2d_package.resample2d import Resample2d
+    from model.networks.channelnorm_package.channelnorm import ChannelNorm
 
-    from networks import FlowNetC
-    from networks import FlowNetS
-    from networks import FlowNetSD
-    from networks import FlowNetFusion
+    from model.networks import FlowNetC
+    from model.networks import FlowNetS
+    from model.networks import FlowNetSD
+    from model.networks import FlowNetFusion
 
-    from networks.submodules import *
+    from model.networks.submodules import *
 'Parameter count = 162,518,834'
 
 class FlowNet2(nn.Module):
