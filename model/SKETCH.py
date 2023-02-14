@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from model.Sep_STS_Encoder import ResBlock
-from flownet import FlowNet2
+from model.flownet import FlowNet2
 
 def joinTensors(X1 , X2 , type="concat"):
 
