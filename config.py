@@ -47,6 +47,12 @@ parser.add_argument('--phase', default='train', type=str)
 parser.add_argument('--crop_size', default=192, type=int)
 parser.add_argument('--result_dir', default='train', type=str)
 
+# flow
+parser.add_argument("--rgb_max", type=float, default = 255.)
+parser.add_argument('--fp16', action='store_true', help='Run model in pseudo-fp16 mode (fp16 storage fp32 math).')
+parser.add_argument('--fp16_scale', type=float, default=1024.,
+                    help='Loss scaling, positive power of 2 values can improve fp16 convergence.')
+
 # Misc
 misc_arg = add_argument_group('Misc')
 misc_arg.add_argument('--exp_name', type=str, default='exp')

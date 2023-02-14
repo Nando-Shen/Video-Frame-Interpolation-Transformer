@@ -55,12 +55,18 @@ elif args.model == 'VFIT_B':
     from model.VFIT_B import UNet_3D_3D
 elif args.model == 'VFI':
     from model.VFIformer_arch import VFIformerSmall
+elif args.model == 'SKETCH':
+    from model.SKETCH import SKETCH
 
 print("Building model: %s"%args.model)
 if args.model == 'VFI':
     args.device = device
     args.resume_flownet = False
     model = VFIformerSmall(args)
+elif args.model == 'SKETCH':
+    args.device = device
+    args.resume_flownet = False
+    model = SKETCH(args)
 else:
     model = UNet_3D_3D( n_inputs=args.nbr_frame, joinType=args.joinType)
 model = torch.nn.DataParallel(model).to(device)
@@ -86,13 +92,12 @@ def train(args, epoch):
 
         # Build input batch
         images = [img_.to(device) for img_ in images]
-        points = torch.cat([images[2],images[4]], 1)
 
         # Forward
         optimizer.zero_grad()
-        if args.model == 'VFI':
+        if args.model == 'SKETCH':
             with autocast():
-                out = model(images[0], images[1], points)
+                out = model(images[2], images[3])
                 gt = gt_image.to(device)
 
                 loss, _ = criterion(out, gt)
@@ -195,7 +200,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
+    # load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
     # test_loss, psnr, ssim = test(args, args.start_epoch)
     # print("psnr :{}, ssim:{}".format(psnr, ssim))
     # exit()
