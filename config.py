@@ -50,7 +50,7 @@ parser.add_argument('--result_dir', default='train', type=str)
 # Misc
 misc_arg = add_argument_group('Misc')
 misc_arg.add_argument('--exp_name', type=str, default='exp')
-misc_arg.add_argument('--log_iter', type=int, default=100)
+misc_arg.add_argument('--log_iter', type=int, default=500)
 misc_arg.add_argument('--num_gpu', type=int, default=1)
 misc_arg.add_argument('--random_seed', type=int, default=103)
 misc_arg.add_argument('--num_workers', type=int, default=1)
