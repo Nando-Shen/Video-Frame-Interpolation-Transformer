@@ -18,6 +18,8 @@ from model.warplayer import warp
 from model.transformer_layers import TFModel
 from model.TFC import TFCModel
 
+from rfr_model.rfr_new import RFR
+from softsplat import ModuleSoftsplat as ForwardWarp
 
 def make_layer(block, n_layers):
     layers = []
@@ -478,6 +480,8 @@ class VFIformerSmall(nn.Module):
         super(VFIformerSmall, self).__init__()
         self.phase = args.phase
         self.device = args.device
+        args.small = False
+        args.mixed_precision = False
         c = 24
         height = args.crop_size
         width = args.crop_size
@@ -486,8 +490,11 @@ class VFIformerSmall(nn.Module):
 
         # self.flownet = IFNet()
         # self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
-        self.flownet = IFNet()
-        self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
+        # self.flownet = IFNet()
+        self.animeflownet = RFR(args)
+        self.fwarp = ForwardWarp('summation')
+
+        # self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
         self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                          nn.Conv2d(2*c, 2*c, 3, 1, 1),
@@ -560,7 +567,7 @@ class VFIformerSmall(nn.Module):
 
     def forward(self, img0, img1, points):
         B, _, H, W = img0.size()
-        imgs = torch.cat((img0, img1), 1)
+        # imgs = torch.cat((img0, img1), 1)
 
         # if flow_pre is not None:
         #     flow = flow_pre
@@ -573,13 +580,23 @@ class VFIformerSmall(nn.Module):
         #
         # warped_img0 = warp(img0, flow[:, :2])
         # warped_img1 = warp(img1, flow[:, 2:])
+        img0o = (img0 - 0.5) / 0.5
+        img1o = (img1 - 0.5) / 0.5
+        F12, F12in, err12, = self.flownet(img0o, img1o, iters=12, test_mode=False, flow_init=None)
+        F21, F21in, err12, = self.flownet(img1o, img0o, iters=12, test_mode=False, flow_init=None)
 
-        flow, _ = self.flownet(imgs)
-        flow, _, _ = self.refinenet(img0, img1, flow)
+        F1t = 0.5 * F12
+        F2t = 0.5 * F21
+
+        warped_img0 = self.fwarp(img0, F1t)
+        warped_img1 = self.fwarp(img1, F2t)
+
+        # flow, _ = self.flownet(imgs)
+        # flow, _, _ = self.refinenet(img0, img1, flow)
         # c0, c1 = self.refinenet(img0, img1)
 
-        warped_img0 = warp(img0, flow[:, :2])
-        warped_img1 = warp(img1, flow[:, 2:])
+        # warped_img0 = warp(img0, flow[:, :2])
+        # warped_img1 = warp(img1, flow[:, 2:])
 
         points = self.points_fuse(points)
 
