@@ -582,8 +582,8 @@ class VFIformerSmall(nn.Module):
         # warped_img1 = warp(img1, flow[:, 2:])
         img0o = (img0 - 0.5) / 0.5
         img1o = (img1 - 0.5) / 0.5
-        F12, F12in, err12, = self.flownet(img0o, img1o, iters=12, test_mode=False, flow_init=None)
-        F21, F21in, err12, = self.flownet(img1o, img0o, iters=12, test_mode=False, flow_init=None)
+        F12, F12in, err12, = self.animeflownet(img0o, img1o, iters=12, test_mode=False, flow_init=None)
+        F21, F21in, err12, = self.animeflownet(img1o, img0o, iters=12, test_mode=False, flow_init=None)
 
         F1t = 0.5 * F12
         F2t = 0.5 * F21
