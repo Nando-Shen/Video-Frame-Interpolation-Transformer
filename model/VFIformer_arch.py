@@ -18,7 +18,7 @@ from model.warplayer import warp
 from model.transformer_layers import TFModel
 from model.TFC import TFCModel
 
-from rfr_model.rfr_new import RFR
+from .rfr_model.rfr_new import RFR
 from softsplat import ModuleSoftsplat as ForwardWarp
 
 def make_layer(block, n_layers):
