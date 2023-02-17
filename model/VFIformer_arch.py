@@ -512,7 +512,7 @@ class VFIformerSmall(nn.Module):
 
         self.transformer = TFModel(img_size=(height, width), in_chans=2*c, out_chans=3, fuse_c=c,
                                           window_size=window_size, img_range=1.,
-                                          depths=[[4, 4], [4, 4], [2, 2], [1, 1]],
+                                          depths=[[3, 3], [3, 3], [3, 3], [1, 1]],
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
                                           resi_connection='1conv',
                                           use_crossattn=[[[False, False, False, False], [False, False, False, False]], \
@@ -521,7 +521,7 @@ class VFIformerSmall(nn.Module):
                                                       [[False, False, False, False], [False, False, False, False]]])
         self.cross_tran = TFCModel(img_size=(height, width), in_chans=3, out_chans=3, fuse_c=c,
                                           window_size=window_size, img_range=1.,
-                                          depths=[[4, 4], [4, 4], [2, 2], [1, 1]],
+                                          depths=[[3, 3], [3, 3], [3, 3], [1, 1]],
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
                                           resi_connection='1conv')
 
@@ -590,6 +590,11 @@ class VFIformerSmall(nn.Module):
 
         warped_img0 = self.fwarp(img0, F1t)
         warped_img1 = self.fwarp(img1, F2t)
+        one0 = torch.ones(img0.size(), requires_grad=True).cuda()
+        norm1 = self.fwarp(one0, F1t.clone())
+        norm2 = self.fwarp(one0, F2t.clone())
+        warped_img0[norm1 > 0] = warped_img0.clone()[norm1 > 0] / norm1[norm1 > 0]
+        warped_img1[norm2 > 0] = warped_img1.clone()[norm2 > 0] / norm2[norm2 > 0]
 
         # flow, _ = self.flownet(imgs)
         # flow, _, _ = self.refinenet(img0, img1, flow)
