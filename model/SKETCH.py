@@ -1,10 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from model.Sep_STS_Encoder import ResBlock
-from model.flownet import FlowNet2
 import math
-
 from model.pwc import PWC
 
 def joinTensors(X1 , X2 , type="concat"):
