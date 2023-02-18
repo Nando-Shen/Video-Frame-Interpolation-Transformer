@@ -11,4 +11,4 @@ source /home/jshe2377/NeuS/neus/bin/activate
 module load cuda/10.2.89
 
 python main.py --model VFI --dataset atd12k \
---data_root /home/jiaming/atd12k_points --batch_size 4
+--data_root /home/jiaming/atd12k_points --batch_size 3
