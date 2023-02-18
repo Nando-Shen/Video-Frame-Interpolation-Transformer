@@ -3,6 +3,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 from model.Sep_STS_Encoder import ResBlock
 from model.flownet import FlowNet2
+import math
+
+from model.pwc import PWC
 
 def joinTensors(X1 , X2 , type="concat"):
 
@@ -65,12 +68,30 @@ class SKETCH(nn.Module):
     def __init__(self, args):
         super().__init__()
 
-        self.flownet = FlowNet2(args)
+        self.flownet = PWC()
+
 
 
     def forward(self, img0, img1):
+        intWidth = img0.shape[2]
+        intHeight = img0.shape[1]
+        tenPreprocessedOne = img0.view(1, 3, intHeight, intWidth)
+        tenPreprocessedTwo = img1.view(1, 3, intHeight, intWidth)
+        intPreprocessedWidth = int(math.floor(math.ceil(intWidth / 64.0) * 64.0))
+        intPreprocessedHeight = int(math.floor(math.ceil(intHeight / 64.0) * 64.0))
 
-        flow = self.flownet(torch.cat([img0, img1], dim=1))
+        tenPreprocessedOne = torch.nn.functional.interpolate(input=tenPreprocessedOne,
+                                                             size=(intPreprocessedHeight, intPreprocessedWidth),
+                                                             mode='bilinear', align_corners=False)
+        tenPreprocessedTwo = torch.nn.functional.interpolate(input=tenPreprocessedTwo,
+                                                             size=(intPreprocessedHeight, intPreprocessedWidth),
+                                                             mode='bilinear', align_corners=False)
+        tenFlow = torch.nn.functional.interpolate(input=PWC(tenPreprocessedOne, tenPreprocessedTwo),
+                                                  size=(intHeight, intWidth), mode='bilinear', align_corners=False)
+
+        tenFlow[:, 0, :, :] *= float(intWidth) / float(intPreprocessedWidth)
+        tenFlow[:, 1, :, :] *= float(intHeight) / float(intPreprocessedHeight)
+        flow = tenFlow[0, :, :, :]
         print(flow.size())
         out = img0 - flow/2
         return out
