@@ -97,6 +97,7 @@ def train(args, epoch):
         optimizer.zero_grad()
         if args.model == 'SKETCH':
             with autocast():
+                print(images[2].size())
                 out = model(images[2], images[3])
                 gt = gt_image.to(device)
 
