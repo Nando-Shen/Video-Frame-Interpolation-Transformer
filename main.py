@@ -98,9 +98,8 @@ def train(args, epoch):
         optimizer.zero_grad()
         if args.model == 'SKETCH':
             with autocast():
-                img0 = cv2.cvtColor(images[2], cv2.COLOR_GRAY2RGB)
-                img1 = cv2.cvtColor(images[3], cv2.COLOR_GRAY2RGB)
-                out = model(img0, img1)
+
+                out = model(images[2], images[3])
                 gt = gt_image.to(device)
 
                 loss, _ = criterion(out, gt)
