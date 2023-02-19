@@ -62,45 +62,85 @@ class Conv_3d(nn.Module):
 
         return self.conv(x)
 
+def conv(in_planes, out_planes, kernel_size=3, stride=1, padding=1, dilation=1):
+    return nn.Sequential(
+        nn.Conv2d(in_planes, out_planes, kernel_size=kernel_size, stride=stride,
+                  padding=padding, dilation=dilation, bias=True),
+        nn.PReLU(out_planes)
+    )
+
+
+class IFBlock(nn.Module):
+    def __init__(self, in_planes, scale=1, c=64):
+        super(IFBlock, self).__init__()
+        self.scale = scale
+        self.conv0 = nn.Sequential(
+            conv(in_planes, c // 2, 3, 2, 1),
+            conv(c // 2, c, 3, 2, 1),
+        )
+        self.convblock = nn.Sequential(
+            conv(c, c),
+            conv(c, c),
+            conv(c, c),
+            conv(c, c),
+            conv(c, c),
+            conv(c, c),
+            conv(c, c),
+            conv(c, c),
+        )
+        self.conv1 = nn.ConvTranspose2d(c, 4, 4, 2, 1)
+
+    def forward(self, x):
+        if self.scale != 1:
+            x = F.interpolate(x, scale_factor=1. / self.scale, mode="bilinear", align_corners=False)
+        x = self.conv0(x)
+        x = self.convblock(x) + x
+        x = self.conv1(x)
+        flow = x
+        if self.scale != 1:
+            flow = F.interpolate(flow, scale_factor=self.scale, mode="bilinear", align_corners=False)
+        return flow
+
+
+class IFNet(nn.Module):
+    def __init__(self, args=None):
+        super(IFNet, self).__init__()
+        self.block0 = IFBlock(6, scale=4, c=240)
+        self.block1 = IFBlock(10, scale=2, c=150)
+        self.block2 = IFBlock(10, scale=1, c=90)
+
+    def forward(self, x):
+        flow0 = self.block0(x)
+        F1 = flow0
+        F1_large = F.interpolate(F1, scale_factor=2.0, mode="bilinear", align_corners=False) * 2.0
+        warped_img0 = warp(x[:, :3], F1_large[:, :2])
+        warped_img1 = warp(x[:, 3:], F1_large[:, 2:4])
+        flow1 = self.block1(torch.cat((warped_img0, warped_img1, F1_large), 1))
+        F2 = (flow0 + flow1)
+        F2_large = F.interpolate(F2, scale_factor=2.0, mode="bilinear", align_corners=False) * 2.0
+        warped_img0 = warp(x[:, :3], F2_large[:, :2])
+        warped_img1 = warp(x[:, 3:], F2_large[:, 2:4])
+        flow2 = self.block2(torch.cat((warped_img0, warped_img1, F2_large), 1))
+        F3 = (flow0 + flow1 + flow2)
+
+        return F3, [F1, F2, F3]
+
 
 class SKETCH(nn.Module):
     def __init__(self, args):
         super().__init__()
 
-        self.flownet = PWC()
-        self.fuse = nn.Sequential(nn.Conv2d(2, 24, 3, 1, 1),
-                                            nn.LeakyReLU(negative_slope=0.2, inplace=True),
-                                            nn.Conv2d(24, 3, 3, 1, 1),
-                                            nn.LeakyReLU(negative_slope=0.2, inplace=True))
-
+        self.flownet = IFNet()
 
 
     def forward(self, img0, img1):
-        intWidth = img0.shape[3]
-        intHeight = img0.shape[2]
-        # img0 = torch.cat([img0,img0,img0], dim=1)
-        # img1 = torch.cat([img1,img1,img1], dim=1)
-        print(img0.size())
-        print(intWidth)
 
-        # tenPreprocessedOne = img0.view(4, 3, intHeight, intWidth)
-        # tenPreprocessedTwo = img1.view(4, 3, intHeight, intWidth)
-        intPreprocessedWidth = int(math.floor(math.ceil(intWidth / 64.0) * 64.0))
-        intPreprocessedHeight = int(math.floor(math.ceil(intHeight / 64.0) * 64.0))
-
-        tenPreprocessedOne = torch.nn.functional.interpolate(input=img0,
-                                                             size=(intPreprocessedHeight, intPreprocessedWidth),
-                                                             mode='bilinear', align_corners=False)
-        tenPreprocessedTwo = torch.nn.functional.interpolate(input=img1,
-                                                             size=(intPreprocessedHeight, intPreprocessedWidth),
-                                                             mode='bilinear', align_corners=False)
-        tenFlow = torch.nn.functional.interpolate(input=self.flownet(tenPreprocessedOne, tenPreprocessedTwo),
-                                                  size=(intHeight, intWidth), mode='bilinear', align_corners=False)
-
-        tenFlow[:, 0, :, :] *= float(intWidth) / float(intPreprocessedWidth)
-        tenFlow[:, 1, :, :] *= float(intHeight) / float(intPreprocessedHeight)
-        flow = tenFlow.permute(0,2,3,1)/2
+        B, _, H, W = img0.size()
+        self.flownet = IFNet()
+        imgs = torch.cat((img0, img1), 1)
+        flow, flow_list = self.flownet(imgs)
         print(flow.size())
+
         # out = img0[:, :1, :, :] - flow / 2
         out = torch.nn.functional.grid_sample(input=img0, grid=flow, mode='bilinear', padding_mode='border',
                                         align_corners=True)
