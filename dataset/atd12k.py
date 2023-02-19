@@ -75,7 +75,7 @@ class ATD12k(Dataset):
             seed = random.randint(0, 2**32)
             images_ = []
             for img_ in images:
-                # img_ = img_.convert('RGB').resize(size)
+                img_ = img_.convert('RGB').resize(size)
                 random.seed(seed)
                 images_.append(self.transforms(img_))
             images = images_
