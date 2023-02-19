@@ -87,7 +87,7 @@ class ATD12k(Dataset):
             return images, gt
         else:
             T = self.transforms
-            images = [T(img_.resize(size)) for img_ in images]
+            images = [T(img_.convert('RGB').resize(size)) for img_ in images]
 
             gt = images[4]
             images = images[:4]
