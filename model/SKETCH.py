@@ -95,7 +95,7 @@ class SKETCH(nn.Module):
         tenFlow[:, 1, :, :] *= float(intHeight) / float(intPreprocessedHeight)
         flow = tenFlow[:, :, :, :]
         print(flow.size())
-        out = img0 - flow/2
+        out = img0[:, :1, :, :] - flow/2
         return out
 
 if __name__ == '__main__':
