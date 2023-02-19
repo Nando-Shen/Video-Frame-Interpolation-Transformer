@@ -99,7 +99,7 @@ class SKETCH(nn.Module):
 
         tenFlow[:, 0, :, :] *= float(intWidth) / float(intPreprocessedWidth)
         tenFlow[:, 1, :, :] *= float(intHeight) / float(intPreprocessedHeight)
-        flow = tenFlow[:, :, :, :]
+        flow = tenFlow.permute(0,2,3,1)
         print(flow.size())
         # out = img0[:, :1, :, :] - flow / 2
         out = warp(img0, flow)
