@@ -251,7 +251,7 @@ class PWC(torch.nn.Module):
         self.netSix = Decoder(6)
 
         self.netRefiner = Refiner()
-
+        arguments_strModel = 'default'
         self.load_state_dict({ strKey.replace('module', 'net'): tenWeight for strKey, tenWeight in torch.hub.load_state_dict_from_url(url='http://content.sniklaus.com/github/pytorch-pwc/network-' + arguments_strModel + '.pytorch', file_name='pwc-' + arguments_strModel).items() })
     # end
 
