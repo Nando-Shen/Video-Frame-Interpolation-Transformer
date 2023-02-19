@@ -66,6 +66,10 @@ class SKETCH(nn.Module):
         super().__init__()
 
         self.flownet = PWC()
+        self.fuse = nn.Sequential(nn.Conv2d(2, 24, 3, 1, 1),
+                                            nn.LeakyReLU(negative_slope=0.2, inplace=True),
+                                            nn.Conv2d(24, 3, 3, 1, 1),
+                                            nn.LeakyReLU(negative_slope=0.2, inplace=True))
 
 
 
@@ -96,6 +100,7 @@ class SKETCH(nn.Module):
         flow = tenFlow[:, :, :, :]
         print(flow.size())
         out = img0[:, :1, :, :] - flow/2
+        out = self.fuse(out)
         return out
 
 if __name__ == '__main__':
