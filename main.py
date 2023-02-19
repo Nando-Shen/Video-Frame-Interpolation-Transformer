@@ -102,7 +102,7 @@ def train(args, epoch):
                 gt = gt_image.to(device)
 
                 loss, _ = criterion(out, gt)
-                overall_loss = loss
+                # overall_loss = loss
 
                 losses['total'].update(loss.item())
         else:
@@ -115,8 +115,8 @@ def train(args, epoch):
             losses['total'].update(loss.item())
             overall_loss.backward()
             optimizer.step()
-
-        scaler.scale(overall_loss).backward()
+        loss.requires_grad = True
+        scaler.scale(loss).backward()
         scaler.step(optimizer)
 
         scaler.update()
