@@ -179,14 +179,14 @@ class SKETCH(nn.Module):
         self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
 
 
-    def forward(self, img0, img1):
+    def forward(self,ii, img0, img1):
 
         B, _, H, W = img0.size()
         imgs = torch.cat((img0, img1), 1)
         flow, flow_list = self.flownet(imgs)
         flow, c0, c1 = self.refinenet(img0, img1, flow)
 
-        out = warp(img0, flow[:, :2]/2)
+        out = warp(ii, flow[:, :2]/2)
         # out = img0[:, :1, :, :] - flow / 2
         # out = torch.nn.functional.grid_sample(input=img0, grid=flow, mode='bilinear', padding_mode='border',
         #                                 align_corners=True)

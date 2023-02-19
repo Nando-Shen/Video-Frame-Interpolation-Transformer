@@ -97,7 +97,7 @@ def train(args, epoch):
         # Forward
         optimizer.zero_grad()
         if args.model == 'SKETCH':
-            out = model(images[2], images[3])
+            out = model(images[0], images[2], images[3])
             gt = gt_image.to(device)
 
             loss, _ = criterion(out, gt)
@@ -142,7 +142,7 @@ def test(args, epoch):
 
             images = [img_.to(device) for img_ in images]
             if args.model == 'SKETCH':
-                out = model(images[2], images[3])
+                out = model(images[0], images[2], images[3])
                 gt = gt_image.to(device)
 
                 loss, _ = criterion(out, gt)
