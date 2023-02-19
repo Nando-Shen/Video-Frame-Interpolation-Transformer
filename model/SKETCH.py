@@ -174,6 +174,7 @@ class FlowRefineNet_Multis_Simple(nn.Module):
 class SKETCH(nn.Module):
     def __init__(self, args):
         super(SKETCH,self).__init__()
+        c = 24
         self.flownet = IFNet()
         self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
 
