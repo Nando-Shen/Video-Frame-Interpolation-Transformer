@@ -114,7 +114,6 @@ def train(args, epoch):
             losses['total'].update(loss.item())
             overall_loss.backward()
             optimizer.step()
-        loss.requires_grad = True
         # scaler.scale(loss).backward()
         # scaler.step(optimizer)
         loss.backward()
