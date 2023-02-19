@@ -3,6 +3,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math
 from model.pwc import PWC
+from model.warplayer import warp
+
 
 def joinTensors(X1 , X2 , type="concat"):
 
@@ -99,8 +101,9 @@ class SKETCH(nn.Module):
         tenFlow[:, 1, :, :] *= float(intHeight) / float(intPreprocessedHeight)
         flow = tenFlow[:, :, :, :]
         print(flow.size())
-        out = img0[:, :1, :, :] - flow/2
-        out = self.fuse(out)
+        # out = img0[:, :1, :, :] - flow / 2
+        out = warp(img0, flow)
+        # out = self.fuse(out)
         return out
 
 if __name__ == '__main__':

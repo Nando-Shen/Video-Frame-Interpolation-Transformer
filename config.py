@@ -12,6 +12,7 @@ def add_argument_group(name):
 data_arg = add_argument_group('Dataset')
 data_arg.add_argument('--dataset', type=str, default='vimeo90K_septuplet')
 data_arg.add_argument('--data_root', type=str, default='/home/zhihao/DATA-M2/video_interpolation/vimeo_septuplet/')
+data_arg.add_argument('--flow_root', type=str, default='/home/jiaming/sgm/')
 
 # data_arg.add_argument('--dataset', type=str, default='Davis')
 # data_arg.add_argument('--data_root', type=str, default='/home/zhihao/DATA-M2/video_interpolation/Davis/')

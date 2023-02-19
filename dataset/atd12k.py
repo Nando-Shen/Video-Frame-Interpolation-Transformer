@@ -14,13 +14,16 @@ class ATD12k(Dataset):
             input_frames: Which frames to input for frame interpolation network.
         """
         self.data_root = data_root
+        # self.flow_root = data_root
 
         self.training = is_training
         self.inputs = input_frames
         if is_training:
             self.data_root = os.path.join(self.data_root, 'train_10k')
+            # self.flow_root = os.path.join(self.flow_root, 'train_10k')
         else:
             self.data_root = os.path.join(self.data_root, 'test_2k_540p')
+            # self.flow_root = os.path.join(self.flow_root, 'test_2k_540p')
 
         dirs = os.listdir(self.data_root)
         data_list = []
@@ -35,6 +38,9 @@ class ATD12k(Dataset):
 
             dt1 = os.path.join(self.data_root, d, 'dt1.jpg')
             dt3 = os.path.join(self.data_root, d, 'dt3.jpg')
+
+            # flowPath[index].append(os.path.join(flowFolderPath, 'guide_flo13.npy'))
+            # flowPath[index].append(os.path.join(flowFolderPath, 'guide_flo31.npy'))
 
             # data_list.append([img0, img1, points14, points12, points34, gt, d])
             data_list.append([img0, img1, dt1, dt3, gt, d])
