@@ -136,9 +136,10 @@ class SKETCH(nn.Module):
         flow, flow_list = self.flownet(imgs)
         print(flow.size())
 
+        out = warp(img0, flow[:, :2]/2)
         # out = img0[:, :1, :, :] - flow / 2
-        out = torch.nn.functional.grid_sample(input=img0, grid=flow, mode='bilinear', padding_mode='border',
-                                        align_corners=True)
+        # out = torch.nn.functional.grid_sample(input=img0, grid=flow, mode='bilinear', padding_mode='border',
+        #                                 align_corners=True)
         # out = self.fuse(out)
         return out
 
