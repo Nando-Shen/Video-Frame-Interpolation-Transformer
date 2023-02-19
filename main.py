@@ -97,14 +97,13 @@ def train(args, epoch):
         # Forward
         optimizer.zero_grad()
         if args.model == 'SKETCH':
-            with autocast():
-                out = model(images[2], images[3])
-                gt = gt_image.to(device)
+            out = model(images[2], images[3])
+            gt = gt_image.to(device)
 
-                loss, _ = criterion(out, gt)
-                # overall_loss = loss
+            loss, _ = criterion(out, gt)
+            # overall_loss = loss
 
-                losses['total'].update(loss.item())
+            losses['total'].update(loss.item())
         else:
             out_ll, out_l, out = model(images)
             gt = gt_image.to(device)
@@ -118,6 +117,8 @@ def train(args, epoch):
         loss.requires_grad = True
         # scaler.scale(loss).backward()
         # scaler.step(optimizer)
+        loss.backward()
+        optimizer.step()
 
         # scaler.update()
 

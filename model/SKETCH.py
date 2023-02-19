@@ -1,8 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import math
-from model.pwc import PWC
 from model.warplayer import warp
 
 
@@ -129,9 +127,7 @@ class IFNet(nn.Module):
 class SKETCH(nn.Module):
     def __init__(self, args):
         super().__init__()
-
         self.flownet = IFNet()
-
 
     def forward(self, img0, img1):
 
