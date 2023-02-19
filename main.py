@@ -67,7 +67,7 @@ if args.model == 'VFI':
 elif args.model == 'SKETCH':
     args.device = device
     args.resume_flownet = False
-    model = SKETCH(args)
+    model = SKETCH(args).cuda()
 else:
     model = UNet_3D_3D( n_inputs=args.nbr_frame, joinType=args.joinType)
 model = torch.nn.DataParallel(model).to(device)
