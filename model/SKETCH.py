@@ -74,6 +74,7 @@ class SKETCH(nn.Module):
         intHeight = img0.shape[1]
         img0 = torch.cat([img0,img0,img0], dim=1)
         img1 = torch.cat([img1,img1,img1], dim=1)
+        print(img0.size())
 
         # tenPreprocessedOne = img0.view(1, 3, intHeight, intWidth)
         # tenPreprocessedTwo = img1.view(1, 3, intHeight, intWidth)
