@@ -72,15 +72,15 @@ class SKETCH(nn.Module):
     def forward(self, img0, img1):
         intWidth = img0.shape[2]
         intHeight = img0.shape[1]
-        tenPreprocessedOne = img0.view(1, 3, intHeight, intWidth)
-        tenPreprocessedTwo = img1.view(1, 3, intHeight, intWidth)
+        # tenPreprocessedOne = img0.view(1, 3, intHeight, intWidth)
+        # tenPreprocessedTwo = img1.view(1, 3, intHeight, intWidth)
         intPreprocessedWidth = int(math.floor(math.ceil(intWidth / 64.0) * 64.0))
         intPreprocessedHeight = int(math.floor(math.ceil(intHeight / 64.0) * 64.0))
 
-        tenPreprocessedOne = torch.nn.functional.interpolate(input=tenPreprocessedOne,
+        tenPreprocessedOne = torch.nn.functional.interpolate(input=img0,
                                                              size=(intPreprocessedHeight, intPreprocessedWidth),
                                                              mode='bilinear', align_corners=False)
-        tenPreprocessedTwo = torch.nn.functional.interpolate(input=tenPreprocessedTwo,
+        tenPreprocessedTwo = torch.nn.functional.interpolate(input=img1,
                                                              size=(intPreprocessedHeight, intPreprocessedWidth),
                                                              mode='bilinear', align_corners=False)
         tenFlow = torch.nn.functional.interpolate(input=PWC(tenPreprocessedOne, tenPreprocessedTwo),
