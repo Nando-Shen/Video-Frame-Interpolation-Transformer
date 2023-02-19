@@ -76,8 +76,8 @@ class SKETCH(nn.Module):
     def forward(self, img0, img1):
         intWidth = img0.shape[3]
         intHeight = img0.shape[2]
-        img0 = torch.cat([img0,img0,img0], dim=1)
-        img1 = torch.cat([img1,img1,img1], dim=1)
+        # img0 = torch.cat([img0,img0,img0], dim=1)
+        # img1 = torch.cat([img1,img1,img1], dim=1)
         print(img0.size())
         print(intWidth)
 

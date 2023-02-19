@@ -11,6 +11,7 @@ import myutils
 from loss import Loss
 import shutil
 import os
+import cv2
 
 def load_checkpoint(args, model, optimizer, path):
     print("loading checkpoint %s" % path)
@@ -97,7 +98,9 @@ def train(args, epoch):
         optimizer.zero_grad()
         if args.model == 'SKETCH':
             with autocast():
-                out = model(images[2], images[3])
+                img0 = cv2.cvtColor(images[2], cv2.COLOR_GRAY2RGB)
+                img1 = cv2.cvtColor(images[3], cv2.COLOR_GRAY2RGB)
+                out = model(img0, img1)
                 gt = gt_image.to(device)
 
                 loss, _ = criterion(out, gt)
