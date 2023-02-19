@@ -83,7 +83,7 @@ class SKETCH(nn.Module):
         tenPreprocessedTwo = torch.nn.functional.interpolate(input=img1,
                                                              size=(intPreprocessedHeight, intPreprocessedWidth),
                                                              mode='bilinear', align_corners=False)
-        tenFlow = torch.nn.functional.interpolate(input=PWC(tenPreprocessedOne, tenPreprocessedTwo),
+        tenFlow = torch.nn.functional.interpolate(input=self.flownet(tenPreprocessedOne, tenPreprocessedTwo),
                                                   size=(intHeight, intWidth), mode='bilinear', align_corners=False)
 
         tenFlow[:, 0, :, :] *= float(intWidth) / float(intPreprocessedWidth)
