@@ -102,7 +102,8 @@ class SKETCH(nn.Module):
         flow = tenFlow.permute(0,2,3,1)/2
         print(flow.size())
         # out = img0[:, :1, :, :] - flow / 2
-        out = warp(img0, flow)
+        out = torch.nn.functional.grid_sample(input=img0, grid=flow, mode='bilinear', padding_mode='border',
+                                        align_corners=True)
         # out = self.fuse(out)
         return out
 
