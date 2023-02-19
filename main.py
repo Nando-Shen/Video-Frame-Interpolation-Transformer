@@ -116,10 +116,10 @@ def train(args, epoch):
             overall_loss.backward()
             optimizer.step()
         loss.requires_grad = True
-        scaler.scale(loss).backward()
-        scaler.step(optimizer)
+        # scaler.scale(loss).backward()
+        # scaler.step(optimizer)
 
-        scaler.update()
+        # scaler.update()
 
         # Calc metrics & print logs
         if i % args.log_iter == 0:
