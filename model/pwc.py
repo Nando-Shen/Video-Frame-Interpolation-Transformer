@@ -72,7 +72,7 @@ class PWC(torch.nn.Module):
                 super().__init__()
 
                 self.netOne = torch.nn.Sequential(
-                    torch.nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3, stride=2, padding=1),
+                    torch.nn.Conv2d(in_channels=1, out_channels=16, kernel_size=3, stride=2, padding=1),
                     torch.nn.LeakyReLU(inplace=False, negative_slope=0.1),
                     torch.nn.Conv2d(in_channels=16, out_channels=16, kernel_size=3, stride=1, padding=1),
                     torch.nn.LeakyReLU(inplace=False, negative_slope=0.1),
