@@ -70,21 +70,21 @@ class SKETCH(nn.Module):
 
 
     def forward(self, img0, img1):
-        intWidth = img0.shape[2]
-        intHeight = img0.shape[1]
+        intWidth = img0.shape[3]
+        intHeight = img0.shape[2]
         img0 = torch.cat([img0,img0,img0], dim=1)
         img1 = torch.cat([img1,img1,img1], dim=1)
         print(img0.size())
 
-        # tenPreprocessedOne = img0.view(1, 3, intHeight, intWidth)
-        # tenPreprocessedTwo = img1.view(1, 3, intHeight, intWidth)
+        tenPreprocessedOne = img0.view(1, 3, intHeight, intWidth)
+        tenPreprocessedTwo = img1.view(1, 3, intHeight, intWidth)
         intPreprocessedWidth = int(math.floor(math.ceil(intWidth / 64.0) * 64.0))
         intPreprocessedHeight = int(math.floor(math.ceil(intHeight / 64.0) * 64.0))
 
-        tenPreprocessedOne = torch.nn.functional.interpolate(input=img0,
+        tenPreprocessedOne = torch.nn.functional.interpolate(input=tenPreprocessedOne,
                                                              size=(intPreprocessedHeight, intPreprocessedWidth),
                                                              mode='bilinear', align_corners=False)
-        tenPreprocessedTwo = torch.nn.functional.interpolate(input=img1,
+        tenPreprocessedTwo = torch.nn.functional.interpolate(input=tenPreprocessedTwo,
                                                              size=(intPreprocessedHeight, intPreprocessedWidth),
                                                              mode='bilinear', align_corners=False)
         tenFlow = torch.nn.functional.interpolate(input=self.flownet(tenPreprocessedOne, tenPreprocessedTwo),
