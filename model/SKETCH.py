@@ -126,13 +126,12 @@ class IFNet(nn.Module):
 
 class SKETCH(nn.Module):
     def __init__(self, args):
-        super().__init__()
+        super(SKETCH,self).__init__()
         self.flownet = IFNet()
 
     def forward(self, img0, img1):
 
         B, _, H, W = img0.size()
-        self.flownet = IFNet()
         imgs = torch.cat((img0, img1), 1)
         flow, flow_list = self.flownet(imgs)
         print(flow.size())
