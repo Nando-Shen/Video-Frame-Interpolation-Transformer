@@ -114,13 +114,9 @@ def train(args, epoch):
             losses['total'].update(loss.item())
             overall_loss.backward()
             optimizer.step()
-        # scaler.scale(loss).backward()
-        # scaler.step(optimizer)
+
         loss.backward()
         optimizer.step()
-
-        # scaler.update()
-
         # Calc metrics & print logs
         if i % args.log_iter == 0:
             with autocast():
@@ -145,9 +141,11 @@ def test(args, epoch):
         for i, (images, gt_image, datapath) in enumerate(tqdm(test_loader)):
 
             images = [img_.to(device) for img_ in images]
-            points = torch.cat([images[2], images[4]], dim=1)
-            if args.model == 'VFI':
-                out = model(images[0], images[1], points)
+            if args.model == 'SKETCH':
+                out = model(images[2], images[3])
+                gt = gt_image.to(device)
+
+                loss, _ = criterion(out, gt)
             else:
                 out = model(images)
 
