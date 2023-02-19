@@ -124,16 +124,67 @@ class IFNet(nn.Module):
         return F3, [F1, F2, F3]
 
 
+class Conv2(nn.Module):
+    def __init__(self, in_planes, out_planes, stride=2):
+        super(Conv2, self).__init__()
+        self.conv1 = conv(in_planes, out_planes, 3, stride, 1)
+        self.conv2 = conv(out_planes, out_planes, 3, 1, 1)
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        return x
+
+class FlowRefineNet_Multis_Simple(nn.Module):
+    def __init__(self, c=24, n_iters=1):
+        super(FlowRefineNet_Multis_Simple, self).__init__()
+
+        self.conv1 = Conv2(3, c, 1)
+        self.conv2 = Conv2(c, 2 * c)
+        self.conv3 = Conv2(2 * c, 4 * c)
+        self.conv4 = Conv2(4 * c, 8 * c)
+
+    def forward(self, x0, x1, flow):
+        bs = x0.size(0)
+
+        inp = torch.cat([x0, x1], dim=0)
+        s_1 = self.conv1(inp)  # 1
+        s_2 = self.conv2(s_1)  # 1/2
+        s_3 = self.conv3(s_2)  # 1/4
+        s_4 = self.conv4(s_3)  # 1/8
+
+        flow = F.interpolate(flow, scale_factor=2., mode="bilinear", align_corners=False) * 2.
+
+        # warp features by the updated flow
+        c0 = [s_1[:bs], s_2[:bs], s_3[:bs], s_4[:bs]]
+        c1 = [s_1[bs:], s_2[bs:], s_3[bs:], s_4[bs:]]
+        out0 = self.warp_fea(c0, flow[:, :2])
+        out1 = self.warp_fea(c1, flow[:, 2:4])
+
+        return flow, out0, out1
+
+    def warp_fea(self, feas, flow):
+        outs = []
+        for i, fea in enumerate(feas):
+            out = warp(fea, flow)
+            outs.append(out)
+            flow = F.interpolate(flow, scale_factor=0.5, mode="bilinear", align_corners=False) * 0.5
+        return outs
+
 class SKETCH(nn.Module):
     def __init__(self, args):
         super(SKETCH,self).__init__()
         self.flownet = IFNet()
+        self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
+
 
     def forward(self, img0, img1):
 
         B, _, H, W = img0.size()
         imgs = torch.cat((img0, img1), 1)
         flow, flow_list = self.flownet(imgs)
+        flow, c0, c1 = self.refinenet(img0, img1, flow)
+
         print(flow.size())
 
         out = warp(img0, flow[:, :2]/2)
