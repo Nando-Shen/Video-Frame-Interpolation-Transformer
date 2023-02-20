@@ -46,7 +46,7 @@ learn_arg.add_argument("--pretrained" , type=str,
 
 parser.add_argument('--phase', default='train', type=str)
 parser.add_argument('--crop_size', default=192, type=int)
-parser.add_argument('--result_dir', default='train', type=str)
+parser.add_argument('--result_dir', default='/home/jiaming/sfi-result', type=str)
 
 # flow
 parser.add_argument("--rgb_max", type=float, default = 255.)

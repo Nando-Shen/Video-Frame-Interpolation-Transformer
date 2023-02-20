@@ -155,17 +155,17 @@ def test(args, epoch):
 
             out = model(images[0], images[2], images[3]) ## images is a list of neighboring frames
             for idx in range(out.size()[0]):
-                print(idx)
-                print(datapath[idx])
-                # os.makedirs(args.result_dir + '/' + datapath[idx])
-                # imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/flowdeep.png')
+                # print(idx)
+                # print(datapath[idx])
+                os.makedirs(args.result_dir + '/' + datapath[idx])
+                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/sfi.png')
 
             # Save loss values
-            loss, loss_specific = criterion(out, gt)
-            for k, v in losses.items():
-                if k != 'total':
-                    v.update(loss_specific[k].item())
-            losses['total'].update(loss.item())
+            # loss, loss_specific = criterion(out, gt)
+            # for k, v in losses.items():
+            #     if k != 'total':
+            #         v.update(loss_specific[k].item())
+            # losses['total'].update(loss.item())
 
             # Evaluate metrics
             myutils.eval_metrics(out, gt, psnrs, ssims)
