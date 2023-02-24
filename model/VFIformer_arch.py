@@ -490,9 +490,9 @@ class VFIformerSmall(nn.Module):
         # self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
         from .sintel import get_cfg
 
-        args = {'stage': 'sintel', 'mixed_precision': True}
+        argss = {'stage': 'sintel', 'mixed_precision': True}
         cfg = get_cfg()
-        cfg.update(args)
+        cfg.update(argss)
 
         self.flownet = FlowFormer(cfg['latentcostformer'])
         self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
