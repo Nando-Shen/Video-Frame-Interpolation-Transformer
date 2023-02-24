@@ -492,7 +492,7 @@ class VFIformerSmall(nn.Module):
 
         args = {'stage': 'sintel', 'mixed_precision': True}
         cfg = get_cfg()
-        cfg.update(vars(args))
+        cfg.update(args)
 
         self.flownet = FlowFormer(cfg)
         self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
