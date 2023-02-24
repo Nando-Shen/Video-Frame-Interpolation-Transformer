@@ -495,8 +495,8 @@ class VFIformerSmall(nn.Module):
         cfg.update(argss)
 
         self.flownet = FlowFormer(cfg['latentcostformer'])
-        self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
-        self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
+        # self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
+        self.fuse_block = nn.Sequential(nn.Conv2d(15, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                          nn.Conv2d(2*c, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True))
@@ -585,8 +585,6 @@ class VFIformerSmall(nn.Module):
         flow0 = self.flownet(img0,img1)[0]
         flow1 = self.flownet(img1,img0)[0]
 
-        print(flow0.size())
-        print(img0.size())
         # flow, _, _ = self.refinenet(img0, img1, torch.cat(flow, dim = 0))
         # c0, c1 = self.refinenet(img0, img1)
 
@@ -612,7 +610,7 @@ class VFIformerSmall(nn.Module):
         # pred1 = merged_img1 + res1
         # pred1 = torch.clamp(pred1, 0, 1)
 
-        x = self.fuse_block(torch.cat([warped_img0, warped_img1, points], dim=1))
+        x = self.fuse_block(torch.cat([warped_img0, warped_img1, img0, img1, points], dim=1))
 
         refine_output = self.transformer(x)
         res = torch.sigmoid(refine_output)
