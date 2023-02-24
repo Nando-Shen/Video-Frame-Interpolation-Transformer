@@ -1,26 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="sketch training">
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/attention.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/cnn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/convnext.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/decoder.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/encoder.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/gma.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/gru.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/mlpmixer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/transformer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/twins.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/common.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/FlowFormer/encoders.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/sintel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Video-Frame-Interpolation-Transformer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Video-Frame-Interpolation-Transformer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/VFIformer_arch.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/VFIformer_arch.py" afterDir="false" />
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="flow training">
+      <change afterPath="$PROJECT_DIR$/model/utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/utils/augmentor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/utils/datasets.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/utils/flow_transforms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/utils/flow_viz.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/utils/frame_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/utils/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/utils/misc.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/utils/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -470,21 +460,7 @@
       <workItem from="1676739480040" duration="2310000" />
       <workItem from="1676742179252" duration="30420000" />
       <workItem from="1676891709798" duration="18001000" />
-      <workItem from="1677242828059" duration="4342000" />
-    </task>
-    <task id="LOCAL-00402" summary="anime training">
-      <created>1676616191233</created>
-      <option name="number" value="00402" />
-      <option name="presentableId" value="LOCAL-00402" />
-      <option name="project" value="LOCAL" />
-      <updated>1676616191233</updated>
-    </task>
-    <task id="LOCAL-00403" summary="anime training">
-      <created>1676723299129</created>
-      <option name="number" value="00403" />
-      <option name="presentableId" value="LOCAL-00403" />
-      <option name="project" value="LOCAL" />
-      <updated>1676723299129</updated>
+      <workItem from="1677242828059" duration="5260000" />
     </task>
     <task id="LOCAL-00404" summary="sketch training">
       <created>1676743677483</created>
@@ -815,7 +791,21 @@
       <option name="project" value="LOCAL" />
       <updated>1676878042002</updated>
     </task>
-    <option name="localTasksCounter" value="451" />
+    <task id="LOCAL-00451" summary="sketch training">
+      <created>1677248360569</created>
+      <option name="number" value="00451" />
+      <option name="presentableId" value="LOCAL-00451" />
+      <option name="project" value="LOCAL" />
+      <updated>1677248360569</updated>
+    </task>
+    <task id="LOCAL-00452" summary="flow training">
+      <created>1677249412863</created>
+      <option name="number" value="00452" />
+      <option name="presentableId" value="LOCAL-00452" />
+      <option name="project" value="LOCAL" />
+      <updated>1677249412863</updated>
+    </task>
+    <option name="localTasksCounter" value="453" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -874,7 +864,8 @@
     <MESSAGE value="distance trans" />
     <MESSAGE value="anime training" />
     <MESSAGE value="sketch training" />
-    <option name="LAST_COMMIT_MESSAGE" value="sketch training" />
+    <MESSAGE value="flow training" />
+    <option name="LAST_COMMIT_MESSAGE" value="flow training" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
