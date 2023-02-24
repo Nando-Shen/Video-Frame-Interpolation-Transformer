@@ -584,7 +584,7 @@ class VFIformerSmall(nn.Module):
 
         flow = self.flownet(img0,img1)
         # print(flow[0].size())
-        flow, _, _ = self.refinenet(img0, img1, torch.stack(flow))
+        flow, _, _ = self.refinenet(img0, img1, torch.cat(flow, dim = 0))
         # c0, c1 = self.refinenet(img0, img1)
 
         warped_img0 = warp(img0, flow[:, :2])
