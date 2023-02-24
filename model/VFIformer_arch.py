@@ -18,7 +18,6 @@ from model.warplayer import warp
 from model.transformer_layers import TFModel
 from model.TFC import TFCModel
 from model.FlowFormer.LatentCostFormer.transformer import FlowFormer
-import argparse
 
 
 
@@ -490,13 +489,8 @@ class VFIformerSmall(nn.Module):
         # self.flownet = IFNet()
         # self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
         from .sintel import get_cfg
-        parser = argparse.ArgumentParser()
-        parser.add_argument('--name', default='flowformer', help="name your experiment")
-        parser.add_argument('--stage', default='sintel', help="determines which dataset to use for training")
-        parser.add_argument('--mixed_precision', default=True, action='store_true', help='use mixed precision')
 
-        args = parser.parse_args()
-
+        args = {'stage': 'sintel'}
         cfg = get_cfg()
         cfg.update(vars(args))
 
