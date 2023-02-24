@@ -488,7 +488,16 @@ class VFIformerSmall(nn.Module):
         # self.flownet = IFNet()
         # self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
         from .sintel import get_cfg
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--name', default='flowformer', help="name your experiment")
+        parser.add_argument('--stage', default='sintel', help="determines which dataset to use for training")
+        parser.add_argument('--mixed_precision', default=True, action='store_true', help='use mixed precision')
+
+        args = parser.parse_args()
+
         cfg = get_cfg()
+        cfg.update(vars(args))
+
         self.flownet = FlowFormer(cfg)
         self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
         self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
