@@ -1,77 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="">
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="sketch training">
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/attention.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/cnn.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/convnext.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/decoder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/encoder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/gma.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/gru.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/mlpmixer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/transformer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/twins.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/common.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/FlowFormer/encoders.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/sintel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Video-Frame-Interpolation-Transformer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Video-Frame-Interpolation-Transformer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/VFIformer_arch.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/VFIformer_arch.py" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
-              <caret line="24" column="81" selection-start-line="24" selection-start-column="81" selection-end-line="24" selection-end-column="81" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="744">
-                <caret line="31" column="50" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dataset/vimeo90k_septuplet.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/training_log/train_log.txt">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="46" column="25" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -82,7 +36,21 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="ab_newflowdeep4" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -135,6 +103,7 @@
     <option name="width" value="927" />
     <option name="height" value="1055" />
   </component>
+  <component name="ProjectId" id="2DzapydNMZtoW2Cd5swhvJLkoSQ" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -159,13 +128,27 @@
       <pane id="Scope" />
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="TODO_SCOPE" value="All Places" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/model" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/model/Unet_arch.py" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/model" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/dataset" />
+      <recent name="$PROJECT_DIR$/checkpoints" />
+      <recent name="$PROJECT_DIR$/utils" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/checkpoints/VFIT_B" />
       <recent name="$PROJECT_DIR$/checkpoints/VFIT_S" />
@@ -173,29 +156,10 @@
       <recent name="$PROJECT_DIR$/checkpoints/Unet_arch" />
       <recent name="$PROJECT_DIR$/checkpoints/epoch_100" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/checkpoints" />
-      <recent name="$PROJECT_DIR$/utils" />
-      <recent name="$PROJECT_DIR$/checkpoints/VFIT_S" />
-      <recent name="$PROJECT_DIR$/model" />
-    </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Python.plot_attn">
-    <configuration name="Unet_arch_new (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="swin_transformer_VFI" />
+  <component name="RunManager" selected="Python.atd12k">
+    <configuration name="VFIT_S" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Video-Frame-Interpolation-Transformer" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -206,7 +170,30 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/VFIT_B.py" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/VFIT_S.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="atd12k" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Video-Frame-Interpolation-Transformer" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/dataset" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dataset/atd12k.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -227,6 +214,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/perf_size_plot.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -248,6 +236,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -269,6 +258,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/plot_attn.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -290,6 +280,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/runtime_plot.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -311,6 +302,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -332,6 +324,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_adacof.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -341,47 +334,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="tmp (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="swin_transformer_VFI" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/plot_patches.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Python.Unet_arch_new (1)" />
-      <item itemvalue="Python.figure_plot" />
       <item itemvalue="Python.main" />
-      <item itemvalue="Python.plot_attn" />
-      <item itemvalue="Python.runtime_plot" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.test_adacof" />
-      <item itemvalue="Python.tmp (1)" />
+      <item itemvalue="Python.figure_plot" />
+      <item itemvalue="Python.plot_attn" />
+      <item itemvalue="Python.runtime_plot" />
+      <item itemvalue="Python.atd12k" />
+      <item itemvalue="Python.VFIT_S" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.VFIT_S" />
+        <item itemvalue="Python.atd12k" />
+        <item itemvalue="Python.runtime_plot" />
         <item itemvalue="Python.plot_attn" />
         <item itemvalue="Python.figure_plot" />
-        <item itemvalue="Python.runtime_plot" />
-        <item itemvalue="Python.tmp (1)" />
-        <item itemvalue="Python.Unet_arch_new (1)" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -392,7 +365,457 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1628171104744</updated>
+      <workItem from="1661704555646" duration="596000" />
+      <workItem from="1661882193545" duration="5084000" />
+      <workItem from="1662014726312" duration="38308000" />
+      <workItem from="1662198649838" duration="78998000" />
+      <workItem from="1662668707594" duration="2021000" />
+      <workItem from="1662717209961" duration="13012000" />
+      <workItem from="1662832659823" duration="11574000" />
+      <workItem from="1662960131492" duration="17256000" />
+      <workItem from="1663024680963" duration="95000" />
+      <workItem from="1663058707047" duration="926000" />
+      <workItem from="1663086624871" duration="1987000" />
+      <workItem from="1663096832124" duration="2968000" />
+      <workItem from="1663176372722" duration="494000" />
+      <workItem from="1663189625866" duration="1461000" />
+      <workItem from="1663212049324" duration="6019000" />
+      <workItem from="1663255292395" duration="113000" />
+      <workItem from="1663310944214" duration="8371000" />
+      <workItem from="1663349570113" duration="19325000" />
+      <workItem from="1663450147458" duration="10194000" />
+      <workItem from="1663571935395" duration="823000" />
+      <workItem from="1663591482110" duration="3243000" />
+      <workItem from="1663663815221" duration="1642000" />
+      <workItem from="1663783862609" duration="413000" />
+      <workItem from="1663854332847" duration="640000" />
+      <workItem from="1663863020450" duration="7528000" />
+      <workItem from="1663896514720" duration="1930000" />
+      <workItem from="1663931526284" duration="4419000" />
+      <workItem from="1664003707141" duration="19000" />
+      <workItem from="1664047429541" duration="6175000" />
+      <workItem from="1664176809141" duration="5779000" />
+      <workItem from="1664198659797" duration="8376000" />
+      <workItem from="1664351431647" duration="740000" />
+      <workItem from="1664442311036" duration="105000" />
+      <workItem from="1664619669049" duration="632000" />
+      <workItem from="1664772509035" duration="19000" />
+      <workItem from="1664782934910" duration="90000" />
+      <workItem from="1664859887219" duration="933000" />
+      <workItem from="1664944537131" duration="3430000" />
+      <workItem from="1664957479708" duration="888000" />
+      <workItem from="1664961021773" duration="164000" />
+      <workItem from="1664987162488" duration="81000" />
+      <workItem from="1665044155486" duration="12159000" />
+      <workItem from="1665126098559" duration="3896000" />
+      <workItem from="1665219215571" duration="3713000" />
+      <workItem from="1665288154232" duration="25000" />
+      <workItem from="1665323483572" duration="3487000" />
+      <workItem from="1665334980071" duration="3394000" />
+      <workItem from="1665464116114" duration="26000" />
+      <workItem from="1665481019778" duration="5000" />
+      <workItem from="1665733280641" duration="7754000" />
+      <workItem from="1665983283119" duration="5000" />
+      <workItem from="1665983496623" duration="736000" />
+      <workItem from="1665984543720" duration="740000" />
+      <workItem from="1665988346765" duration="1126000" />
+      <workItem from="1665991593414" duration="4494000" />
+      <workItem from="1666050456000" duration="608000" />
+      <workItem from="1666314895667" duration="7456000" />
+      <workItem from="1666347087346" duration="1095000" />
+      <workItem from="1666506003993" duration="5000" />
+      <workItem from="1666778672666" duration="778000" />
+      <workItem from="1666783326848" duration="175000" />
+      <workItem from="1666790591656" duration="638000" />
+      <workItem from="1666840101966" duration="110000" />
+      <workItem from="1666860686243" duration="25122000" />
+      <workItem from="1667207707868" duration="1846000" />
+      <workItem from="1667213328064" duration="9965000" />
+      <workItem from="1667296838965" duration="1230000" />
+      <workItem from="1667443088129" duration="806000" />
+      <workItem from="1667716533160" duration="2803000" />
+      <workItem from="1668086141693" duration="632000" />
+      <workItem from="1669265224593" duration="15736000" />
+      <workItem from="1669445422371" duration="176000" />
+      <workItem from="1669535469456" duration="2905000" />
+      <workItem from="1669566003470" duration="808000" />
+      <workItem from="1669705116001" duration="1280000" />
+      <workItem from="1669734808947" duration="386000" />
+      <workItem from="1669900540948" duration="8000" />
+      <workItem from="1669901083049" duration="5000" />
+      <workItem from="1670092220085" duration="1978000" />
+      <workItem from="1670136722823" duration="7000" />
+      <workItem from="1670172621037" duration="1697000" />
+      <workItem from="1670222401189" duration="24000" />
+      <workItem from="1670349295922" duration="68000" />
+      <workItem from="1670495556802" duration="5000" />
+      <workItem from="1670671431200" duration="1637000" />
+      <workItem from="1670687835324" duration="44000" />
+      <workItem from="1670864854882" duration="56000" />
+      <workItem from="1670996809101" duration="5000" />
+      <workItem from="1673444025520" duration="6197000" />
+      <workItem from="1673725111960" duration="7849000" />
+      <workItem from="1674658320861" duration="598000" />
+      <workItem from="1675145072555" duration="27000" />
+      <workItem from="1675153566857" duration="1853000" />
+      <workItem from="1675346021287" duration="599000" />
+      <workItem from="1675505054739" duration="3360000" />
+      <workItem from="1675685423755" duration="381000" />
+      <workItem from="1675685899000" duration="21677000" />
+      <workItem from="1676131380927" duration="4906000" />
+      <workItem from="1676274315891" duration="8674000" />
+      <workItem from="1676361435240" duration="11164000" />
+      <workItem from="1676455444308" duration="5739000" />
+      <workItem from="1676527344080" duration="11409000" />
+      <workItem from="1676739480040" duration="2310000" />
+      <workItem from="1676742179252" duration="30420000" />
+      <workItem from="1676891709798" duration="18001000" />
+      <workItem from="1677242828059" duration="4342000" />
     </task>
+    <task id="LOCAL-00402" summary="anime training">
+      <created>1676616191233</created>
+      <option name="number" value="00402" />
+      <option name="presentableId" value="LOCAL-00402" />
+      <option name="project" value="LOCAL" />
+      <updated>1676616191233</updated>
+    </task>
+    <task id="LOCAL-00403" summary="anime training">
+      <created>1676723299129</created>
+      <option name="number" value="00403" />
+      <option name="presentableId" value="LOCAL-00403" />
+      <option name="project" value="LOCAL" />
+      <updated>1676723299129</updated>
+    </task>
+    <task id="LOCAL-00404" summary="sketch training">
+      <created>1676743677483</created>
+      <option name="number" value="00404" />
+      <option name="presentableId" value="LOCAL-00404" />
+      <option name="project" value="LOCAL" />
+      <updated>1676743677483</updated>
+    </task>
+    <task id="LOCAL-00405" summary="sketch training">
+      <created>1676743801669</created>
+      <option name="number" value="00405" />
+      <option name="presentableId" value="LOCAL-00405" />
+      <option name="project" value="LOCAL" />
+      <updated>1676743801669</updated>
+    </task>
+    <task id="LOCAL-00406" summary="sketch training">
+      <created>1676786736282</created>
+      <option name="number" value="00406" />
+      <option name="presentableId" value="LOCAL-00406" />
+      <option name="project" value="LOCAL" />
+      <updated>1676786736282</updated>
+    </task>
+    <task id="LOCAL-00407" summary="sketch training">
+      <created>1676787638895</created>
+      <option name="number" value="00407" />
+      <option name="presentableId" value="LOCAL-00407" />
+      <option name="project" value="LOCAL" />
+      <updated>1676787638895</updated>
+    </task>
+    <task id="LOCAL-00408" summary="sketch training">
+      <created>1676787882793</created>
+      <option name="number" value="00408" />
+      <option name="presentableId" value="LOCAL-00408" />
+      <option name="project" value="LOCAL" />
+      <updated>1676787882793</updated>
+    </task>
+    <task id="LOCAL-00409" summary="sketch training">
+      <created>1676788696711</created>
+      <option name="number" value="00409" />
+      <option name="presentableId" value="LOCAL-00409" />
+      <option name="project" value="LOCAL" />
+      <updated>1676788696711</updated>
+    </task>
+    <task id="LOCAL-00410" summary="sketch training">
+      <created>1676789038357</created>
+      <option name="number" value="00410" />
+      <option name="presentableId" value="LOCAL-00410" />
+      <option name="project" value="LOCAL" />
+      <updated>1676789038357</updated>
+    </task>
+    <task id="LOCAL-00411" summary="sketch training">
+      <created>1676791263703</created>
+      <option name="number" value="00411" />
+      <option name="presentableId" value="LOCAL-00411" />
+      <option name="project" value="LOCAL" />
+      <updated>1676791263703</updated>
+    </task>
+    <task id="LOCAL-00412" summary="sketch training">
+      <created>1676791576517</created>
+      <option name="number" value="00412" />
+      <option name="presentableId" value="LOCAL-00412" />
+      <option name="project" value="LOCAL" />
+      <updated>1676791576517</updated>
+    </task>
+    <task id="LOCAL-00413" summary="sketch training">
+      <created>1676792275655</created>
+      <option name="number" value="00413" />
+      <option name="presentableId" value="LOCAL-00413" />
+      <option name="project" value="LOCAL" />
+      <updated>1676792275655</updated>
+    </task>
+    <task id="LOCAL-00414" summary="sketch training">
+      <created>1676792454053</created>
+      <option name="number" value="00414" />
+      <option name="presentableId" value="LOCAL-00414" />
+      <option name="project" value="LOCAL" />
+      <updated>1676792454053</updated>
+    </task>
+    <task id="LOCAL-00415" summary="sketch training">
+      <created>1676792695932</created>
+      <option name="number" value="00415" />
+      <option name="presentableId" value="LOCAL-00415" />
+      <option name="project" value="LOCAL" />
+      <updated>1676792695932</updated>
+    </task>
+    <task id="LOCAL-00416" summary="sketch training">
+      <created>1676792797451</created>
+      <option name="number" value="00416" />
+      <option name="presentableId" value="LOCAL-00416" />
+      <option name="project" value="LOCAL" />
+      <updated>1676792797451</updated>
+    </task>
+    <task id="LOCAL-00417" summary="sketch training">
+      <created>1676792832712</created>
+      <option name="number" value="00417" />
+      <option name="presentableId" value="LOCAL-00417" />
+      <option name="project" value="LOCAL" />
+      <updated>1676792832712</updated>
+    </task>
+    <task id="LOCAL-00418" summary="sketch training">
+      <created>1676799392253</created>
+      <option name="number" value="00418" />
+      <option name="presentableId" value="LOCAL-00418" />
+      <option name="project" value="LOCAL" />
+      <updated>1676799392253</updated>
+    </task>
+    <task id="LOCAL-00419" summary="sketch training">
+      <created>1676799456481</created>
+      <option name="number" value="00419" />
+      <option name="presentableId" value="LOCAL-00419" />
+      <option name="project" value="LOCAL" />
+      <updated>1676799456481</updated>
+    </task>
+    <task id="LOCAL-00420" summary="sketch training">
+      <created>1676799485960</created>
+      <option name="number" value="00420" />
+      <option name="presentableId" value="LOCAL-00420" />
+      <option name="project" value="LOCAL" />
+      <updated>1676799485960</updated>
+    </task>
+    <task id="LOCAL-00421" summary="sketch training">
+      <created>1676799556454</created>
+      <option name="number" value="00421" />
+      <option name="presentableId" value="LOCAL-00421" />
+      <option name="project" value="LOCAL" />
+      <updated>1676799556454</updated>
+    </task>
+    <task id="LOCAL-00422" summary="sketch training">
+      <created>1676802263748</created>
+      <option name="number" value="00422" />
+      <option name="presentableId" value="LOCAL-00422" />
+      <option name="project" value="LOCAL" />
+      <updated>1676802263748</updated>
+    </task>
+    <task id="LOCAL-00423" summary="sketch training">
+      <created>1676804341446</created>
+      <option name="number" value="00423" />
+      <option name="presentableId" value="LOCAL-00423" />
+      <option name="project" value="LOCAL" />
+      <updated>1676804341446</updated>
+    </task>
+    <task id="LOCAL-00424" summary="sketch training">
+      <created>1676804673045</created>
+      <option name="number" value="00424" />
+      <option name="presentableId" value="LOCAL-00424" />
+      <option name="project" value="LOCAL" />
+      <updated>1676804673045</updated>
+    </task>
+    <task id="LOCAL-00425" summary="sketch training">
+      <created>1676804708104</created>
+      <option name="number" value="00425" />
+      <option name="presentableId" value="LOCAL-00425" />
+      <option name="project" value="LOCAL" />
+      <updated>1676804708104</updated>
+    </task>
+    <task id="LOCAL-00426" summary="sketch training">
+      <created>1676804840468</created>
+      <option name="number" value="00426" />
+      <option name="presentableId" value="LOCAL-00426" />
+      <option name="project" value="LOCAL" />
+      <updated>1676804840468</updated>
+    </task>
+    <task id="LOCAL-00427" summary="sketch training">
+      <created>1676805011464</created>
+      <option name="number" value="00427" />
+      <option name="presentableId" value="LOCAL-00427" />
+      <option name="project" value="LOCAL" />
+      <updated>1676805011464</updated>
+    </task>
+    <task id="LOCAL-00428" summary="sketch training">
+      <created>1676810351716</created>
+      <option name="number" value="00428" />
+      <option name="presentableId" value="LOCAL-00428" />
+      <option name="project" value="LOCAL" />
+      <updated>1676810351716</updated>
+    </task>
+    <task id="LOCAL-00429" summary="sketch training">
+      <created>1676817534435</created>
+      <option name="number" value="00429" />
+      <option name="presentableId" value="LOCAL-00429" />
+      <option name="project" value="LOCAL" />
+      <updated>1676817534435</updated>
+    </task>
+    <task id="LOCAL-00430" summary="sketch training">
+      <created>1676817543276</created>
+      <option name="number" value="00430" />
+      <option name="presentableId" value="LOCAL-00430" />
+      <option name="project" value="LOCAL" />
+      <updated>1676817543276</updated>
+    </task>
+    <task id="LOCAL-00431" summary="sketch training">
+      <created>1676817741080</created>
+      <option name="number" value="00431" />
+      <option name="presentableId" value="LOCAL-00431" />
+      <option name="project" value="LOCAL" />
+      <updated>1676817741080</updated>
+    </task>
+    <task id="LOCAL-00432" summary="sketch training">
+      <created>1676819354400</created>
+      <option name="number" value="00432" />
+      <option name="presentableId" value="LOCAL-00432" />
+      <option name="project" value="LOCAL" />
+      <updated>1676819354400</updated>
+    </task>
+    <task id="LOCAL-00433" summary="sketch training">
+      <created>1676821238282</created>
+      <option name="number" value="00433" />
+      <option name="presentableId" value="LOCAL-00433" />
+      <option name="project" value="LOCAL" />
+      <updated>1676821238282</updated>
+    </task>
+    <task id="LOCAL-00434" summary="sketch training">
+      <created>1676823220849</created>
+      <option name="number" value="00434" />
+      <option name="presentableId" value="LOCAL-00434" />
+      <option name="project" value="LOCAL" />
+      <updated>1676823220849</updated>
+    </task>
+    <task id="LOCAL-00435" summary="sketch training">
+      <created>1676824686453</created>
+      <option name="number" value="00435" />
+      <option name="presentableId" value="LOCAL-00435" />
+      <option name="project" value="LOCAL" />
+      <updated>1676824686453</updated>
+    </task>
+    <task id="LOCAL-00436" summary="sketch training">
+      <created>1676824728032</created>
+      <option name="number" value="00436" />
+      <option name="presentableId" value="LOCAL-00436" />
+      <option name="project" value="LOCAL" />
+      <updated>1676824728032</updated>
+    </task>
+    <task id="LOCAL-00437" summary="sketch training">
+      <created>1676824936691</created>
+      <option name="number" value="00437" />
+      <option name="presentableId" value="LOCAL-00437" />
+      <option name="project" value="LOCAL" />
+      <updated>1676824936691</updated>
+    </task>
+    <task id="LOCAL-00438" summary="sketch training">
+      <created>1676825067522</created>
+      <option name="number" value="00438" />
+      <option name="presentableId" value="LOCAL-00438" />
+      <option name="project" value="LOCAL" />
+      <updated>1676825067522</updated>
+    </task>
+    <task id="LOCAL-00439" summary="sketch training">
+      <created>1676826204320</created>
+      <option name="number" value="00439" />
+      <option name="presentableId" value="LOCAL-00439" />
+      <option name="project" value="LOCAL" />
+      <updated>1676826204320</updated>
+    </task>
+    <task id="LOCAL-00440" summary="sketch training">
+      <created>1676826360110</created>
+      <option name="number" value="00440" />
+      <option name="presentableId" value="LOCAL-00440" />
+      <option name="project" value="LOCAL" />
+      <updated>1676826360110</updated>
+    </task>
+    <task id="LOCAL-00441" summary="sketch training">
+      <created>1676826383908</created>
+      <option name="number" value="00441" />
+      <option name="presentableId" value="LOCAL-00441" />
+      <option name="project" value="LOCAL" />
+      <updated>1676826383908</updated>
+    </task>
+    <task id="LOCAL-00442" summary="sketch training">
+      <created>1676826419914</created>
+      <option name="number" value="00442" />
+      <option name="presentableId" value="LOCAL-00442" />
+      <option name="project" value="LOCAL" />
+      <updated>1676826419914</updated>
+    </task>
+    <task id="LOCAL-00443" summary="sketch training">
+      <created>1676827107002</created>
+      <option name="number" value="00443" />
+      <option name="presentableId" value="LOCAL-00443" />
+      <option name="project" value="LOCAL" />
+      <updated>1676827107002</updated>
+    </task>
+    <task id="LOCAL-00444" summary="sketch training">
+      <created>1676829069402</created>
+      <option name="number" value="00444" />
+      <option name="presentableId" value="LOCAL-00444" />
+      <option name="project" value="LOCAL" />
+      <updated>1676829069402</updated>
+    </task>
+    <task id="LOCAL-00445" summary="sketch training">
+      <created>1676829191569</created>
+      <option name="number" value="00445" />
+      <option name="presentableId" value="LOCAL-00445" />
+      <option name="project" value="LOCAL" />
+      <updated>1676829191569</updated>
+    </task>
+    <task id="LOCAL-00446" summary="sketch training">
+      <created>1676829245194</created>
+      <option name="number" value="00446" />
+      <option name="presentableId" value="LOCAL-00446" />
+      <option name="project" value="LOCAL" />
+      <updated>1676829245194</updated>
+    </task>
+    <task id="LOCAL-00447" summary="sketch training">
+      <created>1676829342728</created>
+      <option name="number" value="00447" />
+      <option name="presentableId" value="LOCAL-00447" />
+      <option name="project" value="LOCAL" />
+      <updated>1676829342728</updated>
+    </task>
+    <task id="LOCAL-00448" summary="sketch training">
+      <created>1676842238290</created>
+      <option name="number" value="00448" />
+      <option name="presentableId" value="LOCAL-00448" />
+      <option name="project" value="LOCAL" />
+      <updated>1676842238290</updated>
+    </task>
+    <task id="LOCAL-00449" summary="sketch training">
+      <created>1676877262232</created>
+      <option name="number" value="00449" />
+      <option name="presentableId" value="LOCAL-00449" />
+      <option name="project" value="LOCAL" />
+      <updated>1676877262232</updated>
+    </task>
+    <task id="LOCAL-00450" summary="sketch training">
+      <created>1676878042002</created>
+      <option name="number" value="00450" />
+      <option name="presentableId" value="LOCAL-00450" />
+      <option name="project" value="LOCAL" />
+      <updated>1676878042002</updated>
+    </task>
+    <option name="localTasksCounter" value="451" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -418,6 +841,41 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="a" />
+    <MESSAGE value="add cross atten" />
+    <MESSAGE value="distance trans" />
+    <MESSAGE value="anime training" />
+    <MESSAGE value="sketch training" />
+    <option name="LAST_COMMIT_MESSAGE" value="sketch training" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -426,18 +884,12 @@
           <line>103</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/VFIT_B.py</url>
-          <line>129</line>
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test.py</url>
-          <line>87</line>
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/VFI_Transformer$VFIT_S.coverage" NAME="VFIT_S Coverage Results" MODIFIED="1662106411384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/VFI_Transformer$atd12k.coverage" NAME="atd12k Coverage Results" MODIFIED="1662107470045" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dataset" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/training_log/full_log.txt" />

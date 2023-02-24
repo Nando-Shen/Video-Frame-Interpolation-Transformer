@@ -17,6 +17,7 @@ from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from model.warplayer import warp
 from model.transformer_layers import TFModel
 from model.TFC import TFCModel
+from model.FlowFormer.LatentCostFormer.transformer import FlowFormer
 
 
 def make_layer(block, n_layers):
@@ -486,7 +487,9 @@ class VFIformerSmall(nn.Module):
 
         # self.flownet = IFNet()
         # self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
-        self.flownet = IFNet()
+        from sintel import get_cfg
+        cfg = get_cfg()
+        self.flownet = FlowFormer(cfg)
         self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
         self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),
@@ -574,7 +577,7 @@ class VFIformerSmall(nn.Module):
         # warped_img0 = warp(img0, flow[:, :2])
         # warped_img1 = warp(img1, flow[:, 2:])
 
-        flow, _ = self.flownet(imgs)
+        flow = self.flownet(imgs)
         flow, _, _ = self.refinenet(img0, img1, flow)
         # c0, c1 = self.refinenet(img0, img1)
 
