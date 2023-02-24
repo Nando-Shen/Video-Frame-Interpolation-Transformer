@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="flow training" />
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="flow training">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/twins.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/FlowFormer/LatentCostFormer/twins.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -450,14 +453,7 @@
       <workItem from="1676739480040" duration="2310000" />
       <workItem from="1676742179252" duration="30420000" />
       <workItem from="1676891709798" duration="18001000" />
-      <workItem from="1677242828059" duration="6424000" />
-    </task>
-    <task id="LOCAL-00407" summary="sketch training">
-      <created>1676787638895</created>
-      <option name="number" value="00407" />
-      <option name="presentableId" value="LOCAL-00407" />
-      <option name="project" value="LOCAL" />
-      <updated>1676787638895</updated>
+      <workItem from="1677242828059" duration="6688000" />
     </task>
     <task id="LOCAL-00408" summary="sketch training">
       <created>1676787882793</created>
@@ -795,7 +791,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677249621895</updated>
     </task>
-    <option name="localTasksCounter" value="456" />
+    <task id="LOCAL-00456" summary="flow training">
+      <created>1677252022270</created>
+      <option name="number" value="00456" />
+      <option name="presentableId" value="LOCAL-00456" />
+      <option name="project" value="LOCAL" />
+      <updated>1677252022271</updated>
+    </task>
+    <option name="localTasksCounter" value="457" />
     <servers />
   </component>
   <component name="ToolWindowManager">
