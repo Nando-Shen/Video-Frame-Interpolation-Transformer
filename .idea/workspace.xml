@@ -450,21 +450,7 @@
       <workItem from="1676739480040" duration="2310000" />
       <workItem from="1676742179252" duration="30420000" />
       <workItem from="1676891709798" duration="18001000" />
-      <workItem from="1677242828059" duration="9654000" />
-    </task>
-    <task id="LOCAL-00417" summary="sketch training">
-      <created>1676792832712</created>
-      <option name="number" value="00417" />
-      <option name="presentableId" value="LOCAL-00417" />
-      <option name="project" value="LOCAL" />
-      <updated>1676792832712</updated>
-    </task>
-    <task id="LOCAL-00418" summary="sketch training">
-      <created>1676799392253</created>
-      <option name="number" value="00418" />
-      <option name="presentableId" value="LOCAL-00418" />
-      <option name="project" value="LOCAL" />
-      <updated>1676799392253</updated>
+      <workItem from="1677242828059" duration="10383000" />
     </task>
     <task id="LOCAL-00419" summary="sketch training">
       <created>1676799456481</created>
@@ -795,7 +781,21 @@
       <option name="project" value="LOCAL" />
       <updated>1677255271361</updated>
     </task>
-    <option name="localTasksCounter" value="466" />
+    <task id="LOCAL-00466" summary="flow training">
+      <created>1677255310079</created>
+      <option name="number" value="00466" />
+      <option name="presentableId" value="LOCAL-00466" />
+      <option name="project" value="LOCAL" />
+      <updated>1677255310079</updated>
+    </task>
+    <task id="LOCAL-00467" summary="flow training">
+      <created>1677256838002</created>
+      <option name="number" value="00467" />
+      <option name="presentableId" value="LOCAL-00467" />
+      <option name="project" value="LOCAL" />
+      <updated>1677256838002</updated>
+    </task>
+    <option name="localTasksCounter" value="468" />
     <servers />
   </component>
   <component name="ToolWindowManager">
