@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="flow training">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/VFIformer_arch.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/VFIformer_arch.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -452,14 +453,7 @@
       <workItem from="1676739480040" duration="2310000" />
       <workItem from="1676742179252" duration="30420000" />
       <workItem from="1676891709798" duration="18001000" />
-      <workItem from="1677242828059" duration="11506000" />
-    </task>
-    <task id="LOCAL-00424" summary="sketch training">
-      <created>1676804673045</created>
-      <option name="number" value="00424" />
-      <option name="presentableId" value="LOCAL-00424" />
-      <option name="project" value="LOCAL" />
-      <updated>1676804673045</updated>
+      <workItem from="1677242828059" duration="12044000" />
     </task>
     <task id="LOCAL-00425" summary="sketch training">
       <created>1676804708104</created>
@@ -797,7 +791,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677257968403</updated>
     </task>
-    <option name="localTasksCounter" value="473" />
+    <task id="LOCAL-00473" summary="flow training">
+      <created>1677258507756</created>
+      <option name="number" value="00473" />
+      <option name="presentableId" value="LOCAL-00473" />
+      <option name="project" value="LOCAL" />
+      <updated>1677258507756</updated>
+    </task>
+    <option name="localTasksCounter" value="474" />
     <servers />
   </component>
   <component name="ToolWindowManager">
