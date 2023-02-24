@@ -591,8 +591,8 @@ class VFIformerSmall(nn.Module):
 
         # warped_img0 = warp(img0, flow[:, :2])
         # warped_img1 = warp(img1, flow[:, 2:])
-        warped_img0 = warp(img0, flow0)
-        warped_img1 = warp(img1, flow1)
+        warped_img0 = warp(img0, torch.stack(flow0))
+        warped_img1 = warp(img1, torch.stack(flow1))
 
         points = self.points_fuse(points)
 
