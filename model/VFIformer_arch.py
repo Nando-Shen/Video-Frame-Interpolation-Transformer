@@ -494,7 +494,7 @@ class VFIformerSmall(nn.Module):
         cfg = get_cfg()
         cfg.update(args)
 
-        self.flownet = FlowFormer(cfg)
+        self.flownet = FlowFormer(cfg['latentcostformer'])
         self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
         self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),
