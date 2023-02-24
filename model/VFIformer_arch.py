@@ -487,7 +487,7 @@ class VFIformerSmall(nn.Module):
 
         # self.flownet = IFNet()
         # self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
-        from sintel import get_cfg
+        from .sintel import get_cfg
         cfg = get_cfg()
         self.flownet = FlowFormer(cfg)
         self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
