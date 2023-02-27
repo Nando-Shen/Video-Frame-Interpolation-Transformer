@@ -135,7 +135,7 @@ def test(args, epoch):
     torch.cuda.empty_cache()
 
     t = time.time()
-    idxx = 0
+    # idxx = 0
     with torch.no_grad():
         for i, (images, gt_image, datapath) in enumerate(tqdm(test_loader)):
 
@@ -151,12 +151,12 @@ def test(args, epoch):
             # print(out.size())
 
             # out = model(images) ## images is a list of neighboring frames
-            for idx in range(out.size()[0]):
+            # for idx in range(out.size()[0]):
                 # print(idx)
                 # print(datapath[idx])
-                os.makedirs(args.result_dir + '/' + datapath[idx])
-                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/flowdeep4.png')
-                idxx += 1
+                # os.makedirs(args.result_dir + '/' + datapath[idx])
+                # imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/flowdeep4.png')
+                # idxx += 1
 
             # Save loss values
             loss, loss_specific = criterion(out, gt)
@@ -167,7 +167,7 @@ def test(args, epoch):
 
             # Evaluate metrics
             myutils.eval_metrics(out, gt, psnrs, ssims)
-    print('Total image generated: {}'.format(str(idxx)))
+    # print('Total image generated: {}'.format(str(idxx)))
     return losses['total'].avg, psnrs.avg, ssims.avg
 
 
