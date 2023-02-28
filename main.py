@@ -109,7 +109,7 @@ def test(args, epoch):
 
     t = time.time()
     with torch.no_grad():
-        for i, (images, gt_image, _) in enumerate(tqdm(test_loader)):
+        for i, (images, gt_image, dir) in enumerate(tqdm(test_loader)):
 
             images = [img_.to(device) for img_ in images]
             gt = gt_image.to(device)
@@ -122,6 +122,13 @@ def test(args, epoch):
                 if k != 'total':
                     v.update(loss_specific[k].item())
             losses['total'].update(loss.item())
+
+            if epoch % 20 == 0:
+                for j in range(out.size()[0]):
+                    pp = transform(out[j])
+                    os.makedirs('/home/jiaming/vfi' + '/{}'.format(dir[j]), exist_ok=True)
+                    pp.save('/home/jiaming/vfi' + '/{}/vfi.png'.format(dir[j]))
+
 
             # Evaluate metrics
             myutils.eval_metrics(out, gt, psnrs, ssims)
@@ -156,7 +163,7 @@ def adjust_learning_rate(optimizer, epoch):
 """ Entry Point """
 def main(args):
     # load_checkpoint(args, model, optimizer, save_loc+'/epoch20/model_best.pth')
-    # test_loss, psnr, ssim = test(args, args.start_epoch)
+    test_loss, psnr, ssim = test(args, args.start_epoch)
     # print(psnr)
 
     best_psnr = 0
