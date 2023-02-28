@@ -8,6 +8,8 @@ import myutils
 from loss import Loss
 import shutil
 import os
+import torchvision.transforms as T
+
 
 def load_checkpoint(args, model, optimizer, path):
     print("loading checkpoint %s" % path)
@@ -32,6 +34,8 @@ torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
 
 torch.manual_seed(args.random_seed)
+transform = T.ToPILImage()
+
 if args.cuda:
     torch.cuda.manual_seed(args.random_seed)
 
@@ -126,8 +130,8 @@ def test(args, epoch):
             if epoch % 20 == 0:
                 for j in range(out.size()[0]):
                     pp = transform(out[j])
-                    os.makedirs('/home/jiaming/vfi' + '/{}'.format(dir[j]), exist_ok=True)
-                    pp.save('/home/jiaming/vfi' + '/{}/vfi.png'.format(dir[j]))
+                    os.makedirs('/home/jiaming/vfi-result' + '/{}'.format(dir[j]), exist_ok=True)
+                    pp.save('/home/jiaming/vfi-result' + '/{}/vfi.png'.format(dir[j]))
 
 
             # Evaluate metrics
