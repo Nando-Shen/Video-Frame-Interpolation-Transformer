@@ -63,7 +63,7 @@ class ATD12k(Dataset):
         # images = [images[i] for i in inputs]
         # imgpaths = [imgpaths[i] for i in inputs]
         # Data augmentation
-        size = (512, 256)
+        size = (512, 288)
         if self.training:
             seed = random.randint(0, 2**32)
             images_ = []
