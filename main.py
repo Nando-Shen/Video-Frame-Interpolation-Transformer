@@ -168,7 +168,7 @@ def test(args, epoch):
 
     return losses['total'].avg, psnrs.avg, ssims.avg
 
-def test(args, epoch):
+def testt(args, epoch):
     print('Evaluating for epoch = %d' % epoch)
     losses, psnrs, ssims = myutils.init_meters(args.loss)
     model.eval()
