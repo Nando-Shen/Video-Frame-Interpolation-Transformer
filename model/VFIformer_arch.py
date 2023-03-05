@@ -17,7 +17,7 @@ from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from model.warplayer import warp
 from model.transformer_layers import TFModel
 from model.TFC import TFCModel
-
+from vis_flow import *
 
 def make_layer(block, n_layers):
     layers = []
@@ -577,6 +577,8 @@ class VFIformerSmall(nn.Module):
         flow, _ = self.flownet(imgs)
         flow, _, _ = self.refinenet(img0, img1, flow)
         # c0, c1 = self.refinenet(img0, img1)
+
+        save_flow_to_img(flow[:,:2], '/home/jiaming/flow')
 
         warped_img0 = warp(img0, flow[:, :2])
         warped_img1 = warp(img1, flow[:, 2:])

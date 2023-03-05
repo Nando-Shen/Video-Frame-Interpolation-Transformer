@@ -168,6 +168,49 @@ def test(args, epoch):
 
     return losses['total'].avg, psnrs.avg, ssims.avg
 
+def test(args, epoch):
+    print('Evaluating for epoch = %d' % epoch)
+    losses, psnrs, ssims = myutils.init_meters(args.loss)
+    model.eval()
+    criterion.eval()
+    torch.cuda.empty_cache()
+
+    t = time.time()
+    with torch.no_grad():
+        for i, (images, gt_image, datapath) in enumerate(tqdm(test_loader)):
+            if datapath[0] == 'Disney_v4_21_028517_s2':
+
+                images = [img_.to(device) for img_ in images]
+                points = torch.cat([images[2], images[3]], dim=1)
+                if args.model == 'VFI':
+                    out = model(images[0], images[1], points)
+                else:
+                    out = model(images)
+
+                gt = gt_image.to(device)
+            else:
+                continue
+            # print(out.size())
+
+            # out = model(images) ## images is a list of neighboring frames
+            # for idx in range(out.size()[0]):
+                # print(idx)
+                # print(datapath[idx])
+                # os.makedirs(args.result_dir + '/' + datapath[idx])
+                # imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/flowdeep2.png')
+
+            # Save loss values
+            loss, loss_specific = criterion(out, gt)
+            for k, v in losses.items():
+                if k != 'total':
+                    v.update(loss_specific[k].item())
+            losses['total'].update(loss.item())
+
+            # Evaluate metrics
+            myutils.eval_metrics(out, gt, psnrs, ssims)
+
+    return losses['total'].avg, psnrs.avg, ssims.avg
+
 
 def print_log(epoch, num_epochs, one_epoch_time, oup_pnsr, oup_ssim, Lr):
     print('({0:.0f}s) Epoch [{1}/{2}], Val_PSNR:{3:.2f}, Val_SSIM:{4:.4f}'
@@ -196,7 +239,7 @@ def adjust_learning_rate(optimizer, epoch):
 """ Entry Point """
 def main(args):
     load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
-    test_loss, psnr, ssim = test(args, args.start_epoch)
+    test_loss, psnr, ssim = testt(args, args.start_epoch)
     print("psnr :{}, ssim:{}".format(psnr, ssim))
     exit()
 
