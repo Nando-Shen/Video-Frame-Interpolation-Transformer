@@ -47,7 +47,9 @@ images, gt, imgpath = next(iter(test_loader))
 # data_list = [img0, img1, points14, points12, points34, gt]
 # images = [Image.open(pth) for pth in data_list]
 
-model = VFIformerSmall(args).to(device)
+model = VFIformerSmall(args)
+model = torch.nn.DataParallel(model).to(device)
+
 from torch.optim import Adamax
 optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
 save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
