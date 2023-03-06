@@ -15,6 +15,15 @@ import os
 from model.VFIformer_arch import VFIformerSmall
 from dataset.atd12k import get_loader
 
+def load_checkpoint(args, model, optimizer, path):
+    print("loading checkpoint %s" % path)
+    checkpoint = torch.load(path)
+    args.start_epoch = checkpoint['epoch'] + 1
+    model.load_state_dict(checkpoint['state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer'])
+    lr = checkpoint.get("lr", args.lr)
+    for param_group in optimizer.param_groups:
+        param_group['lr'] = lr
 
 args, unparsed = config.get_args()
 device = torch.device('cuda' if args.cuda else 'cpu')
