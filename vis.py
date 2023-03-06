@@ -77,6 +77,9 @@ save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
 net = ResnetFeatureExtractor(model).to(device)
 
+gt_f = net(gt)
+print(gt_f.size())
+
 target_layers = [model.module.final_fuse_block[2]]
 # Note: input_tensor can be a batch tensor with several images!
 img = torch.cat([images[0], images[1], images[2], images[3]], dim=1).to(device)
@@ -84,7 +87,7 @@ img = torch.cat([images[0], images[1], images[2], images[3]], dim=1).to(device)
 # Construct the CAM object once, and then re-use it on many images:
 cam = GradCAM(model=net, target_layers=target_layers, use_cuda=True)
 
-targets = [SimilarityToConceptTarget(gt)]
+targets = [SimilarityToConceptTarget(gt_f)]
 
 grayscale_cam = cam(input_tensor=img, targets=targets)
 
