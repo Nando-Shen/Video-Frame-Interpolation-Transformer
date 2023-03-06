@@ -558,7 +558,10 @@ class VFIformerSmall(nn.Module):
 
         return flow
 
-    def forward(self, img0, img1, points):
+    def forward(self, img):
+        img0 = img[:, 3:]
+        img1 = img[:, 3:6]
+        points = img[:, 6:]
         B, _, H, W = img0.size()
         imgs = torch.cat((img0, img1), 1)
 
