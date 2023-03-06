@@ -559,7 +559,7 @@ class VFIformerSmall(nn.Module):
         return flow
 
     def forward(self, img):
-        img0 = img[:, 3:]
+        img0 = img[:, :3]
         img1 = img[:, 3:6]
         points = img[:, 6:]
         B, _, H, W = img0.size()
