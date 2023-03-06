@@ -20,6 +20,23 @@ from pytorch_grad_cam import GradCAM, HiResCAM, ScoreCAM, GradCAMPlusPlus, Ablat
 from pytorch_grad_cam.utils.model_targets import RawScoresOutputTarget
 from pytorch_grad_cam.utils.image import show_cam_on_image
 
+class SimilarityToConceptTarget:
+    def __init__(self, features):
+        self.features = features
+
+    def __call__(self, model_output):
+        cos = torch.nn.CosineSimilarity(dim=0)
+        return cos(model_output, self.features)
+
+class ResnetFeatureExtractor(torch.nn.Module):
+    def __init__(self, model):
+        super(ResnetFeatureExtractor, self).__init__()
+        self.model = model
+        self.feature_extractor = torch.nn.Sequential(*list(self.model.children())[:-1])
+
+    def __call__(self, x):
+        return self.feature_extractor(x)[:, :, 0, 0]
+
 def load_checkpoint(args, model, optimizer, path):
     print("loading checkpoint %s" % path)
     checkpoint = torch.load(path)
@@ -49,6 +66,7 @@ images, gt, imgpath = next(iter(test_loader))
 
 model = VFIformerSmall(args)
 model = torch.nn.DataParallel(model).to(device)
+model.eval()
 
 from torch.optim import Adamax
 optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
@@ -63,7 +81,7 @@ img = torch.cat([images[0], images[1], images[2], images[3]], dim=1)
 # Construct the CAM object once, and then re-use it on many images:
 cam = GradCAM(model=model, target_layers=target_layers, use_cuda=True)
 
-targets = [RawScoresOutputTarget()]
+targets = [SimilarityToConceptTarget(gt)]
 
 grayscale_cam = cam(input_tensor=img, targets=targets)
 
