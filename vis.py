@@ -41,4 +41,6 @@ save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 
 load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
 
-print(list(model.modules()))
+for name in model.state_dict():
+    print(name)
+# print(list(model.modules()))
