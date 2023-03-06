@@ -54,7 +54,7 @@ args.resume_flownet = False
 # train_loader = get_loader('train', args.data_root, args.batch_size, shuffle=True, num_workers=args.num_workers)
 test_loader = get_loader('test', args.data_root, args.test_batch_size, shuffle=False, num_workers=args.num_workers)
 images, gt, imgpath = next(iter(test_loader))
-images.to(device)
+
 gt.to(device)
 # img0 = os.path.join('image', 'frame1.jpg')
 # img1 = os.path.join('image', 'frame3.jpg')
@@ -78,7 +78,7 @@ load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
 
 target_layers = [model.module.final_fuse_block[2]]
 # Note: input_tensor can be a batch tensor with several images!
-img = torch.cat([images[0], images[1], images[2], images[3]], dim=1)
+img = torch.cat([images[0], images[1], images[2], images[3]], dim=1).to(device)
 
 # Construct the CAM object once, and then re-use it on many images:
 cam = GradCAM(model=model, target_layers=target_layers, use_cuda=True)
