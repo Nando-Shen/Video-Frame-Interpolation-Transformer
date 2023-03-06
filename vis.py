@@ -67,7 +67,7 @@ gt = gt.to(device)
 # images = [Image.open(pth) for pth in data_list]
 
 model = VFIformerSmall(args)
-model = torch.nn.DataParallel(model).to(device)
+model = torch.nn.DataParallel(model)
 model.eval()
 
 from torch.optim import Adamax
@@ -75,6 +75,7 @@ optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2
 save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 
 load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
+model = ResnetFeatureExtractor(model).to(device)
 
 target_layers = [model.module.final_fuse_block[2]]
 # Note: input_tensor can be a batch tensor with several images!
