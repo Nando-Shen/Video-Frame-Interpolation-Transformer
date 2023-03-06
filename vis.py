@@ -57,15 +57,15 @@ save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
 
 target_layers = [model.module.final_fuse_block[2]]
-input_tensor = images# Create an input tensor image for your model..
 # Note: input_tensor can be a batch tensor with several images!
+img = torch.cat([images[0], images[1], images[2], images[3]], dim=1)
 
 # Construct the CAM object once, and then re-use it on many images:
 cam = GradCAM(model=model, target_layers=target_layers, use_cuda=True)
 
 targets = [ClassifierOutputTarget(281)]
 
-grayscale_cam = cam(input_tensor=input_tensor, targets=targets)
+grayscale_cam = cam(input_tensor=img, targets=targets)
 
 # In this example grayscale_cam has only one image in the batch:
 grayscale_cam = grayscale_cam[0, :]
