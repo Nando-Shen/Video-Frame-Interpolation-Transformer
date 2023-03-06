@@ -56,7 +56,7 @@ save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 
 load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
 
-target_layers = [model.final_fuse_block[2]]
+target_layers = [model.module.final_fuse_block[2]]
 input_tensor = images# Create an input tensor image for your model..
 # Note: input_tensor can be a batch tensor with several images!
 
