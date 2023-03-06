@@ -37,6 +37,7 @@ model = VFIformerSmall(args)
 model = torch.nn.DataParallel(model).to(device)
 from torch.optim import Adamax
 optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
+save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 
 load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
 
