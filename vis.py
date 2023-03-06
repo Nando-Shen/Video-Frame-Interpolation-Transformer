@@ -17,7 +17,7 @@ from model.VFIformer_arch import VFIformerSmall
 from dataset.atd12k import get_loader
 
 from pytorch_grad_cam import GradCAM, HiResCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, XGradCAM, EigenCAM, FullGrad
-from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
+from pytorch_grad_cam.utils.model_targets import RawScoresOutputTarget
 from pytorch_grad_cam.utils.image import show_cam_on_image
 
 def load_checkpoint(args, model, optimizer, path):
@@ -63,7 +63,7 @@ img = torch.cat([images[0], images[1], images[2], images[3]], dim=1)
 # Construct the CAM object once, and then re-use it on many images:
 cam = GradCAM(model=model, target_layers=target_layers, use_cuda=True)
 
-targets = [ClassifierOutputTarget(281)]
+targets = [RawScoresOutputTarget()]
 
 grayscale_cam = cam(input_tensor=img, targets=targets)
 
