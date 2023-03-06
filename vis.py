@@ -77,6 +77,7 @@ save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
 net = ResnetFeatureExtractor(model).to(device)
 
+print(gt.size())
 gt_f = net(gt)
 print(gt_f.size())
 
