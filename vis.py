@@ -13,7 +13,14 @@ import shutil
 import os
 
 from model.VFIformer_arch import VFIformerSmall
+from dataset.atd12k import get_loader
+
+
 args, unparsed = config.get_args()
+device = torch.device('cuda' if args.cuda else 'cpu')
+train_loader = get_loader('train', args.data_root, args.batch_size, shuffle=True, num_workers=args.num_workers)
+test_loader = get_loader('test', args.data_root, args.test_batch_size, shuffle=False, num_workers=args.num_workers)
+
 
 model = VFIformerSmall(args)
 model = torch.nn.DataParallel(model).to(device)
