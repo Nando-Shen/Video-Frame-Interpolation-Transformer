@@ -35,6 +35,9 @@ test_loader = get_loader('test', args.data_root, args.test_batch_size, shuffle=F
 
 model = VFIformerSmall(args)
 model = torch.nn.DataParallel(model).to(device)
+from torch.optim import Adamax
+optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
+
 load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
 
 print(list(model.modules()))
