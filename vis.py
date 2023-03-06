@@ -13,6 +13,7 @@ import shutil
 import os
 
 from model.VFIformer_arch import VFIformerSmall
+args, unparsed = config.get_args()
 
 model = VFIformerSmall(args)
 model = torch.nn.DataParallel(model).to(device)
