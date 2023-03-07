@@ -6,6 +6,8 @@ from tqdm import tqdm
 from torch.cuda.amp import autocast, GradScaler
 from torchvision.utils import save_image as imwrite
 from PIL import Image
+from torchvision import transforms
+
 
 import config
 import myutils
@@ -165,7 +167,7 @@ def highlight_grid(image, grid_indexes, grid_size=14):
     if not isinstance(grid_size, tuple):
         grid_size = (grid_size, grid_size)
 
-    W, H = image.size
+    W, H = image.size()
     h = H / grid_size[0]
     w = W / grid_size[1]
     image = image.copy()
@@ -190,20 +192,36 @@ device = torch.device('cuda' if args.cuda else 'cpu')
 args.device = device
 args.resume_flownet = False
 # train_loader = get_loader('train', args.data_root, args.batch_size, shuffle=True, num_workers=args.num_workers)
-test_loader = get_loader('test', args.data_root, args.test_batch_size, shuffle=False, num_workers=args.num_workers)
-images, gt, imgpath = next(iter(test_loader))
+# test_loader = get_loader('test', args.data_root, args.test_batch_size, shuffle=False, num_workers=args.num_workers)
+# images, gt, imgpath = next(iter(test_loader))
 
 # gt = gt.to(device)
-# img0 = os.path.join('image', 'frame1.jpg')
-# img1 = os.path.join('image', 'frame3.jpg')
-#
-# points14 = os.path.join('image', 'inter14.jpg')
-# points12 = os.path.join('image', 'inter12.jpg')
-# points34 = os.path.join('image', 'inter34.jpg')
-# gt = os.path.join('image', 'frame2.jpg')
-# data_list = [img0, img1, points14, points12, points34, gt]
-# images = [Image.open(pth) for pth in data_list]
 
+img0 = os.path.join('image', 'frame1.jpg')
+img1 = os.path.join('image', 'frame3.jpg')
+
+points14 = os.path.join('image', 'inter14.jpg')
+points12 = os.path.join('image', 'inter12.jpg')
+points34 = os.path.join('image', 'inter34.jpg')
+gt = os.path.join('image', 'frame2.jpg')
+data_list = [img0, img1, points14, points12, points34, gt]
+size = (384, 192)
+images = [Image.open(pth) for pth in data_list]
+
+transforms = transforms.Compose([
+                transforms.ToTensor()
+            ])
+images_ = []
+for img_ in images:
+    img_ = img_.resize(size)
+    images_.append(img_)
+images = images_
+gt = images[5]
+
+for img_ in images:
+    images_.append(transforms(img_).unsqueeze(0))
+images = images_
+get_local.clear()
 model = VFIformerSmall(args)
 model = torch.nn.DataParallel(model)
 model.eval()
