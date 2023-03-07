@@ -51,6 +51,8 @@ def visualize_head(att_map):
     # Create colorbar
     cbar = ax.figure.colorbar(im, ax=ax)
     plt.show()
+    plt.savefig('viss.png')
+
 
 
 def visualize_heads(att_map, cols):
