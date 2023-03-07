@@ -227,7 +227,8 @@ cache = get_local.cache
 print(list(cache.keys()))
 attention_maps = cache['WindowCrossAttention.forward']
 print(len(attention_maps))
-visualize_grid_to_grid_with_cls(attention_maps[4][0,4,:,:], 105, gt)
+print(attention_maps[0].shape)
+visualize_grid_to_grid_with_cls(attention_maps[4][0,0,:,:], 105, gt)
 # for name in model.state_dict():
 #     print(name)
 # print(list(model.modules()))
