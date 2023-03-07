@@ -68,7 +68,9 @@ img = torch.cat([images[0], images[1], images[2], images[3]], dim=1).to(device)
 out = model(img)
 cache = get_local.cache
 print(list(cache.keys()))
+attention_maps = cache['WindowCrossAttention.forward']
+print(len(attention_maps))
 
-for name in model.state_dict():
-    print(name)
+# for name in model.state_dict():
+#     print(name)
 # print(list(model.modules()))
