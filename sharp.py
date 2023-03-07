@@ -151,6 +151,10 @@ def visualize_grid_to_grid(att_map, grid_index, image, grid_size=8, alpha=0.6):
     with_cls_token = False
 
     # grid_image = highlight_grid(image, [grid_index], grid_size)
+    for i in range(24):
+        for j in range(48):
+            att_map[i+j]
+
 
     mask = att_map[grid_index].reshape(grid_size[0], grid_size[1])
     mask = Image.fromarray(mask).resize((image.size))
@@ -255,7 +259,7 @@ print(list(cache.keys()))
 attention_maps = cache['WindowCrossAttention.forward']
 print(len(attention_maps))
 print(attention_maps[0].shape)
-visualize_grid_to_grid(attention_maps[4][:,0,:,:], 60, gt)
+visualize_grid_to_grid(attention_maps[0][:,0,:,:], 60, gt)
 # visualize_head(attention_maps[7][0,1])
 # for name in model.state_dict():
 #     print(name)
