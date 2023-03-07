@@ -215,8 +215,8 @@ args.resume_flownet = False
 img0 = os.path.join('image', 'frame1.jpg')
 img1 = os.path.join('image', 'frame3.jpg')
 
-points14 = os.path.join('image', 'blank.jpg')
-points12 = os.path.join('image', 'blank.jpg')
+points14 = os.path.join('image', 'inter14.jpg')
+points12 = os.path.join('image', 'inter12.jpg')
 points34 = os.path.join('image', 'inter34.jpg')
 gt = os.path.join('image', 'frame2.jpg')
 data_list = [img0, img1, points14, points12, points34, gt]
