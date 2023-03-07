@@ -119,15 +119,15 @@ def visualize_grid_to_grid_with_cls(att_map, grid_index, image, grid_size=14, al
     if grid_index != 0:  # adjust grid_index since we pad our image
         grid_index = grid_index + (grid_index - 1) // grid_size[1]
 
-    grid_image = highlight_grid(padded_image, [grid_index], (grid_size[0], grid_size[1] + 1))
+    # grid_image = highlight_grid(padded_image, [grid_index], (grid_size[0], grid_size[1] + 1))
 
     fig, ax = plt.subplots(1, 2, figsize=(10, 7))
     fig.tight_layout()
 
-    ax[0].imshow(grid_image)
+    ax[0].imshow(image)
     ax[0].axis('off')
 
-    ax[1].imshow(grid_image)
+    ax[1].imshow(image)
     ax[1].imshow(padded_mask, alpha=alpha, cmap='rainbow')
     ax[1].imshow(meta_mask)
     ax[1].axis('off')
