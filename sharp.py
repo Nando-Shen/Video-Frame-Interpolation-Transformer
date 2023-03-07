@@ -89,7 +89,7 @@ img = torch.cat([images[0], images[1], images[2], images[3]], dim=1).to(device)
 
 # Construct the CAM object once, and then re-use it on many images:
 # cam = GradCAM(model=net, target_layers=target_layers, use_cuda=True)
-dasp = DASP(model)
+dasp = DASP(model.module)
 res = dasp(img, 16)
 
 # targets = [SimilarityToConceptTarget(gt_f)]
