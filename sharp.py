@@ -139,7 +139,7 @@ def visualize_grid_to_grid_with_cls(att_map, grid_index, image, grid_size=1, alp
 
 
 
-def visualize_grid_to_grid(att_map, grid_index, image, grid_size=1, alpha=0.6):
+def visualize_grid_to_grid(att_map, grid_index, image, grid_size=8, alpha=0.6):
     if not isinstance(grid_size, tuple):
         grid_size = (grid_size, grid_size)
 
