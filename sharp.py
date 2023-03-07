@@ -177,14 +177,12 @@ def visualize_grid_to_grid(att_map, grid_index, image, grid_size=8, alpha=0.6):
     plt.savefig('vis.png')
 
 
-def visualize_grid_to_grid_i(att_map, grid_index, image, grid_size=8, alpha=0.6):
+def visualize_grid_to_grid_i(att_map, grid_index, grid_size=8, alpha=0.6):
     if not isinstance(grid_size, tuple):
         grid_size = (grid_size, grid_size)
 
     H, W = att_map.shape
     with_cls_token = False
-
-    grid_image = highlight_grid(image, [grid_index], grid_size)
 
     mask = att_map[grid_index].reshape(grid_size[0], grid_size[1])
     # mask = Image.fromarray(mask).resize((image.size))
