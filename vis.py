@@ -76,7 +76,7 @@ optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2
 save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 
 load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
-print(model.state_dict())
+# print(model.state_dict())
 print(*list(model.children())[:-1])
 exit()
 model = torchvision.models.resnet50(pretrained=True)
