@@ -4,7 +4,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from lightprobnets.contrib import adf
+from contrib import adf
 
 
 def spaced_elements(array, num_elems=4):
