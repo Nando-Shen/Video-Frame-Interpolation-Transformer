@@ -177,6 +177,28 @@ def visualize_grid_to_grid(att_map, grid_index, image, grid_size=8, alpha=0.6):
     plt.savefig('vis.png')
 
 
+def visualize_grid_to_grid_i(att_map, grid_index, image, grid_size=8, alpha=0.6):
+    if not isinstance(grid_size, tuple):
+        grid_size = (grid_size, grid_size)
+
+    H, W = att_map.shape
+    with_cls_token = False
+
+    grid_image = highlight_grid(image, [grid_index], grid_size)
+
+    mask = att_map[grid_index].reshape(grid_size[0], grid_size[1])
+    # mask = Image.fromarray(mask).resize((image.size))
+    mask = Image.fromarray(mask).resize((192,192))
+
+    ax = plt.gca()
+    # Plot the heatmap
+    ax.imshow(mask / np.max(mask), alpha=alpha, cmap='rainbow')
+    ax.axis('off')
+    # Create colorbar
+    plt.show()
+    plt.savefig('swin/viss{}.png'.format(i))
+
+
 
 def highlight_grid(image, grid_indexes, grid_size=14):
     if not isinstance(grid_size, tuple):
@@ -263,7 +285,8 @@ print(list(cache.keys()))
 attention_maps = cache['WindowCrossAttention.forward']
 print(len(attention_maps))
 print(attention_maps[0].shape)
-visualize_grid_to_grid(attention_maps[4][4,0,:,:], 60, gt)
+for i in range(10):
+    visualize_grid_to_grid_i(attention_maps[4][i,0,:,:], 60, gt, i)
 # visualize_head(attention_maps[7][0,1])
 # for name in model.state_dict():
 #     print(name)
