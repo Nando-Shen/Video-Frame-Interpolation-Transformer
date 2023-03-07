@@ -67,15 +67,16 @@ gt = gt.to(device)
 # data_list = [img0, img1, points14, points12, points34, gt]
 # images = [Image.open(pth) for pth in data_list]
 
-# model = VFIformerSmall(args)
-# model = torch.nn.DataParallel(model)
-# model.eval()
+model = VFIformerSmall(args)
+model = torch.nn.DataParallel(model)
+model.eval()
 
 from torch.optim import Adamax
-# optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
+optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
 save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 
-# load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
+load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
+print(model.state_dict())
 model = torchvision.models.resnet50(pretrained=True)
 model.eval()
 print(*list(model.children())[:-1])
@@ -101,6 +102,6 @@ grayscale_cam = cam(input_tensor=img, targets=targets)
 grayscale_cam = grayscale_cam[0, :]
 visualization = show_cam_on_image(gt, grayscale_cam, use_rgb=True)
 
-for name in model.state_dict():
-    print(name)
-# print(list(model.modules()))
+# for name in model.state_dict():
+#     print(name)
+
