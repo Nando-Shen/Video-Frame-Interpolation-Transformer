@@ -167,7 +167,7 @@ def highlight_grid(image, grid_indexes, grid_size=14):
     if not isinstance(grid_size, tuple):
         grid_size = (grid_size, grid_size)
 
-    W, H = image.size()
+    W, H = image.size
     h = H / grid_size[0]
     w = W / grid_size[1]
     image = image.copy()
@@ -217,7 +217,7 @@ for img_ in images:
     images_.append(img_)
 images = images_
 gt = images[5]
-print(gt)
+print(gt.size)
 images_ = []
 
 for img_ in images:
@@ -238,7 +238,7 @@ load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
 # gt_f = net(gt)
 # print(gt_f.size())
 
-target_layers = [model.module.final_fuse_block[2]]
+# target_layers = [model.module.final_fuse_block[2]]
 # Note: input_tensor can be a batch tensor with several images!
 img = torch.cat([images[0], images[1], images[2], images[3]], dim=1).to(device)
 
