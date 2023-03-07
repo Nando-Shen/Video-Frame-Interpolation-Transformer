@@ -12,32 +12,10 @@ import myutils
 from loss import Loss
 import shutil
 import os
-
+from visualizer import get_local
+get_local.activate()
 from model.VFIformer_arch import VFIformerSmall
 from dataset.atd12k import get_loader
-
-from pytorch_grad_cam import GradCAM, HiResCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, XGradCAM, EigenCAM, FullGrad
-from pytorch_grad_cam.utils.model_targets import RawScoresOutputTarget
-from pytorch_grad_cam.utils.image import show_cam_on_image
-
-from daspTorch import DASP
-
-class SimilarityToConceptTarget:
-    def __init__(self, features):
-        self.features = features
-
-    def __call__(self, model_output):
-        cos = torch.nn.CosineSimilarity(dim=0)
-        return cos(model_output, self.features)
-
-class ResnetFeatureExtractor(torch.nn.Module):
-    def __init__(self, model):
-        super(ResnetFeatureExtractor, self).__init__()
-        self.model = model
-        self.feature_extractor = torch.nn.Sequential(*list(self.model.children())[:-1])
-
-    def __call__(self, x):
-        return self.feature_extractor(x)[:, :, 0, 0]
 
 def load_checkpoint(args, model, optimizer, path):
     print("loading checkpoint %s" % path)
@@ -87,18 +65,9 @@ target_layers = [model.module.final_fuse_block[2]]
 # Note: input_tensor can be a batch tensor with several images!
 img = torch.cat([images[0], images[1], images[2], images[3]], dim=1).to(device)
 
-# Construct the CAM object once, and then re-use it on many images:
-# cam = GradCAM(model=net, target_layers=target_layers, use_cuda=True)
-dasp = DASP(model.module)
-res = dasp(img, 16)
-
-# targets = [SimilarityToConceptTarget(gt_f)]
-
-# grayscale_cam = cam(input_tensor=img, targets=targets)
-
-# In this example grayscale_cam has only one image in the batch:
-# grayscale_cam = grayscale_cam[0, :]
-# visualization = show_cam_on_image(gt, grayscale_cam, use_rgb=True)
+out = model(img)
+cache = get_local.cache
+print(list(cache.keys()))
 
 for name in model.state_dict():
     print(name)

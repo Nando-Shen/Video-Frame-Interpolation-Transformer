@@ -9,6 +9,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.checkpoint as checkpoint
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
+from visualizer import get_local
 
 
 class Mlp(nn.Module):
@@ -112,6 +113,7 @@ class WindowCrossAttention(nn.Module):
         trunc_normal_(self.relative_position_bias_table, std=.02)
         self.softmax = nn.Softmax(dim=-1)
 
+    @get_local('atten_map')
     def forward(self, x, y, mask=None):
         """
         Args:
@@ -139,6 +141,8 @@ class WindowCrossAttention(nn.Module):
             attn = self.softmax(attn)
         else:
             attn = self.softmax(attn)
+
+        atten_map = attn
 
         attn = self.attn_drop(attn)
 
