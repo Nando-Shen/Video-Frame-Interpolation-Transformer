@@ -283,8 +283,8 @@ print(list(cache.keys()))
 attention_maps = cache['WindowCrossAttention.forward']
 print(len(attention_maps))
 print(attention_maps[0].shape)
-for i in range(10):
-    visualize_grid_to_grid_i(attention_maps[i][0,0,:,:], 59, i)
+for i in range(100):
+    visualize_grid_to_grid_i(attention_maps[3][i,0,:,:], 59, i)
 # visualize_head(attention_maps[7][0,1])
 # for name in model.state_dict():
 #     print(name)
