@@ -217,6 +217,8 @@ for img_ in images:
     images_.append(img_)
 images = images_
 gt = images[5]
+print(gt)
+images_ = []
 
 for img_ in images:
     images_.append(transforms(img_).unsqueeze(0))
