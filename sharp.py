@@ -151,7 +151,6 @@ def visualize_grid_to_grid(att_map, grid_index, image, grid_size=8, alpha=0.6):
 
     grid_image = highlight_grid(image, [grid_index], grid_size)
 
-
     mask = att_map[grid_index].reshape(grid_size[0], grid_size[1])
     # mask = Image.fromarray(mask).resize((image.size))
     mask = Image.fromarray(mask).resize((192,192))
@@ -159,6 +158,7 @@ def visualize_grid_to_grid(att_map, grid_index, image, grid_size=8, alpha=0.6):
     ax = plt.gca()
     # Plot the heatmap
     ax.imshow(mask / np.max(mask), alpha=alpha, cmap='rainbow')
+    ax.axis('off')
     # Create colorbar
     plt.show()
     plt.savefig('viss.png')
