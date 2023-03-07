@@ -5,6 +5,7 @@ from tqdm import tqdm
 
 from torch.cuda.amp import autocast, GradScaler
 from torchvision.utils import save_image as imwrite
+import torchvision
 from PIL import Image
 
 import config
@@ -66,15 +67,18 @@ gt = gt.to(device)
 # data_list = [img0, img1, points14, points12, points34, gt]
 # images = [Image.open(pth) for pth in data_list]
 
-model = VFIformerSmall(args)
-model = torch.nn.DataParallel(model)
-model.eval()
+# model = VFIformerSmall(args)
+# model = torch.nn.DataParallel(model)
+# model.eval()
 
 from torch.optim import Adamax
-optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
+# optimizer = Adamax(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
 save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 
-load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
+# load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
+model = torchvision.models.resnet50(pretrained=True)
+model.eval()
+
 net = ResnetFeatureExtractor(model).to(device)
 
 print(gt.size())
