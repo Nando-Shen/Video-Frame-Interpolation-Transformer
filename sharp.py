@@ -137,7 +137,7 @@ def visualize_grid_to_grid_with_cls(att_map, grid_index, image, grid_size=1, alp
 
 
 
-def visualize_grid_to_grid(att_map, grid_index, image, grid_size=14, alpha=0.6):
+def visualize_grid_to_grid(att_map, grid_index, image, grid_size=1, alpha=0.6):
     if not isinstance(grid_size, tuple):
         grid_size = (grid_size, grid_size)
 
@@ -229,7 +229,7 @@ print(list(cache.keys()))
 attention_maps = cache['WindowCrossAttention.forward']
 print(len(attention_maps))
 print(attention_maps[0].shape)
-visualize_grid_to_grid_with_cls(attention_maps[4][0,0,:,:], 60, gt)
+visualize_grid_to_grid(attention_maps[4][0,0,:,:], 60, gt)
 
 # for name in model.state_dict():
 #     print(name)
