@@ -162,6 +162,9 @@ def visualize_grid_to_grid(att_map, grid_index, image, grid_size=8, alpha=0.6):
     ax[1].axis('off')
     plt.show()
 
+    plt.savefig('vis.png')
+
+
 
 def highlight_grid(image, grid_indexes, grid_size=14):
     if not isinstance(grid_size, tuple):
