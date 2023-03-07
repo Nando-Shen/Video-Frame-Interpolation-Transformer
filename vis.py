@@ -77,7 +77,7 @@ save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 
 load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
 # print(model.state_dict())
-print(model.module.final_fuse_block[0].weight)
+print(model.module.final_fuse_block[1].weight)
 exit()
 model = torchvision.models.resnet50(pretrained=True)
 model.eval()
