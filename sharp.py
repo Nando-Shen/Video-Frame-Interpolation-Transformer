@@ -20,6 +20,7 @@ import json
 from PIL import Image, ImageDraw
 import numpy as np
 import matplotlib.pyplot as plt
+from visualize import visualize_grid_attention_v2
 
 
 def grid_show(to_shows, cols):
@@ -104,7 +105,7 @@ def cls_padding(image, mask, cls_weight, grid_size):
     return padded_image, padded_mask, meta_mask
 
 
-def visualize_grid_to_grid_with_cls(att_map, grid_index, image, grid_size=14, alpha=0.6):
+def visualize_grid_to_grid_with_cls(att_map, grid_index, image, grid_size=1, alpha=0.6):
     if not isinstance(grid_size, tuple):
         grid_size = (grid_size, grid_size)
 
@@ -119,7 +120,7 @@ def visualize_grid_to_grid_with_cls(att_map, grid_index, image, grid_size=14, al
     if grid_index != 0:  # adjust grid_index since we pad our image
         grid_index = grid_index + (grid_index - 1) // grid_size[1]
 
-    # grid_image = highlight_grid(padded_image, [grid_index], (grid_size[0], grid_size[1] + 1))
+    grid_image = highlight_grid(padded_image, [grid_index], (grid_size[0], grid_size[1] + 1))
 
     fig, ax = plt.subplots(1, 2, figsize=(10, 7))
     fig.tight_layout()
@@ -229,6 +230,7 @@ attention_maps = cache['WindowCrossAttention.forward']
 print(len(attention_maps))
 print(attention_maps[0].shape)
 visualize_grid_to_grid_with_cls(attention_maps[4][0,0,:,:], 60, gt)
+
 # for name in model.state_dict():
 #     print(name)
 # print(list(model.modules()))
