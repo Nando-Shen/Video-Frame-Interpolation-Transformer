@@ -78,7 +78,7 @@ save_loc = os.path.join(args.checkpoint_dir, "checkpoints")
 # load_checkpoint(args, model, optimizer, save_loc + '/model_best1.pth')
 model = torchvision.models.resnet50(pretrained=True)
 model.eval()
-print(model.children())
+print(*list(model.children()))
 
 net = ResnetFeatureExtractor(model).to(device)
 
