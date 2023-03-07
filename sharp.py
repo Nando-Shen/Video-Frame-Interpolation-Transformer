@@ -41,6 +41,7 @@ def grid_show(to_shows, cols):
             axs[i, j].set_yticks([])
             axs[i, j].set_xticks([])
     plt.show()
+    plt.savefig('viss.png')
 
 
 def visualize_head(att_map):
@@ -251,7 +252,8 @@ print(list(cache.keys()))
 attention_maps = cache['WindowCrossAttention.forward']
 print(len(attention_maps))
 print(attention_maps[0].shape)
-visualize_grid_to_grid(attention_maps[4][0,0,:,:], 61, gt)
+# visualize_grid_to_grid(attention_maps[4][0,0,:,:], 61, gt)
+visualize_heads(attention_maps[0], cols=4)
 
 # for name in model.state_dict():
 #     print(name)
