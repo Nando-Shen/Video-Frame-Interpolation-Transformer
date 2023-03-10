@@ -70,7 +70,7 @@ def read(data_root):
     data_list.extend([img0, img1, points14, points12, gt])
     images = [Image.open(pth) for pth in data_list]
     size = (384, 192)
-    images = [transforms(img_.resize(size)).unqueeze(0) for img_ in images]
+    images = [transforms(img_.resize(size)).unsqueeze(0) for img_ in images]
 
     return images
 
