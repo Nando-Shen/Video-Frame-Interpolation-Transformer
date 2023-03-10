@@ -61,11 +61,11 @@ result_dir = '/home/jiaming/flowdeep2rerun'
 
 def read(data_root):
     data_list = []
-    img0 = os.path.join(result_dir, data_root, 'frame1.jpg')
-    img1 = os.path.join(result_dir, data_root, 'flowdeep2.png')
+    img0 = os.path.join(result_dir, data_root, 'flowdeep2.jpg')
+    img1 = os.path.join(result_dir, data_root, 'frame3.png')
 
-    points14 = os.path.join(result_dir, data_root, '012inter14.jpg')
-    points12 = os.path.join(result_dir, data_root, '012inter12.jpg')
+    points14 = os.path.join(result_dir, data_root, '121inter14.jpg')
+    points12 = os.path.join(result_dir, data_root, '121inter12.jpg')
     gt = os.path.join(result_dir, data_root, 'frame2.jpg')
     data_list.extend([img0, img1, points14, points12, gt])
     images = [Image.open(pth) for pth in data_list]
@@ -85,7 +85,7 @@ def test(images, d):
         points = torch.cat([images[2], images[3]], dim=1)
         out = model(images[0], images[1], points)
 
-        imwrite(out[0], result_dir + '/' + d + '/flowdeep2_14.png')
+        imwrite(out[0], result_dir + '/' + d + '/flowdeep2_34.png')
     return
 
 """ Entry Point """
