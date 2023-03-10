@@ -62,7 +62,7 @@ result_dir = '/home/jiaming/flowdeep2rerun'
 def read(data_root):
     data_list = []
     img0 = os.path.join(result_dir, data_root, 'flowdeep2.png')
-    img1 = os.path.join(result_dir, data_root, 'frame3.png')
+    img1 = os.path.join(result_dir, data_root, 'frame3.jpg')
 
     points14 = os.path.join(result_dir, data_root, '121inter14.jpg')
     points12 = os.path.join(result_dir, data_root, '121inter12.jpg')
