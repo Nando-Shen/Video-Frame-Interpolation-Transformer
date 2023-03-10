@@ -67,7 +67,7 @@ def read(data_root):
     points14 = os.path.join(result_dir, data_root, '012inter14.jpg')
     points12 = os.path.join(result_dir, data_root, '012inter12.jpg')
     gt = os.path.join(result_dir, data_root, 'frame2.jpg')
-    data_list.append([img0, img1, points14, points12, gt])
+    data_list.extend([img0, img1, points14, points12, gt])
     images = [Image.open(pth) for pth in data_list]
     size = (384, 192)
     images = [transforms(img_.resize(size)).unqueeze(0) for img_ in images]
