@@ -76,7 +76,7 @@ def read(idx):
     return images
 
 def test(images, idx):
-    print('Evaluating for {}'.format(d))
+    print('Evaluating for {}'.format(idx))
     model.eval()
     torch.cuda.empty_cache()
 
@@ -98,7 +98,6 @@ def main(args):
     for i in range(1, 59, 2):
         images = read(i)
         test(images,i)
-        print(i)
 
 if __name__ == "__main__":
     main(args)
