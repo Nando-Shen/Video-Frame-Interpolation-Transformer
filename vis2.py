@@ -95,7 +95,7 @@ def test(images, idx):
 def main(args):
     load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
 
-    for i in range(1, 59, 2):
+    for i in range(1, 199, 2):
         images = read(i)
         test(images,i)
 
