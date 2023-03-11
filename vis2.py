@@ -98,6 +98,7 @@ def main(args):
     for i in range(1, 59, 2):
         images = read(i)
         test(images,i)
+        print(i)
 
 if __name__ == "__main__":
     main(args)
