@@ -406,7 +406,7 @@ if __name__ == "__main__":
 
 
     totalMatchCount = 0
-    os.remove(os.path.join(folder_root, '.DS_Store'))
+    # os.remove(os.path.join(folder_root, '.DS_Store'))
     folderList = sorted(os.listdir(folder_root))
     if end_idx is None:
         end_idx = len(folderList)
