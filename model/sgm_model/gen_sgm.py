@@ -406,6 +406,7 @@ if __name__ == "__main__":
 
 
     totalMatchCount = 0
+    os.remove(os.path.join(folder_root, '.DS_Store'))
     folderList = sorted(os.listdir(folder_root))
     if end_idx is None:
         end_idx = len(folderList)
@@ -427,8 +428,8 @@ if __name__ == "__main__":
         print(imgFileNames)
         sys.stdout.flush()
 
-        img1 = cv2.imread(os.path.join(input_subfolder, imgFileNames[0]))
-        img3 = cv2.imread(os.path.join(input_subfolder, imgFileNames[-1]))
+        img1 = cv2.imread(os.path.join(input_subfolder, 'frame1.jpg'))
+        img3 = cv2.imread(os.path.join(input_subfolder, 'frame3.jpg'))
 
         # segmentation
         img1_rs = cv2.resize(img1, tar_size)

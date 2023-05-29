@@ -2,18 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="viss">
-      <change afterPath="$PROJECT_DIR$/model/sgm_model/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/sgm_model/forward_warp2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/sgm_model/gen_labelmap.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/sgm_model/gen_sgm.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/sgm_model/linefiller/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/sgm_model/linefiller/thinning.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/sgm_model/linefiller/trappedball_fill.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/sgm_model/my_models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/sgm_model/segregion.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/sgm_model/softsplat.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/sgm_model/vis_flow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -368,14 +356,7 @@
       <workItem from="1678383411881" duration="18625000" />
       <workItem from="1680014088041" duration="1195000" />
       <workItem from="1680103545326" duration="598000" />
-      <workItem from="1685024496267" duration="16342000" />
-    </task>
-    <task id="LOCAL-00102" summary="flow training">
-      <created>1678181571823</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1678181571823</updated>
+      <workItem from="1685024496267" duration="20343000" />
     </task>
     <task id="LOCAL-00103" summary="flow training">
       <created>1678182076247</created>
@@ -713,7 +694,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678553187767</updated>
     </task>
-    <option name="localTasksCounter" value="151" />
+    <task id="LOCAL-00151" summary="viss">
+      <created>1685366557090</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1685366557090</updated>
+    </task>
+    <option name="localTasksCounter" value="152" />
     <servers />
   </component>
   <component name="ToolWindowManager">
