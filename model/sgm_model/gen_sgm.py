@@ -382,7 +382,7 @@ if __name__ == "__main__":
     use_gpu = args.use_gpu
 
     # tar_size = (1280, 720)
-    tar_size = (args.height, args.width)
+    tar_size = (int(args.height), int(args.width))
     # tar_size = (640, 360)
 
     rankSumThr = int(args.rank_sum_thr)
