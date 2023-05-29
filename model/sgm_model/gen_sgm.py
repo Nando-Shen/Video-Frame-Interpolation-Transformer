@@ -363,9 +363,9 @@ if __name__ == "__main__":
 
     parser.add_argument('--rank_sum_thr', default=0,
                         help='threshold for rank sum')
-    parser.add_argument('--height', default=960,
+    parser.add_argument('--height', default=384,
                     help='height of the generated flow, default: 960')
-    parser.add_argument('--width', default=540,
+    parser.add_argument('--width', default=192,
                     help='width of the generated flow, default: 540')
 
     parser.add_argument('--use_gpu', action='store_true')
