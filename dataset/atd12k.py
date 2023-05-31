@@ -19,11 +19,12 @@ class ATD12k(Dataset):
         self.training = is_training
         self.inputs = input_frames
         if is_training:
-            self.data_root = os.path.join(self.data_root, 'train_10k')
             self.region_root = os.path.join(self.data_root, 'train_10k_region')
+            self.data_root = os.path.join(self.data_root, 'train_10k')
         else:
-            self.data_root = os.path.join(self.data_root, 'test_2k_540p')
             self.region_root = os.path.join(self.data_root, 'test_2k_region')
+            self.data_root = os.path.join(self.data_root, 'test_2k_540p')
+
 
         dirs = os.listdir(self.data_root)
         data_list = []
