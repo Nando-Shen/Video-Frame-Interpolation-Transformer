@@ -87,7 +87,7 @@ class ATD12k(Dataset):
 
             images = images[:5]
 
-            return images, gt, flow13, flow
+            return images, gt, flow
         else:
             T = self.transforms
             images = [T(img_.resize(size)) for img_ in images]
