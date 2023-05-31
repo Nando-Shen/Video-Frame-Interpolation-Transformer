@@ -3,6 +3,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from PIL import Image
 import random
+import numpy as np
 
 class ATD12k(Dataset):
     def __init__(self, data_root, is_training , input_frames="1357", mode='mini'):
@@ -14,13 +15,15 @@ class ATD12k(Dataset):
             input_frames: Which frames to input for frame interpolation network.
         """
         self.data_root = data_root
-
+        self.region_root = data_root
         self.training = is_training
         self.inputs = input_frames
         if is_training:
             self.data_root = os.path.join(self.data_root, 'train_10k')
+            self.region_root = os.path.join(self.data_root, 'train_10k_region')
         else:
             self.data_root = os.path.join(self.data_root, 'test_2k_540p')
+            self.region_root = os.path.join(self.data_root, 'test_2k_region')
 
         dirs = os.listdir(self.data_root)
         data_list = []
@@ -35,8 +38,11 @@ class ATD12k(Dataset):
             points12 = os.path.join(self.data_root, d, 'inter12.jpg')
             points34 = os.path.join(self.data_root, d, 'inter34.jpg')
             gt = os.path.join(self.data_root, d, 'frame2.jpg')
+
+            region13 = os.path.join(self.region_root, d, 'guide_flo13.npy')
+            region31 = os.path.join(self.region_root, d, 'guide_flo31.npy')
             # data_list.append([img0, img1, points14, points12, points34, gt, d])
-            data_list.append([img0, img1, points14, points12, points34, gt, d])
+            data_list.append([img0, img1, points14, points12, points34, gt, d, region13, region31])
 
         self.data_list = data_list
 
@@ -64,6 +70,9 @@ class ATD12k(Dataset):
         # imgpaths = [imgpaths[i] for i in inputs]
         # Data augmentation
         size = (384, 192)
+        flow13 = np.load(self.data_list[index][7]).astype(np.float32)
+        flow31 = np.load(self.data_list[index][8]).astype(np.float32)
+        flow = [flow13, flow31]
         if self.training:
             seed = random.randint(0, 2**32)
             images_ = []
@@ -77,7 +86,7 @@ class ATD12k(Dataset):
 
             images = images[:5]
 
-            return images, gt
+            return images, gt, flow13, flow
         else:
             T = self.transforms
             images = [T(img_.resize(size)) for img_ in images]
@@ -86,7 +95,7 @@ class ATD12k(Dataset):
             images = images[:5]
             imgpath = self.data_list[index][6]
 
-            return images, gt, imgpath
+            return images, gt, imgpath, flow
 
     def __len__(self):
         if self.training:
