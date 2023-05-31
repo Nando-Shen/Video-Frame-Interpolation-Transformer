@@ -904,6 +904,7 @@ class TFCModel(nn.Module):
 
         # self.conv_first = nn.Conv2d(num_in_ch, fuse_c, 3, 1, 1)
         self.conv_1 = nn.Conv2d(num_in_ch, fuse_c, 3, 1, 1)
+        self.conv_12 = nn.Conv2d(3, fuse_c, 3, 1, 1)
         self.conv_2 = nn.Conv2d(fuse_c, 2*fuse_c, 3, 1, 1)
         self.conv_3 = nn.Conv2d(2*fuse_c, 4*fuse_c, 3, 1, 1)
         self.conv_4 = nn.Conv2d(4*fuse_c, 8*fuse_c, 3, 1, 1)
@@ -1082,7 +1083,7 @@ class TFCModel(nn.Module):
         return x
 
     def forward(self, x, y):
-        s0 = self.conv_1(x.contiguous())  # 1
+        s0 = self.conv_12(x.contiguous())  # 1
         b0 = self.conv_1(y.contiguous())  # 1
         fea0 = self.forward_features(s0, b0, self.layers0)
 
