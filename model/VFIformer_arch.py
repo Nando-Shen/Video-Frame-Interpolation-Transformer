@@ -17,7 +17,6 @@ from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from model.warplayer import warp
 from model.transformer_layers import TFModel
 from model.TFC import TFCModel
-from model.vis_flow import *
 
 def make_layer(block, n_layers):
     layers = []
