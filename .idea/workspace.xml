@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="viss" />
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="change to gpu 1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -356,20 +358,6 @@
       <workItem from="1680103545326" duration="598000" />
       <workItem from="1685024496267" duration="28682000" />
     </task>
-    <task id="LOCAL-00114" summary="flow training">
-      <created>1678183908494</created>
-      <option name="number" value="00114" />
-      <option name="presentableId" value="LOCAL-00114" />
-      <option name="project" value="LOCAL" />
-      <updated>1678183908494</updated>
-    </task>
-    <task id="LOCAL-00115" summary="flow training">
-      <created>1678185525031</created>
-      <option name="number" value="00115" />
-      <option name="presentableId" value="LOCAL-00115" />
-      <option name="project" value="LOCAL" />
-      <updated>1678185525031</updated>
-    </task>
     <task id="LOCAL-00116" summary="flow training">
       <created>1678186683106</created>
       <option name="number" value="00116" />
@@ -699,7 +687,21 @@
       <option name="project" value="LOCAL" />
       <updated>1685540135798</updated>
     </task>
-    <option name="localTasksCounter" value="163" />
+    <task id="LOCAL-00163" summary="viss">
+      <created>1685540639252</created>
+      <option name="number" value="00163" />
+      <option name="presentableId" value="LOCAL-00163" />
+      <option name="project" value="LOCAL" />
+      <updated>1685540639252</updated>
+    </task>
+    <task id="LOCAL-00164" summary="change to gpu 1">
+      <created>1685710685420</created>
+      <option name="number" value="00164" />
+      <option name="presentableId" value="LOCAL-00164" />
+      <option name="project" value="LOCAL" />
+      <updated>1685710685420</updated>
+    </task>
+    <option name="localTasksCounter" value="165" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -756,7 +758,8 @@
     <MESSAGE value="Revert &quot;add cross atten&quot;&#10;&#10;This reverts commit 39fdf353" />
     <MESSAGE value="flow training" />
     <MESSAGE value="viss" />
-    <option name="LAST_COMMIT_MESSAGE" value="viss" />
+    <MESSAGE value="change to gpu 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="change to gpu 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
