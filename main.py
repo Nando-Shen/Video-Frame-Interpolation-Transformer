@@ -1,5 +1,7 @@
 import time
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = '1'
 import torch
 from tqdm import tqdm
 
@@ -10,7 +12,7 @@ import config
 import myutils
 from loss import Loss
 import shutil
-import os
+
 
 def load_checkpoint(args, model, optimizer, path):
     print("loading checkpoint %s" % path)
