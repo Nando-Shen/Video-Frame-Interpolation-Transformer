@@ -578,7 +578,7 @@ class VFIformerSmall(nn.Module):
         flow, _, _ = self.refinenet(img0, img1, flow)
         # c0, c1 = self.refinenet(img0, img1)
 
-        save_flow_to_img(flow[:,2:], '/home/jiaming/flow')
+        # save_flow_to_img(flow[:,2:], '/home/jiaming/flow')
 
         warped_img0 = warp(img0, flow[:, :2])
         warped_img1 = warp(img1, flow[:, 2:])
