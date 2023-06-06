@@ -586,6 +586,7 @@ class VFIformerSmall(nn.Module):
         flow, _ = self.flownet(imgs)
         print(flow.shape())
         print(region_flow.shape())
+        exit()
         flow, _, _ = self.refinenet(img0, img1, flow)
         # c0, c1 = self.refinenet(img0, img1)
 
