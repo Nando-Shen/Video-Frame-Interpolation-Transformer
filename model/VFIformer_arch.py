@@ -487,7 +487,7 @@ class VFIformerSmall(nn.Module):
         # self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
         self.flownet = IFNet()
         self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
-        self.fuse_block = nn.Sequential(nn.Conv2d(15, 2*c, 3, 1, 1),
+        self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                          nn.Conv2d(2*c, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True))
@@ -594,10 +594,12 @@ class VFIformerSmall(nn.Module):
 
         points = self.points_fuse(points)
 
-        region_flow13 = region_flow[0]
-        region_flow31 = region_flow[1]
-        warped_img2 = warp(img0, region_flow13)
-        warped_img3 = warp(img1, region_flow31)
+        region_flow_con = torch.cat([region_flow[0], region_flow[1]], dim=1)
+        region_flow_con = self.refinenet(img0, img1, region_flow_con)
+        # region_flow13 = region_flow[0]
+        # region_flow31 = region_flow[1]
+        warped_img2 = warp(img0, region_flow_con[:, 2:])
+        warped_img3 = warp(img1, region_flow_con[:, :2])
 
         fused_img0 = self.fuse_block1(torch.cat([warped_img0, warped_img2], dim=1))
         fused_img1 = self.fuse_block2(torch.cat([warped_img1, warped_img3], dim=1))
@@ -616,7 +618,7 @@ class VFIformerSmall(nn.Module):
         # pred1 = merged_img1 + res1
         # pred1 = torch.clamp(pred1, 0, 1)
 
-        x = self.fuse_block(torch.cat([warped_img0, warped_img1, points, warped_img2, warped_img3], dim=1))
+        x = self.fuse_block(torch.cat([fused_img0, fused_img1, points], dim=1))
 
         refine_output = self.transformer(x)
         res = torch.sigmoid(refine_output)
