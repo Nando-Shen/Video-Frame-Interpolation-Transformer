@@ -585,7 +585,8 @@ class VFIformerSmall(nn.Module):
 
         flow, _ = self.flownet(imgs)
         print(flow.size())
-        print(region_flow.size())
+        region_flow_con = torch.cat([region_flow[0], region_flow[1]], dim=1)
+        print(region_flow_con.size())
         exit()
         flow, _, _ = self.refinenet(img0, img1, flow)
         # c0, c1 = self.refinenet(img0, img1)
@@ -597,7 +598,7 @@ class VFIformerSmall(nn.Module):
 
         points = self.points_fuse(points)
 
-        region_flow_con = torch.cat([region_flow[0], region_flow[1]], dim=1)
+
         region_flow_con = self.refinenet(img0, img1, region_flow_con)
         # region_flow13 = region_flow[0]
         # region_flow31 = region_flow[1]
