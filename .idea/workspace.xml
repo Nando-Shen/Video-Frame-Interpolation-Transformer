@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="new different architect">
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="change to gpu 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/loss.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/VFIformer_arch.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/VFIformer_arch.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -358,27 +360,6 @@
       <workItem from="1680103545326" duration="598000" />
       <workItem from="1685024496267" duration="28682000" />
     </task>
-    <task id="LOCAL-00122" summary="flow training">
-      <created>1678187735132</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1678187735132</updated>
-    </task>
-    <task id="LOCAL-00123" summary="flow training">
-      <created>1678187788805</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1678187788805</updated>
-    </task>
-    <task id="LOCAL-00124" summary="flow training">
-      <created>1678187839819</created>
-      <option name="number" value="00124" />
-      <option name="presentableId" value="LOCAL-00124" />
-      <option name="project" value="LOCAL" />
-      <updated>1678187839819</updated>
-    </task>
     <task id="LOCAL-00125" summary="flow training">
       <created>1678188969981</created>
       <option name="number" value="00125" />
@@ -701,7 +682,28 @@
       <option name="project" value="LOCAL" />
       <updated>1686027237366</updated>
     </task>
-    <option name="localTasksCounter" value="171" />
+    <task id="LOCAL-00171" summary="new different architect">
+      <created>1686048051224</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1686048051224</updated>
+    </task>
+    <task id="LOCAL-00172" summary="new different architect">
+      <created>1686049667314</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1686049667314</updated>
+    </task>
+    <task id="LOCAL-00173" summary="change to gpu 1">
+      <created>1686223817902</created>
+      <option name="number" value="00173" />
+      <option name="presentableId" value="LOCAL-00173" />
+      <option name="project" value="LOCAL" />
+      <updated>1686223817902</updated>
+    </task>
+    <option name="localTasksCounter" value="174" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -758,10 +760,10 @@
     <MESSAGE value="Revert &quot;add cross atten&quot;&#10;&#10;This reverts commit 39fdf353" />
     <MESSAGE value="flow training" />
     <MESSAGE value="viss" />
-    <MESSAGE value="change to gpu 1" />
     <MESSAGE value="back to normal flow" />
     <MESSAGE value="new different architect" />
-    <option name="LAST_COMMIT_MESSAGE" value="new different architect" />
+    <MESSAGE value="change to gpu 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="change to gpu 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
