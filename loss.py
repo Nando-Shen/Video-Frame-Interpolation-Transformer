@@ -163,7 +163,7 @@ class LPIPSLoss(nn.Module):
         return
 
     def forward(self, preds: torch.Tensor, target: torch.Tensor):
-        ans = self.model(preds, target).mean((1,2,3))
+        ans = self.model(preds, target).mean((0,1,2,3))
         return ans
 
 import torch.optim as optim
