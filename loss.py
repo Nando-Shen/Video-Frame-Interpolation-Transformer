@@ -7,6 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
 import pytorch_msssim
+import lpips
 
 class MeanShift(nn.Conv2d):
     def __init__(self, rgb_mean, rgb_std, sign=-1):
@@ -153,6 +154,17 @@ class Discriminator(nn.Module):
 
         return output
 
+class LPIPSLoss(nn.Module):
+    def __init__(self, net_type='alex', **kwargs):
+        super().__init__()
+        self.net_type = net_type
+        assert self.net_type in ['alex', 'vgg', 'squeeze']
+        self.model = lpips.LPIPS(net=self.net_type, **kwargs)
+        return
+
+    def forward(self, preds: torch.Tensor, target: torch.Tensor):
+        ans = self.model(preds, target).mean((1,2,3))
+        return ans
 
 import torch.optim as optim
 class Adversarial(nn.Module):
@@ -293,6 +305,9 @@ class Loss(nn.modules.loss._Loss):
                 loss_function = pytorch_msssim.SSIM(val_range=1.)
             elif loss_type.find('GAN') >= 0:
                 loss_function = Adversarial(args, loss_type)
+            elif loss_type.find('LPIPS') >= 0:
+                loss_function = LPIPSLoss(net_type='alex')
+
 
             self.loss.append({
                 'type': loss_type,
