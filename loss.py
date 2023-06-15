@@ -7,6 +7,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
 import pytorch_msssim
+import lpips
+
 
 class MeanShift(nn.Conv2d):
     def __init__(self, rgb_mean, rgb_std, sign=-1):
@@ -18,6 +20,7 @@ class MeanShift(nn.Conv2d):
         self.bias.data.div_(std)
         self.requires_grad = False
 
+
 class HuberLoss(nn.Module):
 
     def __init__(self , delta=1):
@@ -25,15 +28,14 @@ class HuberLoss(nn.Module):
         super().__init__()
         self.delta = delta
 
-    def forward(self , sr , hr):
-
+    def forward(self, sr, hr):
         l1 = torch.abs(sr - hr)
-        mask = l1<self.delta
+        mask = l1 < self.delta
 
-        sq_loss = .5*(l1**2) 
-        abs_loss = self.delta*(l1 - .5*self.delta)
+        sq_loss = .5 * (l1 ** 2)
+        abs_loss = self.delta * (l1 - .5 * self.delta)
 
-        return torch.mean(mask*sq_loss + (~mask)*(abs_loss))
+        return torch.mean(mask * sq_loss + (~mask) * (abs_loss))
 
 
 class VGG(nn.Module):
@@ -71,6 +73,7 @@ class VGG(nn.Module):
             x = self.sub_mean(x)
             x = self.vgg(x)
             return x
+
         def _forward_all(x):
             feats = []
             x = self.sub_mean(x)
@@ -86,9 +89,9 @@ class VGG(nn.Module):
             loss = 0
             for i in range(len(vgg_sr_feats)):
                 loss_f = F.mse_loss(vgg_sr_feats[i], vgg_hr_feats[i])
-                #print(loss_f)
+                # print(loss_f)
                 loss += loss_f
-            #print()
+            # print()
         else:
             vgg_sr = _forward(sr)
             with torch.no_grad():
@@ -101,10 +104,11 @@ class VGG(nn.Module):
 # For Adversarial loss
 class BasicBlock(nn.Sequential):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1, bias=False, bn=True, act=nn.ReLU(True)):
-        m = [nn.Conv2d(in_channels, out_channels, kernel_size, padding=(kernel_size//2), stride=stride, bias=bias)]
+        m = [nn.Conv2d(in_channels, out_channels, kernel_size, padding=(kernel_size // 2), stride=stride, bias=bias)]
         if bn: m.append(nn.BatchNorm2d(out_channels))
         if act is not None: m.append(act)
         super(BasicBlock, self).__init__(*m)
+
 
 class Discriminator(nn.Module):
     def __init__(self, args, gan_type='GAN'):
@@ -113,7 +117,7 @@ class Discriminator(nn.Module):
         in_channels = 3
         out_channels = 64
         depth = 7
-        #bn = not gan_type == 'WGAN_GP'
+        # bn = not gan_type == 'WGAN_GP'
         bn = True
         act = nn.LeakyReLU(negative_slope=0.2, inplace=True)
 
@@ -134,10 +138,10 @@ class Discriminator(nn.Module):
         self.features = nn.Sequential(*m_features)
 
         self.patch_size = args.patch_size
-        feature_patch_size = self.patch_size // (2**((depth + 1) // 2))
-        #patch_size = 256 // (2**((depth + 1) // 2))
+        feature_patch_size = self.patch_size // (2 ** ((depth + 1) // 2))
+        # patch_size = 256 // (2**((depth + 1) // 2))
         m_classifier = [
-            nn.Linear(out_channels * feature_patch_size**2, 1024),
+            nn.Linear(out_channels * feature_patch_size ** 2, 1024),
             act,
             nn.Linear(1024, 1)
         ]
@@ -154,7 +158,22 @@ class Discriminator(nn.Module):
         return output
 
 
+class LPIPSLoss(nn.Module):
+    def __init__(self, net_type='alex', **kwargs):
+        super().__init__()
+        self.net_type = net_type
+        assert self.net_type in ['alex', 'vgg', 'squeeze']
+        self.model = lpips.LPIPS(net=self.net_type, **kwargs)
+        return
+
+    def forward(self, preds: torch.Tensor, target: torch.Tensor):
+        ans = self.model(preds, target).mean((0, 1, 2, 3))
+        return ans
+
+
 import torch.optim as optim
+
+
 class Adversarial(nn.Module):
     def __init__(self, args, gan_type):
         super(Adversarial, self).__init__()
@@ -194,9 +213,9 @@ class Adversarial(nn.Module):
                 d_fake1 = self.discriminator(fake1)
             if fake_input_mean is not None:
                 d_fake_m = self.discriminator(fake_m)
-            
+
             # print(d_fake.size(), d_fake0.size(), d_fake1.size(), d_fake_m.size())
-            
+
             d_real = self.discriminator(real)
             if self.gan_type == 'GAN':
                 label_fake = torch.zeros_like(d_fake)
@@ -293,6 +312,8 @@ class Loss(nn.modules.loss._Loss):
                 loss_function = pytorch_msssim.SSIM(val_range=1.)
             elif loss_type.find('GAN') >= 0:
                 loss_function = Adversarial(args, loss_type)
+            elif loss_type.find('LPIPS') >= 0:
+                loss_function = LPIPSLoss(net_type='alex')
 
             self.loss.append({
                 'type': loss_type,
@@ -316,7 +337,6 @@ class Loss(nn.modules.loss._Loss):
         if args.cuda:# and args.n_GPUs > 1:
             self.loss_module = nn.DataParallel(self.loss_module)
 
-
     def forward(self, sr, hr, fake_imgs=None):
         loss = 0
         losses = {}
@@ -333,6 +353,5 @@ class Loss(nn.modules.loss._Loss):
                 loss += effective_loss
             elif l['type'] == 'DIS':
                 losses[l['type']] = self.loss[i - 1]['function'].loss
-
 
         return loss, losses
