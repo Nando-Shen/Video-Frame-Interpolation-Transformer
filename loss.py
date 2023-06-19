@@ -42,7 +42,7 @@ class VGG(nn.Module):
         super(VGG, self).__init__()
         vgg_features = models.vgg19(pretrained=True).features
         modules = [m for m in vgg_features]
-        conv_index = loss_type[-2:]
+        conv_index = 'P'
         if conv_index == '22':
             self.vgg = nn.Sequential(*modules[:8])
         elif conv_index == '33':
