@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="change to gpu1 and add vgg loss">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="change to gpu1 and add vgg loss" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -359,14 +357,7 @@
       <workItem from="1685024496267" duration="28682000" />
       <workItem from="1686838748074" duration="9386000" />
       <workItem from="1687260567780" duration="475000" />
-      <workItem from="1687508911635" duration="1994000" />
-    </task>
-    <task id="LOCAL-00130" summary="flow training">
-      <created>1678196502626</created>
-      <option name="number" value="00130" />
-      <option name="presentableId" value="LOCAL-00130" />
-      <option name="project" value="LOCAL" />
-      <updated>1678196502626</updated>
+      <workItem from="1687508911635" duration="2295000" />
     </task>
     <task id="LOCAL-00131" summary="flow training">
       <created>1678196634959</created>
@@ -704,7 +695,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687173483658</updated>
     </task>
-    <option name="localTasksCounter" value="179" />
+    <task id="LOCAL-00179" summary="change to gpu1 and add vgg loss">
+      <created>1687591412216</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1687591412217</updated>
+    </task>
+    <option name="localTasksCounter" value="180" />
     <servers />
   </component>
   <component name="ToolWindowManager">
