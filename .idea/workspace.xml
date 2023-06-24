@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="back to architect1 and new loss func">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="back to architect1 and new loss func" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -307,13 +305,13 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.test_adacof" />
       <item itemvalue="Python.Unet_arch_new (1)" />
       <item itemvalue="Python.figure_plot" />
+      <item itemvalue="Python.main" />
       <item itemvalue="Python.plot_attn" />
       <item itemvalue="Python.runtime_plot" />
+      <item itemvalue="Python.test" />
+      <item itemvalue="Python.test_adacof" />
       <item itemvalue="Python.tmp (1)" />
     </list>
     <recent_temporary>
