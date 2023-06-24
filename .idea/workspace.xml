@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="vis output">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="vis output" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -361,20 +359,6 @@
       <workItem from="1687260567780" duration="475000" />
       <workItem from="1687508911635" duration="2295000" />
     </task>
-    <task id="LOCAL-00132" summary="flow training">
-      <created>1678196782950</created>
-      <option name="number" value="00132" />
-      <option name="presentableId" value="LOCAL-00132" />
-      <option name="project" value="LOCAL" />
-      <updated>1678196782950</updated>
-    </task>
-    <task id="LOCAL-00133" summary="flow training">
-      <created>1678197231194</created>
-      <option name="number" value="00133" />
-      <option name="presentableId" value="LOCAL-00133" />
-      <option name="project" value="LOCAL" />
-      <updated>1678197231194</updated>
-    </task>
     <task id="LOCAL-00134" summary="flow training">
       <created>1678197921701</created>
       <option name="number" value="00134" />
@@ -704,7 +688,21 @@
       <option name="project" value="LOCAL" />
       <updated>1687607714724</updated>
     </task>
-    <option name="localTasksCounter" value="181" />
+    <task id="LOCAL-00181" summary="vis output">
+      <created>1687608924587</created>
+      <option name="number" value="00181" />
+      <option name="presentableId" value="LOCAL-00181" />
+      <option name="project" value="LOCAL" />
+      <updated>1687608924587</updated>
+    </task>
+    <task id="LOCAL-00182" summary="vis output">
+      <created>1687608937361</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1687608937361</updated>
+    </task>
+    <option name="localTasksCounter" value="183" />
     <servers />
   </component>
   <component name="ToolWindowManager">

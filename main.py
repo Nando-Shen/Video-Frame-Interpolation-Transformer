@@ -205,7 +205,7 @@ def testt(args, epoch):
                 # print(idx)
                 # print(datapath[idx])
                 os.makedirs(args.result_dir + '/' + datapath[idx])
-                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/flowdeep2.png')
+                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/region5+5.png')
 
             # Save loss values
             loss, loss_specific = criterion(out, gt)
