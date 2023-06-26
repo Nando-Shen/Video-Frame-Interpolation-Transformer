@@ -1,7 +1,7 @@
 import time
 
 import os
-# os.environ["CUDA_VISIBLE_DEVICES"] = '1'
+os.environ["CUDA_VISIBLE_DEVICES"] = '1'
 import torch
 from tqdm import tqdm
 
@@ -246,10 +246,10 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
-    test_loss, psnr, ssim = testt(args, args.start_epoch)
-    print("psnr :{}, ssim:{}".format(psnr, ssim))
-    exit()
+    # load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
+    # test_loss, psnr, ssim = testt(args, args.start_epoch)
+    # print("psnr :{}, ssim:{}".format(psnr, ssim))
+    # exit()
 
     best_psnr = 0
     for epoch in range(args.start_epoch, args.max_epoch):
