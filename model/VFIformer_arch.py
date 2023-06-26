@@ -632,6 +632,7 @@ class VFIformerSmall(nn.Module):
 
         pred = self.final_fuse_block(torch.cat([res0, res1, res], dim=1))
         pred = torch.sigmoid(pred)
+        pred = torch.prelu()
 
         # pred = torch.clamp(pred, 0, 1)
 
