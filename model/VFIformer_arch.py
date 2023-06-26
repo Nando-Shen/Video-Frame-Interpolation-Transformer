@@ -632,7 +632,8 @@ class VFIformerSmall(nn.Module):
 
         pred = self.final_fuse_block(torch.cat([res0, res1, res], dim=1))
         # pred = torch.sigmoid(pred)
-        pred = torch.prelu(pred)
+        weight = torch.randn(3, device='cuda')
+        pred = torch.prelu(pred,weight)
 
         # pred = torch.clamp(pred, 0, 1)
 
