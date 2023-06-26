@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="change to prelu">
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="change to prelu" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -361,13 +359,6 @@
       <workItem from="1687260567780" duration="475000" />
       <workItem from="1687508911635" duration="2295000" />
     </task>
-    <task id="LOCAL-00136" summary="flow training">
-      <created>1678201734691</created>
-      <option name="number" value="00136" />
-      <option name="presentableId" value="LOCAL-00136" />
-      <option name="project" value="LOCAL" />
-      <updated>1678201734691</updated>
-    </task>
     <task id="LOCAL-00137" summary="flow training">
       <created>1678247853605</created>
       <option name="number" value="00137" />
@@ -704,7 +695,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687783134388</updated>
     </task>
-    <option name="localTasksCounter" value="185" />
+    <task id="LOCAL-00185" summary="change to prelu">
+      <created>1687783917616</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1687783917616</updated>
+    </task>
+    <option name="localTasksCounter" value="186" />
     <servers />
   </component>
   <component name="ToolWindowManager">
