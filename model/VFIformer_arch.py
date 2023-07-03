@@ -527,6 +527,12 @@ class VFIformerSmall(nn.Module):
                                           embed_dim=embed_dim, num_heads=[[2, 2], [2, 2], [2, 2], [2, 2]], mlp_ratio=2,
                                           resi_connection='1conv')
 
+        self.weight1 = torch.randn(3, device='cuda')
+        self.weight2 = torch.randn(3, device='cuda')
+        self.weight3 = torch.randn(3, device='cuda')
+        self.weight4 = torch.randn(3, device='cuda')
+
+
 
         self.apply(self._init_weights)
 
@@ -604,14 +610,14 @@ class VFIformerSmall(nn.Module):
         fused_img1 = self.fuse_block2(torch.cat([warped_img1, warped_img3], dim=1))
 
         i0_output = self.cross_tran(points, fused_img0)
-        res0 = torch.sigmoid(i0_output)
+        res0 = torch.prelu(i0_output, self.weight1)
         # mask0 = torch.sigmoid(i0_output[:, 3:4])
         # merged_img0 = img0 * mask0 + points * (1 - mask0)
         # pred0 = merged_img0 + res0
         # pred0 = torch.clamp(pred0, 0, 1)
 
         i1_output = self.cross_tran(points, fused_img1)
-        res1 = torch.sigmoid(i1_output)
+        res1 = torch.prelu(i1_output, self.weight2)
         # mask1 = torch.sigmoid(i1_output[:, 3:4])
         # merged_img1 = img1 * mask1 + points * (1 - mask1)
         # pred1 = merged_img1 + res1
@@ -620,7 +626,7 @@ class VFIformerSmall(nn.Module):
         x = self.fuse_block(torch.cat([warped_img0, warped_img1, points, warped_img2, warped_img3], dim=1))
 
         refine_output = self.transformer(x)
-        res = torch.sigmoid(refine_output)
+        res = torch.prelu(refine_output, self.weight3)
 
 
         # res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
@@ -632,8 +638,7 @@ class VFIformerSmall(nn.Module):
 
         pred = self.final_fuse_block(torch.cat([res0, res1, res], dim=1))
         # pred = torch.sigmoid(pred)
-        weight = torch.randn(3, device='cuda')
-        pred = torch.prelu(pred,weight)
+        pred = torch.prelu(pred, self.weight4)
 
         # pred = torch.clamp(pred, 0, 1)
 
