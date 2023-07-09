@@ -5,8 +5,8 @@ import torch.nn as nn
 
 class mylu(nn.Module):
 
-    def __init__(self, *kargs, **kwargs):
-        super(mylu, self).__init__(*kargs, **kwargs)
+    def __init__(self):
+        super(mylu, self).__init__()
         self.r = mylu_.apply  ### <-----注意此处
 
     def forward(self, inputs):
