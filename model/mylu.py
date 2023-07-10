@@ -33,6 +33,22 @@ import torch.nn as nn
 
 class MyReLU(torch.autograd.Function):
     @staticmethod
+    def forward(ctx, inp):
+        ctx.constant = 0.1
+        ctx.save_for_backward(inp)
+        inter = torch.where(inp < 0., 0.1 * inp, inp)
+        return torch.where(inter > 1., 0.1 * inter, inter)
+
+    @staticmethod
+    def backward(ctx, grad_output):
+        inp, = ctx.saved_tensors
+        grad_output = grad_output.clone()
+        grad_output[inp > 1.] *= 0.1
+        grad_output[inp < 0.] *= 0.1
+        return grad_output
+
+class MyReLU(torch.autograd.Function):
+    @staticmethod
     def forward(ctx, input_):
         # 在forward中，需要定义MyReLU这个运算的forward计算过程
         # 同时可以保存任何在后向传播中需要使用的变量值
