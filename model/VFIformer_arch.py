@@ -487,7 +487,7 @@ class VFIformerSmall(nn.Module):
         # self.refinenet = FlowRefineNet_Multis_Simple(c=c, n_iters=1)
         self.flownet = IFNet()
         self.refinenet = FlowRefineNet_Multis(c=c, n_iters=1)
-        self.fuse_block = nn.Sequential(nn.Conv2d(15, 2*c, 3, 1, 1),
+        self.fuse_block = nn.Sequential(nn.Conv2d(9, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True),
                                          nn.Conv2d(2*c, 2*c, 3, 1, 1),
                                          nn.LeakyReLU(negative_slope=0.2, inplace=True))
@@ -589,15 +589,15 @@ class VFIformerSmall(nn.Module):
         # warped_img0 = warp(img0, flow[:, :2])
         # warped_img1 = warp(img1, flow[:, 2:])
 
-        flow, _ = self.flownet(imgs)
-        flow, _, _ = self.refinenet(img0, img1, flow)
+        # flow, _ = self.flownet(imgs)
+        # flow, _, _ = self.refinenet(img0, img1, flow)
 
         # c0, c1 = self.refinenet(img0, img1)
 
         # save_flow_to_img(flow[:,2:], '/home/jiaming/flow')
 
-        warped_img0 = warp(img0, flow[:, :2])
-        warped_img1 = warp(img1, flow[:, 2:])
+        # warped_img0 = warp(img0, flow[:, :2])
+        # warped_img1 = warp(img1, flow[:, 2:])
 
         points = self.points_fuse(points)
 
@@ -606,28 +606,28 @@ class VFIformerSmall(nn.Module):
         warped_img2 = warp(img0, region_flow13)
         warped_img3 = warp(img1, region_flow31)
 
-        fused_img0 = self.fuse_block1(torch.cat([warped_img0, warped_img2], dim=1))
-        fused_img1 = self.fuse_block2(torch.cat([warped_img1, warped_img3], dim=1))
+        # fused_img0 = self.fuse_block1(torch.cat([warped_img0, warped_img2], dim=1))
+        # fused_img1 = self.fuse_block2(torch.cat([warped_img1, warped_img3], dim=1))
 
-        i0_output = self.cross_tran(points, fused_img0)
-        res0 = torch.selu(i0_output)
+        i0_output = self.cross_tran(points, warped_img2)
+        res0 = torch.sigmoid(i0_output)
         # mask0 = torch.sigmoid(i0_output[:, 3:4])
         # merged_img0 = img0 * mask0 + points * (1 - mask0)
         # pred0 = merged_img0 + res0
         # pred0 = torch.clamp(pred0, 0, 1)
 
-        i1_output = self.cross_tran(points, fused_img1)
-        res1 = torch.selu(i1_output)
+        i1_output = self.cross_tran(points, warped_img3)
+        res1 = torch.sigmoid(i1_output)
         # mask1 = torch.sigmoid(i1_output[:, 3:4])
         # merged_img1 = img1 * mask1 + points * (1 - mask1)
         # pred1 = merged_img1 + res1
         # pred1 = torch.clamp(pred1, 0, 1)
 
-        x = self.fuse_block(torch.cat([warped_img0, warped_img1, points, warped_img2, warped_img3], dim=1))
+        x = self.fuse_block(torch.cat([points, warped_img2, warped_img3], dim=1))
 
         refine_output = self.transformer(x)
 
-        res = torch.selu(refine_output)
+        res = torch.sigmoid(refine_output)
 
 
         # res = torch.sigmoid(refine_output[:, :3]) * 2 - 1
@@ -639,7 +639,7 @@ class VFIformerSmall(nn.Module):
 
         pred = self.final_fuse_block(torch.cat([res0, res1, res], dim=1))
         # pred = torch.sigmoid(pred)
-        pred = torch.selu(pred)
+        pred = torch.sigmoid(pred)
 
         # pred = torch.clamp(pred, 0, 1)
 
