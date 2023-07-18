@@ -606,8 +606,8 @@ class VFIformerSmall(nn.Module):
         warped_img2 = warp(img0, region_flow13)
         warped_img3 = warp(img1, region_flow31)
 
-        fused_img0 = self.fuse_block1(torch.cat([warped_img0, warped_img2], dim=1))
-        fused_img1 = self.fuse_block2(torch.cat([warped_img1, warped_img3], dim=1))
+        # fused_img0 = self.fuse_block1(torch.cat([warped_img0, warped_img2], dim=1))
+        # fused_img1 = self.fuse_block2(torch.cat([warped_img1, warped_img3], dim=1))
 
         # i0_output = self.cross_tran(points, fused_img0)
         # res0 = torch.sigmoid(i0_output)
@@ -636,7 +636,7 @@ class VFIformerSmall(nn.Module):
         # merged_img = img0 * mask + img1 * (1 - mask)
         # pred = merged_img + res
 
-        pred = self.final_fuse_block(torch.cat([fused_img0, fused_img1, res], dim=1))
+        pred = self.final_fuse_block(res)
         pred = torch.sigmoid(pred)
         # pred = torch.selu(pred)
 
