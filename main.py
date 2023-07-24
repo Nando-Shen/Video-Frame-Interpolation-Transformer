@@ -87,7 +87,7 @@ def train(args, epoch):
 
         # Build input batch
         images = [img_.to(device) for img_ in images]
-        points = torch.cat([images[2],images[3]], 1)
+        points = torch.cat([images[3]], 1)
 
         # Forward
         optimizer.zero_grad()
@@ -193,7 +193,7 @@ def testt(args, epoch):
             #     continue
             # print(out.size())
             images = [img_.to(device) for img_ in images]
-            points = torch.cat([images[2], images[3]], dim=1)
+            points = torch.cat([images[3]], dim=1)
             if args.model == 'VFI':
                 out = model(images[0], images[1], points, flow)
             else:
@@ -246,7 +246,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
+    # load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
     # test_loss, psnr, ssim = testt(args, args.start_epoch)
     # print("psnr :{}, ssim:{}".format(psnr, ssim))
     # exit()
