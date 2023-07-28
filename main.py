@@ -112,6 +112,7 @@ def train(args, epoch):
             optimizer.step()
 
         scaler.scale(overall_loss).backward()
+        torch.nn.utils.clip_grad_norm_(parameters=model.parameters(), max_norm=10, norm_type=2)
         scaler.step(optimizer)
 
         scaler.update()
