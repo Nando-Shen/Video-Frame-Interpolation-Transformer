@@ -507,9 +507,13 @@ if __name__ == "__main__":
         featx4_pool_3 = superpixel_pooling(featx4_3[0], labelMap3_x4, use_gpu)
         featx8_pool_3 = superpixel_pooling(featx8_3[0], labelMap3_x8, use_gpu)
         # featx16_pool_3 = superpixel_pooling(featx16_3[0], labelMap3_x16, use_gpu)
+
+        print(featx1_pool_1.shape)
         
         feat_pool_1 = torch.cat([featx1_pool_1, featx2_pool_1, featx4_pool_1, featx8_pool_1], dim=0)
         feat_pool_3 = torch.cat([featx1_pool_3, featx2_pool_3, featx4_pool_3, featx8_pool_3], dim=0)
+
+        print(feat_pool_1.shape)
 
         # normalization
         feat_p1_tmp = feat_pool_1 - feat_pool_1.min(dim=0)[0]
