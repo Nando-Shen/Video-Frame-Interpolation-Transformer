@@ -125,6 +125,8 @@ def superpixel_pooling(feat_map, label_map, use_gpu=False):
         return
     
     feat_flat = feat_map.reshape([fC,fH*fW])
+    print('feat_map_flat+{}'.format(feat_map.shape))
+
     label_flat = torch.tensor(label_map.reshape(fH*fW)).long()
     
 #     print('max label: ', torch.max(label_flat).item())
@@ -134,7 +136,8 @@ def superpixel_pooling(feat_map, label_map, use_gpu=False):
         label_flat = label_flat.cuda()
 
     poolMean = scatter_mean(feat_flat, label_flat, dim=1)
-    
+    print('poolMean+{}'.format(feat_map.shape))
+
     return poolMean
 
 
