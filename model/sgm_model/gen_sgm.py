@@ -118,6 +118,7 @@ def mutual_matching(corrMap, descending = True):
 
 def superpixel_pooling(feat_map, label_map, use_gpu=False):
     fC,fH,fW = feat_map.shape
+    print('feat_map+'+feat_map.shape)
     lH,lW = label_map.shape
     if fH != lH or fW != lW:
         print('feature map and label map do not match')
@@ -524,6 +525,7 @@ if __name__ == "__main__":
 
         # for pixel distance
         lH, lW = labelMap1.shape
+        print(labelMap1.shape)
         gridX, gridY = np.meshgrid(np.arange(lW), np.arange(lH))
 
         gridX_flat = torch.tensor(gridX.astype(float), requires_grad=False).reshape(lH*lW)
