@@ -35,15 +35,15 @@ class ATD12k(Dataset):
             img1 = os.path.join(self.data_root, d, 'frame3.jpg')
             # points14 = os.path.join(self.data_root, d, 'frame3.jpg')
 
-            points14 = os.path.join(self.data_root, d, 'inter14.jpg')
+            points13 = os.path.join(self.data_root, d, 'inter13.jpg')
             points12 = os.path.join(self.data_root, d, 'inter12.jpg')
-            points34 = os.path.join(self.data_root, d, 'inter34.jpg')
+            points23 = os.path.join(self.data_root, d, 'inter23.jpg')
             gt = os.path.join(self.data_root, d, 'frame2.jpg')
 
             region13 = os.path.join(self.region_root, d, 'guide_flo13.npy')
             region31 = os.path.join(self.region_root, d, 'guide_flo31.npy')
             # data_list.append([img0, img1, points14, points12, points34, gt, d])
-            data_list.append([img0, img1, points14, points12, points34, gt, d, region13, region31])
+            data_list.append([img0, img1, points13, points12, points23, gt, d, region13, region31])
 
         self.data_list = data_list
 
