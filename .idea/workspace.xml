@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="ab on 141234">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="ab on 141234" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -360,14 +358,7 @@
       <workItem from="1686838748074" duration="9386000" />
       <workItem from="1687260567780" duration="475000" />
       <workItem from="1687508911635" duration="2295000" />
-      <workItem from="1690988244797" duration="1796000" />
-    </task>
-    <task id="LOCAL-00139" summary="flow training">
-      <created>1678316498160</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1678316498160</updated>
+      <workItem from="1690988244797" duration="2175000" />
     </task>
     <task id="LOCAL-00140" summary="flow training">
       <created>1678355673186</created>
@@ -705,7 +696,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690819519526</updated>
     </task>
-    <option name="localTasksCounter" value="188" />
+    <task id="LOCAL-00188" summary="ab on 141234">
+      <created>1691045480398</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1691045480398</updated>
+    </task>
+    <option name="localTasksCounter" value="189" />
     <servers />
   </component>
   <component name="ToolWindowManager">
