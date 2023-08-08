@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="change to prelu">
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="ab on flow">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="animeinterp" />
+        <entry key="$PROJECT_DIR$" value="ab_region_noflow" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -332,11 +332,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.VFIT_S" />
-        <item itemvalue="Python.atd12k" />
         <item itemvalue="Python.runtime_plot" />
         <item itemvalue="Python.plot_attn" />
         <item itemvalue="Python.figure_plot" />
+        <item itemvalue="Python.atd12k" />
+        <item itemvalue="Python.VFIT_S" />
       </list>
     </recent_temporary>
   </component>
@@ -360,13 +360,6 @@
       <workItem from="1686838748074" duration="9386000" />
       <workItem from="1687260567780" duration="475000" />
       <workItem from="1687508911635" duration="2295000" />
-    </task>
-    <task id="LOCAL-00138" summary="flow training">
-      <created>1678250444116</created>
-      <option name="number" value="00138" />
-      <option name="presentableId" value="LOCAL-00138" />
-      <option name="project" value="LOCAL" />
-      <updated>1678250444116</updated>
     </task>
     <task id="LOCAL-00139" summary="flow training">
       <created>1678316498160</created>
@@ -704,7 +697,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687784863370</updated>
     </task>
-    <option name="localTasksCounter" value="187" />
+    <task id="LOCAL-00187" summary="ab on flow">
+      <created>1691344365628</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1691344365628</updated>
+    </task>
+    <option name="localTasksCounter" value="188" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -769,7 +769,8 @@
     <MESSAGE value="change to gpu1 and add vgg loss" />
     <MESSAGE value="vis output" />
     <MESSAGE value="change to prelu" />
-    <option name="LAST_COMMIT_MESSAGE" value="change to prelu" />
+    <MESSAGE value="ab on flow" />
+    <option name="LAST_COMMIT_MESSAGE" value="ab on flow" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
