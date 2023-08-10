@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="change to prelu">
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="ab on flow">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -362,13 +361,6 @@
       <workItem from="1687260567780" duration="475000" />
       <workItem from="1687508911635" duration="2295000" />
     </task>
-    <task id="LOCAL-00138" summary="flow training">
-      <created>1678250444116</created>
-      <option name="number" value="00138" />
-      <option name="presentableId" value="LOCAL-00138" />
-      <option name="project" value="LOCAL" />
-      <updated>1678250444116</updated>
-    </task>
     <task id="LOCAL-00139" summary="flow training">
       <created>1678316498160</created>
       <option name="number" value="00139" />
@@ -705,7 +697,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687784863370</updated>
     </task>
-    <option name="localTasksCounter" value="187" />
+    <task id="LOCAL-00187" summary="ab on flow">
+      <created>1691659300109</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1691659300110</updated>
+    </task>
+    <option name="localTasksCounter" value="188" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -770,7 +769,8 @@
     <MESSAGE value="change to gpu1 and add vgg loss" />
     <MESSAGE value="vis output" />
     <MESSAGE value="change to prelu" />
-    <option name="LAST_COMMIT_MESSAGE" value="change to prelu" />
+    <MESSAGE value="ab on flow" />
+    <option name="LAST_COMMIT_MESSAGE" value="ab on flow" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
