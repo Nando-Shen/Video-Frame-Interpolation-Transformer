@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="ab on 1323" />
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="ab on flow">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -376,13 +378,6 @@
       <workItem from="1690729361592" duration="1000" />
       <workItem from="1690730365326" duration="472000" />
     </task>
-    <task id="LOCAL-00184" summary="change to prelu">
-      <created>1687783134388</created>
-      <option name="number" value="00184" />
-      <option name="presentableId" value="LOCAL-00184" />
-      <option name="project" value="LOCAL" />
-      <updated>1687783134388</updated>
-    </task>
     <task id="LOCAL-00185" summary="change to prelu">
       <created>1687783917616</created>
       <option name="number" value="00185" />
@@ -719,7 +714,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690687293177</updated>
     </task>
-    <option name="localTasksCounter" value="233" />
+    <task id="LOCAL-00233" summary="ab on flow">
+      <created>1691673490348</created>
+      <option name="number" value="00233" />
+      <option name="presentableId" value="LOCAL-00233" />
+      <option name="project" value="LOCAL" />
+      <updated>1691673490348</updated>
+    </task>
+    <option name="localTasksCounter" value="234" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -773,7 +775,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="flow training" />
     <MESSAGE value="viss" />
     <MESSAGE value="back to normal flow" />
     <MESSAGE value="new different architect" />
@@ -798,7 +799,8 @@
     <MESSAGE value="ab on 1234" />
     <MESSAGE value="ab on 141234" />
     <MESSAGE value="ab on 1323" />
-    <option name="LAST_COMMIT_MESSAGE" value="ab on 1323" />
+    <MESSAGE value="ab on flow" />
+    <option name="LAST_COMMIT_MESSAGE" value="ab on flow" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
