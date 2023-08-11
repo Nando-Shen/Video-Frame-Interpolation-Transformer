@@ -1,7 +1,7 @@
 import time
 
 import os
-# os.environ["CUDA_VISIBLE_DEVICES"] = '1'
+os.environ["CUDA_VISIBLE_DEVICES"] = '1'
 import torch
 from tqdm import tqdm
 
@@ -205,7 +205,7 @@ def testt(args, epoch):
                 # print(idx)
                 # print(datapath[idx])
                 os.makedirs(args.result_dir + '/' + datapath[idx])
-                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/region5+5.png')
+                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/regionnopoints.png')
 
             # Save loss values
             loss, loss_specific = criterion(out, gt)

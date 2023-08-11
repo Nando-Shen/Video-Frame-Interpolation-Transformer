@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="ab on flow">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -321,14 +321,14 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.test_adacof" />
       <item itemvalue="Python.VFIT_S" />
       <item itemvalue="Python.atd12k" />
       <item itemvalue="Python.figure_plot" />
+      <item itemvalue="Python.main" />
       <item itemvalue="Python.plot_attn" />
       <item itemvalue="Python.runtime_plot" />
+      <item itemvalue="Python.test" />
+      <item itemvalue="Python.test_adacof" />
     </list>
     <recent_temporary>
       <list>
