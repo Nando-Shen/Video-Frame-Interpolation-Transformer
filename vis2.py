@@ -83,7 +83,7 @@ def test(images, idx):
     with torch.no_grad():
 
         images = [img_.to(device) for img_ in images]
-        points = torch.cat([images[2]], dim=1)
+        points = torch.cat([images[3]], dim=1)
         out = model(images[0], images[1], points, None)
 
         imwrite(images[0], result_dir + '/{}csi.jpg'.format(idx))

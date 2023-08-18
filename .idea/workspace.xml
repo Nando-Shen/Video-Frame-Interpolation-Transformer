@@ -322,14 +322,14 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.test" />
+      <item itemvalue="Python.test_adacof" />
       <item itemvalue="Python.VFIT_S" />
       <item itemvalue="Python.atd12k" />
       <item itemvalue="Python.figure_plot" />
-      <item itemvalue="Python.main" />
       <item itemvalue="Python.plot_attn" />
       <item itemvalue="Python.runtime_plot" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.test_adacof" />
     </list>
     <recent_temporary>
       <list>
