@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="ab on flow">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vis2.py" beforeDir="false" afterPath="$PROJECT_DIR$/vis2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -363,20 +363,8 @@
       <workItem from="1687508911635" duration="2295000" />
       <workItem from="1691070891750" duration="742000" />
       <workItem from="1691248529248" duration="441000" />
-    </task>
-    <task id="LOCAL-00141" summary="flow training">
-      <created>1678472215012</created>
-      <option name="number" value="00141" />
-      <option name="presentableId" value="LOCAL-00141" />
-      <option name="project" value="LOCAL" />
-      <updated>1678472215012</updated>
-    </task>
-    <task id="LOCAL-00142" summary="viss">
-      <created>1678472809132</created>
-      <option name="number" value="00142" />
-      <option name="presentableId" value="LOCAL-00142" />
-      <option name="project" value="LOCAL" />
-      <updated>1678472809132</updated>
+      <workItem from="1692450784893" duration="1798000" />
+      <workItem from="1692528937932" duration="1481000" />
     </task>
     <task id="LOCAL-00143" summary="viss">
       <created>1678472899976</created>
@@ -707,7 +695,21 @@
       <option name="project" value="LOCAL" />
       <updated>1691737585148</updated>
     </task>
-    <option name="localTasksCounter" value="190" />
+    <task id="LOCAL-00190" summary="ab on flow">
+      <created>1692343686702</created>
+      <option name="number" value="00190" />
+      <option name="presentableId" value="LOCAL-00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1692343686702</updated>
+    </task>
+    <task id="LOCAL-00191" summary="ab on flow">
+      <created>1692343750244</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1692343750244</updated>
+    </task>
+    <option name="localTasksCounter" value="192" />
     <servers />
   </component>
   <component name="ToolWindowManager">
