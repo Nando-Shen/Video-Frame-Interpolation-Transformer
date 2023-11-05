@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="ab on flow">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/atd12k.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/atd12k.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/VFIformer_arch.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/VFIformer_arch.py" afterDir="false" />
-    </list>
+    <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="ab on flow" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -365,13 +360,6 @@
       <workItem from="1687508911635" duration="2295000" />
       <workItem from="1692581735737" duration="227000" />
     </task>
-    <task id="LOCAL-00140" summary="flow training">
-      <created>1678355673186</created>
-      <option name="number" value="00140" />
-      <option name="presentableId" value="LOCAL-00140" />
-      <option name="project" value="LOCAL" />
-      <updated>1678355673186</updated>
-    </task>
     <task id="LOCAL-00141" summary="flow training">
       <created>1678472215012</created>
       <option name="number" value="00141" />
@@ -708,7 +696,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699172811414</updated>
     </task>
-    <option name="localTasksCounter" value="189" />
+    <task id="LOCAL-00189" summary="ab on flow">
+      <created>1699175076633</created>
+      <option name="number" value="00189" />
+      <option name="presentableId" value="LOCAL-00189" />
+      <option name="project" value="LOCAL" />
+      <updated>1699175076633</updated>
+    </task>
+    <option name="localTasksCounter" value="190" />
     <servers />
   </component>
   <component name="ToolWindowManager">
