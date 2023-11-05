@@ -83,7 +83,7 @@ def train(args, epoch):
     model.train()
     criterion.train()
 
-    for i, (images, gt_image, flow) in enumerate(train_loader):
+    for i, (images, gt_image, vector) in enumerate(train_loader):
 
         # Build input batch
         images = [img_.to(device) for img_ in images]
@@ -93,7 +93,7 @@ def train(args, epoch):
         optimizer.zero_grad()
         if args.model == 'VFI':
             with autocast():
-                out = model(images[0], images[1], points, flow)
+                out = model(images[0], images[1], points, vector)
                 gt = gt_image.to(device)
 
                 loss, _ = criterion(out, gt)
@@ -137,12 +137,12 @@ def test(args, epoch):
 
     t = time.time()
     with torch.no_grad():
-        for i, (images, gt_image, datapath, flow) in enumerate(tqdm(test_loader)):
+        for i, (images, gt_image, datapath, vector) in enumerate(tqdm(test_loader)):
 
             images = [img_.to(device) for img_ in images]
             points = torch.cat([images[3]], dim=1)
             if args.model == 'VFI':
-                out = model(images[0], images[1], points, flow)
+                out = model(images[0], images[1], points, vector)
             else:
                 out = model(images)
 
@@ -178,7 +178,7 @@ def testt(args, epoch):
 
     t = time.time()
     with torch.no_grad():
-        for i, (images, gt_image, datapath, flow) in enumerate(tqdm(test_loader)):
+        for i, (images, gt_image, datapath, vector) in enumerate(tqdm(test_loader)):
             # if datapath[0] == 'Disney_v4_21_028517_s2':
             #
             #     images = [img_.to(device) for img_ in images]
@@ -195,7 +195,7 @@ def testt(args, epoch):
             images = [img_.to(device) for img_ in images]
             points = torch.cat([images[3]], dim=1)
             if args.model == 'VFI':
-                out = model(images[0], images[1], points, flow)
+                out = model(images[0], images[1], points, vector)
             else:
                 out = model(images)
 
@@ -246,10 +246,10 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
-    test_loss, psnr, ssim = testt(args, args.start_epoch)
-    print("psnr :{}, ssim:{}".format(psnr, ssim))
-    exit()
+    # load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
+    # test_loss, psnr, ssim = testt(args, args.start_epoch)
+    # print("psnr :{}, ssim:{}".format(psnr, ssim))
+    # exit()
 
     best_psnr = 0
     for epoch in range(args.start_epoch, args.max_epoch):

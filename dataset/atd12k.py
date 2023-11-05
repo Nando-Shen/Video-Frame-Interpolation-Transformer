@@ -5,6 +5,10 @@ from PIL import Image
 import random
 import numpy as np
 
+def lerp(p0, p1, t):
+    """Linear interpolation."""
+    return (1.0 - t) * p0 + t * p1
+
 class ATD12k(Dataset):
     def __init__(self, data_root, is_training , input_frames="1357", mode='mini'):
         """
@@ -40,12 +44,12 @@ class ATD12k(Dataset):
             points34 = os.path.join(self.data_root, d, 'inter34.jpg')
             gt = os.path.join(self.data_root, d, 'frame2.jpg')
 
-            vector = os.path.join(self.region_root, d, 'frame2.svg')
+            # vector = os.path.join(self.region_root, d, 'frame2.svg')
 
             # region13 = os.path.join(self.region_root, d, 'guide_flo13.npy')
             # region31 = os.path.join(self.region_root, d, 'guide_flo31.npy')
             # data_list.append([img0, img1, points14, points12, points34, gt, d])
-            data_list.append([img0, img1, points14, points12, points34, gt, d, vector])
+            data_list.append([img0, img1, points14, points12, points34, gt, d])
 
         self.data_list = data_list
 
@@ -72,10 +76,12 @@ class ATD12k(Dataset):
         # images = [images[i] for i in inputs]
         # imgpaths = [imgpaths[i] for i in inputs]
         # Data augmentation
+
         size = (384, 192)
-        flow13 = np.load(self.data_list[index][7]).astype(np.float32)
-        flow31 = np.load(self.data_list[index][8]).astype(np.float32)
-        flow = [flow13, flow31]
+        interpolation_factor = 0.5
+        vector = Image.blend(images[0], images[1], interpolation_factor)
+        images.append(vector)
+
         if self.training:
             seed = random.randint(0, 2**32)
             images_ = []
@@ -88,8 +94,8 @@ class ATD12k(Dataset):
             gt = images[5]
 
             images = images[:5]
-
-            return images, gt, flow
+            vector = images[6]
+            return images, gt, vector
         else:
             T = self.transforms
             images = [T(img_.resize(size)) for img_ in images]
@@ -97,8 +103,9 @@ class ATD12k(Dataset):
             gt = images[5]
             images = images[:5]
             imgpath = self.data_list[index][6]
+            vector = images[6]
 
-            return images, gt, imgpath, flow
+            return images, gt, imgpath, vector
 
     def __len__(self):
         if self.training:

@@ -573,38 +573,21 @@ class VFIformerSmall(nn.Module):
 
         return flow
 
-    def forward(self, img0, img1, points, region_flow):
+    def forward(self, img0, img1, points, vector):
         B, _, H, W = img0.size()
         imgs = torch.cat((img0, img1), 1)
 
-        # if flow_pre is not None:
-        #     flow = flow_pre
-        #     _, c0, c1 = self.refinenet(img0, img1, flow)
-        #
-        # else:
-        #     flow, flow_list = self.flownet(imgs)
-        #     flow, c0, c1 = self.refinenet(img0, img1, flow)
-        #
-        #
-        # warped_img0 = warp(img0, flow[:, :2])
-        # warped_img1 = warp(img1, flow[:, 2:])
 
         flow, _ = self.flownet(imgs)
         flow, _, _ = self.refinenet(img0, img1, flow)
-
-        # c0, c1 = self.refinenet(img0, img1)
-
-        # save_flow_to_img(flow[:,2:], '/home/jiaming/flow')
 
         warped_img0 = warp(img0, flow[:, :2])
         warped_img1 = warp(img1, flow[:, 2:])
 
         points = self.points_fuse(points)
 
-        region_flow13 = region_flow[0]
-        region_flow31 = region_flow[1]
-        warped_img2 = warp(img0, region_flow13)
-        warped_img3 = warp(img1, region_flow31)
+        warped_img2 = warp(img0, vector)
+        warped_img3 = warp(img1, vector)
 
         fused_img0 = self.fuse_block1(torch.cat([warped_img0, warped_img2], dim=1))
         fused_img1 = self.fuse_block2(torch.cat([warped_img1, warped_img3], dim=1))
