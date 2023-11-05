@@ -81,7 +81,6 @@ class ATD12k(Dataset):
         interpolation_factor = 0.5
         vector = Image.blend(images[0], images[1], interpolation_factor)
         images.append(vector)
-        print(len(images))
 
         if self.training:
             seed = random.randint(0, 2**32)
@@ -91,7 +90,6 @@ class ATD12k(Dataset):
                 random.seed(seed)
                 images_.append(self.transforms(img_))
             images = images_
-            print(len(images))
             gt = images[5]
             vector = images[6]
 
