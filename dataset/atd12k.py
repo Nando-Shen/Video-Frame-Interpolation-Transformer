@@ -91,7 +91,7 @@ class ATD12k(Dataset):
                 random.seed(seed)
                 images_.append(self.transforms(img_))
             images = images_
-
+            print(len(images))
             gt = images[5]
 
             images = images[:5]
