@@ -93,18 +93,19 @@ class ATD12k(Dataset):
             images = images_
             print(len(images))
             gt = images[5]
+            vector = images[6]
 
             images = images[:5]
-            vector = images[6]
             return images, gt, vector
         else:
             T = self.transforms
             images = [T(img_.resize(size)) for img_ in images]
 
             gt = images[5]
+            vector = images[6]
+
             images = images[:5]
             imgpath = self.data_list[index][6]
-            vector = images[6]
 
             return images, gt, imgpath, vector
 
