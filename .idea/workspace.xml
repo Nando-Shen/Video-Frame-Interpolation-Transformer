@@ -321,14 +321,14 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.test" />
+      <item itemvalue="Python.test_adacof" />
       <item itemvalue="Python.VFIT_S" />
       <item itemvalue="Python.atd12k" />
       <item itemvalue="Python.figure_plot" />
-      <item itemvalue="Python.main" />
       <item itemvalue="Python.plot_attn" />
       <item itemvalue="Python.runtime_plot" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.test_adacof" />
     </list>
     <recent_temporary>
       <list>
@@ -360,6 +360,10 @@
       <workItem from="1686838748074" duration="9386000" />
       <workItem from="1687260567780" duration="475000" />
       <workItem from="1687508911635" duration="2295000" />
+      <workItem from="1699018569600" duration="2765000" />
+      <workItem from="1699074548644" duration="450000" />
+      <workItem from="1699084744869" duration="2000" />
+      <workItem from="1699089775285" duration="663000" />
     </task>
     <task id="LOCAL-00140" summary="flow training">
       <created>1678355673186</created>
