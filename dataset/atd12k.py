@@ -40,10 +40,12 @@ class ATD12k(Dataset):
             points34 = os.path.join(self.data_root, d, 'inter34.jpg')
             gt = os.path.join(self.data_root, d, 'frame2.jpg')
 
-            region13 = os.path.join(self.region_root, d, 'guide_flo13.npy')
-            region31 = os.path.join(self.region_root, d, 'guide_flo31.npy')
+            vector = os.path.join(self.region_root, d, 'frame2.svg')
+
+            # region13 = os.path.join(self.region_root, d, 'guide_flo13.npy')
+            # region31 = os.path.join(self.region_root, d, 'guide_flo31.npy')
             # data_list.append([img0, img1, points14, points12, points34, gt, d])
-            data_list.append([img0, img1, points14, points12, points34, gt, d, region13, region31])
+            data_list.append([img0, img1, points14, points12, points34, gt, d, vector])
 
         self.data_list = data_list
 
