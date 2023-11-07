@@ -205,7 +205,7 @@ def testt(args, epoch):
                 # print(idx)
                 # print(datapath[idx])
                 os.makedirs(args.result_dir + '/' + datapath[idx])
-                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/abregion12.png')
+                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/ab_nocsb.png')
 
             # Save loss values
             loss, loss_specific = criterion(out, gt)
@@ -246,10 +246,10 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    # load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
-    # test_loss, psnr, ssim = testt(args, args.start_epoch)
-    # print("psnr :{}, ssim:{}".format(psnr, ssim))
-    # exit()
+    load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
+    test_loss, psnr, ssim = testt(args, args.start_epoch)
+    print("psnr :{}, ssim:{}".format(psnr, ssim))
+    exit()
 
     best_psnr = 0
     for epoch in range(args.start_epoch, args.max_epoch):
