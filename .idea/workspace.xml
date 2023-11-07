@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="90d88c8c-0091-46e4-8165-23880327570d" name="Default Changelist" comment="ab on no csb">
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -324,14 +324,14 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.test" />
+      <item itemvalue="Python.test_adacof" />
       <item itemvalue="Python.VFIT_S" />
       <item itemvalue="Python.atd12k" />
       <item itemvalue="Python.figure_plot" />
-      <item itemvalue="Python.main" />
       <item itemvalue="Python.plot_attn" />
       <item itemvalue="Python.runtime_plot" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.test_adacof" />
     </list>
     <recent_temporary>
       <list>
@@ -364,13 +364,6 @@
       <workItem from="1687260567780" duration="475000" />
       <workItem from="1687508911635" duration="2295000" />
       <workItem from="1692581735737" duration="227000" />
-    </task>
-    <task id="LOCAL-00141" summary="flow training">
-      <created>1678472215012</created>
-      <option name="number" value="00141" />
-      <option name="presentableId" value="LOCAL-00141" />
-      <option name="project" value="LOCAL" />
-      <updated>1678472215012</updated>
     </task>
     <task id="LOCAL-00142" summary="viss">
       <created>1678472809132</created>
@@ -708,7 +701,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699294245272</updated>
     </task>
-    <option name="localTasksCounter" value="190" />
+    <task id="LOCAL-00190" summary="ab on no csb">
+      <created>1699373127059</created>
+      <option name="number" value="00190" />
+      <option name="presentableId" value="LOCAL-00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1699373127059</updated>
+    </task>
+    <option name="localTasksCounter" value="191" />
     <servers />
   </component>
   <component name="ToolWindowManager">
