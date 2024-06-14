@@ -19,12 +19,11 @@ class AnimeRun(Dataset):
         self.training = is_training
         self.inputs = input_frames
         if is_training:
-            self.region_root = os.path.join(self.data_root, 'train_region')
-            self.data_root = os.path.join(self.data_root, 'train')
+            self.region_root = os.path.join(self.data_root, 'train/contour_region')
+            self.data_root = os.path.join(self.data_root, 'train/contourcopy')
         else:
-            self.region_root = os.path.join(self.data_root, 'test_region')
-            self.data_root = os.path.join(self.data_root, 'test')
-
+            self.region_root = os.path.join(self.data_root, 'test/contour_region')
+            self.data_root = os.path.join(self.data_root, 'test/contourcopy')
 
         dirs = os.listdir(self.data_root)
         data_list = []
