@@ -37,7 +37,7 @@ class AnimeRun(Dataset):
             # points14 = os.path.join(self.data_root, d, 'frame3.jpg')
 
             points12 = os.path.join(self.data_root, d, 'inter12.jpg')
-            gt = os.path.join(self.data_root, d, 'frame1.png')
+            gt = os.path.join(self.data_root, d, 'resize3.jpg')
 
             region13 = os.path.join(self.region_root, d, 'guide_flo13.npy')
             region31 = os.path.join(self.region_root, d, 'guide_flo31.npy')
