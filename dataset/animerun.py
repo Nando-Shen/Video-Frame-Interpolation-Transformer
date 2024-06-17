@@ -53,7 +53,7 @@ class AnimeRun(Dataset):
 
     def __getitem__(self, index):
 
-        imgpaths = [self.data_list[index][0], self.data_list[index][1], self.data_list[index][2], self.data_list[index][3]]
+        imgpaths = [self.data_list[index][0], self.data_list[index][1], self.data_list[index][2]]
 
         # Load images
         images = [Image.open(pth) for pth in imgpaths]
@@ -84,7 +84,7 @@ class AnimeRun(Dataset):
 
             gt = images[2]
             images = images[:2]
-            imgpath = self.data_list[index][4]
+            imgpath = self.data_list[index][3]
 
             return images, gt, imgpath
 
