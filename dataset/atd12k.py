@@ -42,6 +42,7 @@ class ATD12k(Dataset):
             gt = os.path.join(self.data_root, d, 'frame2.jpg')
 
             result = os.path.join(self.result_dir, d, 'abregion12.png')
+            print(result)
 
             region13 = os.path.join(self.region_root, d, 'guide_flo13.npy')
             region31 = os.path.join(self.region_root, d, 'guide_flo31.npy')
