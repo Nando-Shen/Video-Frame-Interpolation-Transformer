@@ -199,8 +199,8 @@ def testt(args, epoch):
             epe1 = torch.sum((out1 - out) ** 2, dim=1).sqrt()
             epe2 = torch.sum((out3 - out2) ** 2, dim=1).sqrt()
             # print(epe1.shape, epe2.shape)
-            epe_list1.append(epe1.view(-1).numpy())
-            epe_list2.append(epe2.view(-1).numpy())
+            epe_list1.append(epe1.view(-1).cpu().numpy())
+            epe_list2.append(epe2.view(-1).cpu().numpy())
 
     epe_re1 = np.concatenate(epe_list1)
     epe_re2 = np.concatenate(epe_list2)
