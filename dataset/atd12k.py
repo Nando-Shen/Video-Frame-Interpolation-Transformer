@@ -42,7 +42,6 @@ class ATD12k(Dataset):
             gt = os.path.join(self.data_root, d, 'frame2.jpg')
 
             result = os.path.join(self.result_dir, d, 'abregion12.png')
-            print(result)
 
             region13 = os.path.join(self.region_root, d, 'guide_flo13.npy')
             region31 = os.path.join(self.region_root, d, 'guide_flo31.npy')
@@ -69,7 +68,6 @@ class ATD12k(Dataset):
         imgpaths = [self.data_list[index][0], self.data_list[index][1], self.data_list[index][2], self.data_list[index][3], self.data_list[index][4], self.data_list[index][5], self.data_list[index][9]]
         # Load images
         images = [Image.open(pth) for pth in imgpaths]
-        print(images)
         ## Select only relevant inputs
         # inputs = [int(e)-1 for e in list(self.inputs)]
         # inputs = inputs[:len(inputs)//2] + [3] + inputs[len(inputs)//2:]
