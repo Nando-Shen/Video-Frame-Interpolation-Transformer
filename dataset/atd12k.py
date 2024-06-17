@@ -18,6 +18,7 @@ class ATD12k(Dataset):
         self.region_root = data_root
         self.training = is_training
         self.inputs = input_frames
+        self.result_dir = '/home/kuhu6123/jshe2377/12_ab/Video-Frame-Interpolation-Transformer/abregion12';
         if is_training:
             self.region_root = os.path.join(self.data_root, 'train_10k_region')
             self.data_root = os.path.join(self.data_root, 'train_10k')
@@ -40,10 +41,13 @@ class ATD12k(Dataset):
             points34 = os.path.join(self.data_root, d, 'inter34.jpg')
             gt = os.path.join(self.data_root, d, 'frame2.jpg')
 
+            result = os.path.join(self.result_dir, d, 'abregion12.png')
+
             region13 = os.path.join(self.region_root, d, 'guide_flo13.npy')
             region31 = os.path.join(self.region_root, d, 'guide_flo31.npy')
+
             # data_list.append([img0, img1, points14, points12, points34, gt, d])
-            data_list.append([img0, img1, points14, points12, points34, gt, d, region13, region31])
+            data_list.append([img0, img1, points14, points12, points34, gt, d, region13, region31, result])
 
         self.data_list = data_list
 
@@ -61,7 +65,7 @@ class ATD12k(Dataset):
 
     def __getitem__(self, index):
 
-        imgpaths = [self.data_list[index][0], self.data_list[index][1], self.data_list[index][2], self.data_list[index][3],  self.data_list[index][4],  self.data_list[index][5]]
+        imgpaths = [self.data_list[index][0], self.data_list[index][1], self.data_list[index][2], self.data_list[index][3], self.data_list[index][4], self.data_list[index][5], self.data_list[index][9]]
         # Load images
         images = [Image.open(pth) for pth in imgpaths]
         ## Select only relevant inputs
@@ -95,15 +99,14 @@ class ATD12k(Dataset):
             gt = images[5]
             images = images[:5]
             imgpath = self.data_list[index][6]
-
-            return images, gt, imgpath, flow
+            result = images[6]
+            return images, gt, imgpath, flow, result
 
     def __len__(self):
         if self.training:
             return len(self.data_list)
         else:
             return len(self.data_list)
-            # return 1
 
 def get_loader(mode, data_root, batch_size, shuffle, num_workers, test_mode=None):
     if mode == 'train':
