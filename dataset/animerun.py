@@ -22,20 +22,22 @@ class AnimeRun(Dataset):
             self.region_root = os.path.join(self.data_root, 'train/contour_region')
             self.data_root = os.path.join(self.data_root, 'train/contourcopy')
         else:
-            self.region_root = os.path.join(self.data_root, 'test/contour_region')
-            self.data_root = os.path.join(self.data_root, 'test/contourcopy')
+            # self.region_root = os.path.join(self.data_root, 'test/contour_region')
+            # self.data_root = os.path.join(self.data_root, 'test/contourcopy')
+            self.region_root = os.path.join(self.data_root, 'freesketch_region')
+            self.data_root = os.path.join(self.data_root, 'freesketch')
 
         dirs = os.listdir(self.data_root)
         data_list = []
         for d in dirs:
             if d == '.DS_Store':
                 continue
-            img0 = os.path.join(self.data_root, d, 'frame1.jpg')
-            img1 = os.path.join(self.data_root, d, 'frame3.jpg')
+            img0 = os.path.join(self.data_root, d, 'resize1.jpg')
+            img1 = os.path.join(self.data_root, d, 'resize3.jpg')
             # points14 = os.path.join(self.data_root, d, 'frame3.jpg')
 
             points12 = os.path.join(self.data_root, d, 'inter12.jpg')
-            gt = os.path.join(self.data_root, d, 'frame2.jpg')
+            gt = os.path.join(self.data_root, d, 'frame1.png')
 
             region13 = os.path.join(self.region_root, d, 'guide_flo13.npy')
             region31 = os.path.join(self.region_root, d, 'guide_flo31.npy')
