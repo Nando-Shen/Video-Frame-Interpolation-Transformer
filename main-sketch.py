@@ -49,7 +49,7 @@ elif args.dataset == 'atd12k':
     test_loader = get_loader('test', args.data_root, args.test_batch_size, shuffle=False, num_workers=args.num_workers)
 elif args.dataset == 'animerun':
     from dataset.animerun import get_loader
-    train_loader = get_loader('train', args.data_root, args.batch_size, shuffle=True, num_workers=args.num_workers)
+    # train_loader = get_loader('train', args.data_root, args.batch_size, shuffle=True, num_workers=args.num_workers)
     test_loader = get_loader('test', args.data_root, args.test_batch_size, shuffle=False, num_workers=args.num_workers)
 else:
     raise NotImplementedError
