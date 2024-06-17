@@ -97,11 +97,11 @@ class ATD12k(Dataset):
         else:
             T = self.transforms
             images = [T(img_.resize(size)) for img_ in images]
-
+            images1 = images
             gt = images[5]
             images = images[:5]
             imgpath = self.data_list[index][6]
-            result = images[6]
+            result = images1[6]
             return images, gt, imgpath, flow, result
 
     def __len__(self):
