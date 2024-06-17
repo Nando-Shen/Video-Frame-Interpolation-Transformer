@@ -18,7 +18,7 @@ class ATD12k(Dataset):
         self.region_root = data_root
         self.training = is_training
         self.inputs = input_frames
-        self.result_dir = '/home/kuhu6123/jshe2377/12_ab/Video-Frame-Interpolation-Transformer/abregion12'
+        self.result_dir = '/home/kuhu6123/jshe2377/data/fullhalfmix'
         if is_training:
             self.region_root = os.path.join(self.data_root, 'train_10k_region')
             self.data_root = os.path.join(self.data_root, 'train_10k')
