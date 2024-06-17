@@ -4,6 +4,7 @@ import os
 os.environ["CUDA_VISIBLE_DEVICES"] = '1'
 import torch
 from tqdm import tqdm
+import numpy as np
 
 from torch.cuda.amp import autocast, GradScaler
 from torchvision.utils import save_image as imwrite
@@ -197,12 +198,16 @@ def testt(args, epoch):
 
             epe1 = torch.sum((out1 - out) ** 2, dim=1).sqrt()
             epe2 = torch.sum((out3 - out2) ** 2, dim=1).sqrt()
-            print(epe1.shape, epe2.shape)
-            epe_list1.append(epe1)
-            epe_list2.append(epe2)
+            # print(epe1.shape, epe2.shape)
+            epe_list1.append(epe1.view(-1).numpy())
+            epe_list2.append(epe2.view(-1).numpy())
 
+    epe_re1 = np.concatenate(epe_list1)
+    epe_re2 = np.concatenate(epe_list2)
+    epe11 = np.mean(epe_re1)
+    epe22 = np.mean(epe_re2)
 
-    return epe_list1, epe_list2
+    return epe11, epe22
 
 
 def print_log(epoch, num_epochs, one_epoch_time, oup_pnsr, oup_ssim, Lr):
