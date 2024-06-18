@@ -246,7 +246,7 @@ def main(args):
     # test_loss, psnr, ssim = testt(args, args.start_epoch)
     # print("psnr :{}, ssim:{}".format(psnr, ssim))
     # exit()
-    load_checkpoint(args, model, optimizer, '/home/kuhu6123/jshe2377/VFIformer/Video-Frame-Interpolation-Transformer/ckp/checkpoints/model_best.pth')
+    load_checkpoint(args, model, optimizer, '/home/kuhu6123/jshe2377/VFIformer/Video-Frame-Interpolation-Transformer/ckp/checkpoints/checkpoint.pth')
     test_loss, psnr, ssim = testt(args, args.start_epoch)
     print("psnr :{}, ssim:{}".format(psnr, ssim))
     exit()
