@@ -59,13 +59,13 @@ if args.model == 'VFIT_S':
 elif args.model == 'VFIT_B':
     from model.VFIT_B import UNet_3D_3D
 elif args.model == 'VFI':
-    from model.VFIformer_arch import VFIformer
+    from model.VFIformer_arch import VFIformerSmall
 
 print("Building model: %s"%args.model)
 if args.model == 'VFI':
     args.device = device
     args.resume_flownet = False
-    model = VFIformer(args)
+    model = VFIformerSmall(args)
 else:
     model = UNet_3D_3D( n_inputs=args.nbr_frame, joinType=args.joinType)
 model = torch.nn.DataParallel(model).to(device)
