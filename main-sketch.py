@@ -183,19 +183,7 @@ def testt(args, epoch):
     t = time.time()
     with torch.no_grad():
         for i, (images, gt_image, datapath, flow) in enumerate(tqdm(test_loader)):
-            # if datapath[0] == 'Disney_v4_21_028517_s2':
-            #
-            #     images = [img_.to(device) for img_ in images]
-            #     points = torch.cat([images[2], images[3]], dim=1)
-            #     if args.model == 'VFI':
-            #         out = model(images[0], images[1], points)
-            #     else:
-            #         out = model(images)
-            #
-            #     gt = gt_image.to(device)
-            # else:
-            #     continue
-            # print(out.size())
+
             images = [img_.to(device) for img_ in images]
             points = torch.cat([images[2]], dim=1)
             if args.model == 'VFI':
