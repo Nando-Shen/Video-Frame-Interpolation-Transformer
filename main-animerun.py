@@ -250,10 +250,10 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    load_checkpoint(args, model, optimizer, '/home/kuhu6123/jshe2377/12_ab/Video-Frame-Interpolation-Transformer/ckp/checkpoints/model_best1.pth')
-    test_loss, psnr, ssim = testt(args, args.start_epoch)
-    print("psnr :{}, ssim:{}".format(psnr, ssim))
-    exit()
+    # load_checkpoint(args, model, optimizer, '/home/kuhu6123/jshe2377/12_ab/Video-Frame-Interpolation-Transformer/ckp/checkpoints/model_best1.pth')
+    # test_loss, psnr, ssim = testt(args, args.start_epoch)
+    # print("psnr :{}, ssim:{}".format(psnr, ssim))
+    # exit()
 
     best_psnr = 0
     for epoch in range(args.start_epoch, args.max_epoch):
@@ -274,7 +274,7 @@ def main(args):
         is_best = psnr > best_psnr
         best_psnr = max(psnr, best_psnr)
         if is_best:
-            shutil.copyfile(os.path.join(save_loc, 'checkpoint.pth'), os.path.join(save_loc, 'model_best1.pth'))
+            shutil.copyfile(os.path.join(save_loc, 'checkpoint.pth'), os.path.join(save_loc, 'model_best2.pth'))
 
         one_epoch_time = time.time() - start_time
         print_log(epoch, args.max_epoch, one_epoch_time, psnr, ssim, optimizer.param_groups[-1]['lr'])
