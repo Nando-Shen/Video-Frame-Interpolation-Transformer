@@ -48,7 +48,7 @@ class AnimeRun(Dataset):
 
         if self.training:
             self.transforms = transforms.Compose([
-                transforms.RandomCrop(192),
+                # transforms.RandomCrop(192),
                 transforms.RandomHorizontalFlip(),
                 transforms.RandomVerticalFlip(),
                 # transforms.ColorJitter(0.05, 0.05, 0.05, 0.05),
