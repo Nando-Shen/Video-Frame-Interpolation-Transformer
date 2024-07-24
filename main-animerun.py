@@ -158,11 +158,12 @@ def test(args, epoch):
             # print(out.size())
 
             out = model(images[0], images[2], images[3]) ## images is a list of neighboring frames
-            for idx in range(out.size()[0]):
+            # for idx in range(out.size()[0]):
                 # print(idx)
                 # print(datapath[idx])
-                os.makedirs(args.result_dir + '/' + datapath[idx])
-                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/sfi.png')
+
+                # os.makedirs(args.result_dir + '/' + datapath[idx])
+                # imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/sfi.png')
 
             # Save loss values
             # loss, loss_specific = criterion(out, gt)
