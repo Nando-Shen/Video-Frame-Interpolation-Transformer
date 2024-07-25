@@ -250,7 +250,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    load_checkpoint(args, model, optimizer, '/home/kuhu6123/jshe2377/ab_AnimeRun/Video-Frame-Interpolation-Transformer/ckp/checkpoints/model_best2.pth')
+    load_checkpoint(args, model, optimizer, '/home/kuhu6123/jshe2377/ab_AnimeRun/Video-Frame-Interpolation-Transformer/ckp/checkpoints/model_best1.pth')
     test_loss, psnr, ssim = testt(args, args.start_epoch)
     print("psnr :{}, ssim:{}".format(psnr, ssim))
     exit()
