@@ -87,17 +87,16 @@ def train(args, epoch):
     model.train()
     criterion.train()
 
-    for i, (images, gt_image, flow) in enumerate(train_loader):
+    for i, (images, gt_image) in enumerate(train_loader):
 
         # Build input batch
         images = [img_.to(device) for img_ in images]
-        points = torch.cat([images[2]], 1)
 
         # Forward
         optimizer.zero_grad()
         if args.model == 'VFI':
             with autocast():
-                out = model(images[0], images[1], points, flow)
+                out, flow_list = model(images[0], images[1])
                 gt = gt_image.to(device)
 
                 loss, _ = criterion(out, gt)
@@ -141,25 +140,26 @@ def test(args, epoch):
 
     t = time.time()
     with torch.no_grad():
-        for i, (images, gt_image, datapath, flow) in enumerate(tqdm(test_loader)):
+        for i, (images, gt_image, datapath) in enumerate(tqdm(test_loader)):
 
             images = [img_.to(device) for img_ in images]
-            points = torch.cat([images[2]], dim=1)
             if args.model == 'VFI':
-                out = model(images[0], images[1], points, flow)
+                out, flow_list = model(images[0], images[1])
+                gt = gt_image.to(device)
             else:
                 out = model(images)
+                gt = gt_image.to(device)
 
-            gt = gt_image.to(device)
+            print(out.size())
 
-            # print(out.size())
+            # for idx in range(out.size()[0]):
+            #     # print(idx)
+            #     # print(datapath[idx])
+            #     os.makedirs(args.result_dir + '/' + datapath[idx])
+            #     imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/fullhalfmix.png')
+
 
             # out = model(images) ## images is a list of neighboring frames
-            # for idx in range(out.size()[0]):
-                # print(idx)
-                # print(datapath[idx])
-                # os.makedirs(args.result_dir + '/' + datapath[idx])
-                # imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/flowdeep2.png')
 
             # Save loss values
             loss, loss_specific = criterion(out, gt)
@@ -198,7 +198,7 @@ def testt(args, epoch):
             #     # print(idx)
             #     # print(datapath[idx])
                 os.makedirs(args.result_dir + '/' + datapath[idx])
-                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/vfit-animerun.png')
+                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/fullhalfmix-animerun.png')
 
 
             # out = model(images) ## images is a list of neighboring frames
