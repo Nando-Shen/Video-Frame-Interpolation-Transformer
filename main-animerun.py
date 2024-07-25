@@ -234,8 +234,10 @@ def print_log(epoch, num_epochs, one_epoch_time, oup_pnsr, oup_ssim, Lr):
             .format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
                     one_epoch_time, epoch, num_epochs, oup_pnsr, oup_ssim, Lr), file=f)
 
-lr_schular = [2e-4, 1e-4, 5e-5, 2.5e-5, 5e-6, 1e-6]
-training_schedule = [40, 60, 75, 85, 95, 100]
+lr_schular = [2e-4, 1e-4, 5e-5]
+training_schedule = [75, 90, 100]
+
+
 
 def adjust_learning_rate(optimizer, epoch):
     """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
@@ -250,7 +252,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    load_checkpoint(args, model, optimizer, '/home/kuhu6123/jshe2377/ab_AnimeRun/Video-Frame-Interpolation-Transformer/ckp/checkpoints/model_best2.pth')
+    load_checkpoint(args, model, optimizer, '/home/kuhu6123/jshe2377/12_ab/Video-Frame-Interpolation-Transformer/ckp/checkpoints/model_best1.pth')
     # test_loss, psnr, ssim = testt(args, args.start_epoch)
     # print("psnr :{}, ssim:{}".format(psnr, ssim))
     # exit()
