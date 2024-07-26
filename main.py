@@ -12,6 +12,7 @@ from loss import Loss
 import shutil
 import os
 import cv2
+os.environ["CUDA_VISIBLE_DEVICES"] = '1'
 
 def load_checkpoint(args, model, optimizer, path):
     print("loading checkpoint %s" % path)
