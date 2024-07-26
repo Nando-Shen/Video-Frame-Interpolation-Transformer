@@ -9,6 +9,7 @@ import myutils
 from loss import Loss
 import shutil
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 
 from torch.cuda.amp import autocast, GradScaler
 
