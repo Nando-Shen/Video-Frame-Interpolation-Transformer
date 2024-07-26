@@ -237,10 +237,8 @@ def print_log(epoch, num_epochs, one_epoch_time, oup_pnsr, oup_ssim, Lr):
 # lr_schular = [2e-4, 1e-4, 5e-5]
 # training_schedule = [75, 90, 100]
 
-lr_schular = [2e-6, 1e-4, 5e-5]
-training_schedule = [75, 90, 100]
-
-
+lr_schular = [5e-6, 2e-6]
+training_schedule = [75, 100]
 
 def adjust_learning_rate(optimizer, epoch):
     """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
