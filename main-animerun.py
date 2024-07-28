@@ -158,12 +158,12 @@ def test(args, epoch):
             # print(out.size())
 
             out = model(images[0], images[2], images[3]) ## images is a list of neighboring frames
-            # for idx in range(out.size()[0]):
+            for idx in range(out.size()[0]):
                 # print(idx)
                 # print(datapath[idx])
 
-                # os.makedirs(args.result_dir + '/' + datapath[idx])
-                # imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/sfi.png')
+                os.makedirs(args.result_dir + '/' + datapath[idx])
+                imwrite(out[idx], args.result_dir + '/' + datapath[idx] + '/sfi.png')
 
             # Save loss values
             # loss, loss_specific = criterion(out, gt)
@@ -207,7 +207,7 @@ def adjust_learning_rate(optimizer, epoch):
 
 """ Entry Point """
 def main(args):
-    load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
+    load_checkpoint(args, model, optimizer, save_loc+'/model_best-animerun.pth')
     # test_loss, psnr, ssim = test(args, args.start_epoch)
     # print("psnr :{}, ssim:{}".format(psnr, ssim))
     # exit()
