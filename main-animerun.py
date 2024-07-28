@@ -229,7 +229,7 @@ def print_log(epoch, num_epochs, one_epoch_time, oup_pnsr, oup_ssim, Lr):
 # lr_schular = [2e-4, 1e-4, 5e-5, 2.5e-5, 5e-6, 1e-6]
 # training_schedule = [40, 60, 75, 85, 95, 100]
 
-lr_schular = [5e-6, 2e-6]
+lr_schular = [5e-5, 2e-6]
 training_schedule = [70, 80]
 
 def adjust_learning_rate(optimizer, epoch):
@@ -250,7 +250,7 @@ def main(args):
     # print("psnr :{}, ssim:{}".format(psnr, ssim))
     # exit()
 
-    load_checkpoint(args, model, optimizer, '/home/kuhu6123/jshe2377/VFIformer/Video-Frame-Interpolation-Transformer/ckp/checkpoints/model_best.pth')
+    load_checkpoint(args, model, optimizer, '/home/kuhu6123/jshe2377/VFIformer/Video-Frame-Interpolation-Transformer/ckp/checkpoints/checkpoint.pth')
     # test_loss, psnr, ssim = testt(args, args.start_epoch)
     # print("psnr :{}, ssim:{}".format(psnr, ssim))
     # exit()
