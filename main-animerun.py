@@ -188,8 +188,11 @@ def print_log(epoch, num_epochs, one_epoch_time, oup_pnsr, oup_ssim, Lr):
             .format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
                     one_epoch_time, epoch, num_epochs, oup_pnsr, oup_ssim, Lr), file=f)
 
-lr_schular = [2e-4, 1e-4, 5e-5, 2.5e-5, 5e-6, 1e-6]
-training_schedule = [40, 60, 75, 85, 95, 100]
+# lr_schular = [2e-4, 1e-4, 5e-5, 2.5e-5, 5e-6, 1e-6]
+# training_schedule = [40, 60, 75, 85, 95, 100]
+
+lr_schular = [5e-6, 2e-6]
+training_schedule = [75, 100]
 
 def adjust_learning_rate(optimizer, epoch):
     """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
@@ -205,9 +208,9 @@ def adjust_learning_rate(optimizer, epoch):
 """ Entry Point """
 def main(args):
     load_checkpoint(args, model, optimizer, save_loc+'/model_best1.pth')
-    test_loss, psnr, ssim = test(args, args.start_epoch)
-    print("psnr :{}, ssim:{}".format(psnr, ssim))
-    exit()
+    # test_loss, psnr, ssim = test(args, args.start_epoch)
+    # print("psnr :{}, ssim:{}".format(psnr, ssim))
+    # exit()
 
     best_psnr = 0
     for epoch in range(args.start_epoch, args.max_epoch):
@@ -228,7 +231,7 @@ def main(args):
         is_best = psnr > best_psnr
         best_psnr = max(psnr, best_psnr)
         if is_best:
-            shutil.copyfile(os.path.join(save_loc, 'checkpoint.pth'), os.path.join(save_loc, 'model_best1.pth'))
+            shutil.copyfile(os.path.join(save_loc, 'checkpoint.pth'), os.path.join(save_loc, 'model_best-animerun.pth'))
 
         one_epoch_time = time.time() - start_time
         print_log(epoch, args.max_epoch, one_epoch_time, psnr, ssim, optimizer.param_groups[-1]['lr'])
